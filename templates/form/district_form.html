@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+
+    <div class="mb-3 mt-5">
+        <label for="district_name" class="form-label">District Name</label>
+        <div>
+            <select name="district_name">
+                {% for district in districts %}
+                <option value={{district.name}}>{{district.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 mt-5">
+        <h4>Enter Year</h4>
+        <input type="number" name="Year" />
+    </div>
+    <div class="mb-3">
+        <label for="HH_size" class="form-label">st_population</label>
+        <input type="number" class="form-control" id="st_population" name="st_population">
+    </div>
+    <div class="mb-3">
+        <label for="HH_size" class="form-label">tot_population</label>
+        <input type="number" class="form-control" id="tot_population" name="tot_population">
+    </div>
+    <h2>Enter District SubIndicator Scores</h2>
+    <hr>
+    <h3>Health</h3><br>
+    <div class="mb-3">
+        <ul>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Women whose BMI is
+                        below normal </label>
+                    <input type="number" name="Women_whose_BMI_is_below_normal" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Children under 5
+                        years who are
+                        underweight</label>
+                    <input type="number" name="Children_under_5_years_who_are_underweight" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Women age 15-49
+                        years who are
+                        anaemic (%)</label>
+                    <input type="number" name="Women_age_15_to_49_years_who_are_anaemic" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Children age 6-59 months who are anaemic (%)</label>
+                    <input type="number" name="Children_age_6_to_59_months_who_are_anaemic" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Antenatal care in first trimester</label>
+                    <input type="number" name="Antenatal_care_in_first_trimester" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Full antenatal care </label>
+                    <input type="number" name="Full_antenatal_care " />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Post-natal care</label>
+                    <input type="number" name="Post_natal_care" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Health insurance </label>
+                    <input type="number" name="Health_insurance" />
+                </div>
+            </li>
+        </ul>
+    </div>
+    <hr>
+    <h3>Education</h3>
+    <div class="mb-3">
+        <ul>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Enrolment </label>
+                    <input type="number" name="Enrolment" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Equity Outcome</label>
+                    <input type="number" name="Equity_Outcome" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Drop-out rate </label>
+                    <input type="number" name="Drop_out_rate" />
+                </div>
+            </li>
+        </ul>
+    </div>
+    <hr>
+    <h3>Standard Of Living</h3>
+    <div class="mb-3">
+        <ul>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">IC_score</label>
+                    <input type="number" name="IC_score" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Source of cooking fuel</label>
+                    <input type="number" name="Source_of_cooking_fuel" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Source of drinking water</label>
+                    <input type="number" name="Source_of_drinking_water" />
+                </div>
+            </li>
+            <li>
+                <div class="score-box">
+                    <label class="score-label">Electricity</label>
+                    <input type="number" name="Electricity" />
+                </div>
+            </li>
+
+        </ul>
+    </div>
+    <hr>
+
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="accountsbox">
+  {% if not request.user.is_authenticated %}
+  <div class="accounts-head">
+    <h2>Login to your account</h2>
+  </div>
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username" placeholder="Username">
+    </div>
+
+    <div class="form-group">
+      <label for="Password">Password</label>
+      <input type="password" class="form-control" name="password" placeholder="Password">
+    </div>
+
+    <div class="form-group">
+      <a href="#" class="float-right">Forgot password?</a>
+      <label class="float-left custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input"
+          checked="">
+        <div class="custom-control-label">Remember</div>
+      </label>
+    </div><br><br>
+
+    <button type="submit" class="btn btn-primary">Login</button><br>
+  </form>
+  <p class="text-center mt-4">Don't have account? <a href="{% url 'register' %}">Sign up</a></p>
+
+  {% else %}
+  <div class="accounts-head" style="text-align: center;">
+    You've Already logged in <b>{{user.username}}</b>. Do you want to <a href="{% url 'logout' %}">Logout</a> ?
+  </div>
+  {% endif %}
+</div>
+
+
+
+{% endblock %}
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
