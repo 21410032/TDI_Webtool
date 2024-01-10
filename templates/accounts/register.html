@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+{% if not request.user.is_authenticated %}
+<div class="accountsbox">
+    {% if form.errors %}
+    <p style="color: red;">There is an error with your form!</p>
+    {% endif %}
+    <div class="accounts-head">
+        <h2>Register your account</h2>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+
+{% else %}
+<h1>Hi</h1>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}

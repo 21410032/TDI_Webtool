@@ -1,0 +1,448 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 mt-5">
+    <label for="tribe_name" class="form-label">Tribe Name</label>
+    <div>
+      <select name="tribe_id">
+        {% for tribe in tribes %}
+        <option value={{tribe.id}}>{{tribe.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="HH_size" class="form-label">Household Size</label>
+    <input type="number" class="form-control" id="HH_size" name="HH_size">
+  </div>
+  <h2>Enter Household Indicator Scores</h2>
+  <hr>
+  <h3>Health</h3><br>
+  <div class="mb-3">
+    <ul>
+      <li>
+        <div class="score-box">
+          <label class="score-label">CD_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="CD_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="CD_score
+                    ptions" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="CD_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">IM_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="IM_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="IM_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="IM_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">MC_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="MC_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="MC_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="MC_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">CM_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="CM_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="CM_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="CM_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">FS_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="FS_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="FS_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="FS_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <h3>Education</h3>
+  <div class="mb-3">
+    <ul>
+      <li>
+        <div class="score-box">
+          <label class="score-label">LE_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="LE_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="LE_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="LE_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">DRO_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="DRO_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="DRO_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="DRO_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <h3>Standard Of Living</h3>
+  <div class="mb-3">
+    <ul>
+      <li>
+        <div class="score-box">
+          <label class="score-label">IC_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="IC_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="IC_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="IC_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">OW_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="OW_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="OW_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="OW_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">SANI_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="SANI_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="SANI_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="SANI_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">FUEL_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="FUEL_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="FUEL_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="FUEL_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">DRWA_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="DRWA_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="DRWA_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="DRWA_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">ELECTR_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ELECTR_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ELECTR_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ELECTR_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">ASS_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ASS_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ASS_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ASS_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <h3>Culture</h3>
+  <div class="mb-3">
+    <ul>
+      <li>
+        <div class="score-box">
+          <label class="score-label">LAN_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="LAN_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="LAN_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="LAN_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">ARTS_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ARTS_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ARTS_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="ARTS_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <h3>Governance</h3>
+  <div class="mb-3">
+    <ul>
+      <li>
+        <div class="score-box">
+          <label class="score-label">EV_score</label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="EV_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="EV_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="EV_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="score-box">
+          <label class="score-label">MEET_score
+
+          </label>
+          <div class="radio-container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="MEET_score" id="inlineRadio1" value="0">
+              <label class="form-check-label" for="inlineRadio1">0</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="MEET_score" id="inlineRadio2" value="1">
+              <label class="form-check-label" for="inlineRadio2">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="MEET_score" id="inlineRadio3" value="">
+              <label class="form-check-label" for="inlineRadio3">NA</label>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock content %}

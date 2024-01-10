@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="accountsbox">
+    <form method="POST">
+        {% csrf_token %}
+
+
+        <div class="accounts-head">
+            <h2>Are you sure, you want to Log Out?</h2>
+        </div>
+        <button type="submit" class="btn btn-primary">Log Out</button><br>
+
+    </form>
+</div>
+
+{% else %}
+<div class="accountsbox">
+    <div class="accounts-head">
+        <h2>You are already logged out.</h2>
+    </div>
+    <p>Click Here to <a href="{% url 'login' %}">login</a></p>
+</div>
+{% endif %}
+{% endblock content %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
