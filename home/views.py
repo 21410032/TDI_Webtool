@@ -7,7 +7,8 @@ from django.http import HttpResponse
 
 
 # Create your views here.
-
+from .forms import TribeModelForm
+from django.forms import formset_factory
 
 
 
@@ -142,6 +143,27 @@ def test_view(request):
     return render(request, 'pvtg/test.html', context)
 
 def form_view(request):
+    
+    YourModelFormSet = formset_factory(TribeModelForm, extra=1, can_delete=True, validate_max=True)
+
+    if request.method == 'POST':
+        print(f"Raw POST data: {request.POST}")
+        formset = YourModelFormSet(request.POST, prefix='form')
+        
+        for form in formset:
+                # Save each form indsividually
+            print(f"Form errors for {form.prefix}: {form.errors}")
+                
+            print(f"Field values for {form.prefix}: {form.cleaned_data}")
+            if form.is_valid():
+             form.save()
+
+            # Redirect after successful form submission to avoid resubmission on page refresh
+        return redirect('/')  # Replace 'success_page' with the actual URL or name of your success page
+    else:
+        formset = YourModelFormSet(prefix='form')
+
+    return render(request, 'form/form.html', {'formset': formset})
     tribes = Tribe.objects.all()
     context = {
         'tribes':tribes,

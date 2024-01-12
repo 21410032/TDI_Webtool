@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'district_wise',
     'whitenoise.runserver_nostatic',
+    
 
 ]
 
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 'WebTDi.context_processors.navbar_data',
             ],
         },
     },
@@ -145,3 +147,10 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTHENTICATION_BACKENDS = [
+   
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]

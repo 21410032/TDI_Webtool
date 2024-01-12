@@ -56,9 +56,39 @@
                 <b class="tdi-webtool"><a href="{% url 'home' %}">TDI Webtool</a></b>
             </div>
             <div class="nav-items">
-                <div class="home"><a href="{% url 'home' %}">HOME</a></div>
+                
+                   
+                  <div class="home">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Tribe
+                    </a>
+                  
+                    <ul class="dropdown-menu">
+                        {% for tribe in tribes %}
+                      <li><a class="dropdown-item" href="/tribe/{{tribe.name}}">
+                        {{tribe.name}}
+                      </a></li>
+                      {% endfor %}
+                      
+                    </ul>
+                  </div>
                 <div class="home"><a href="#">RESEARCH</a></div>
-                <div class="home"><a href="#">TEAM</a></div>
+               
+                <div class="home">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      District
+                    </a>
+                  
+                    <ul class="dropdown-menu">
+                        {% for district in district %}
+                      <li><a class="dropdown-item" href="/district/{{district.name}}/{{district.year}}">
+                        {{district.name}}
+                      </a></li>
+                      {% endfor %}
+                      
+                    </ul>
+                </div>
+                
                 <div class="home"><a href="#">GALLERY</a></div>
                 <div class="home"><a href="#">ABOUT US</a></div>
                 <div class="home"><a href="#">CONTACT US</a></div>
@@ -136,7 +166,7 @@
 <!-- HOME DISTRICT GRAPH -->
 <script>
     // DISTRICT HORIZONTAL GRAPH
-
+{% comment %} 
     const district_horizontal_graph = document.getElementById('district_horizontal_graph');
     var district_wise_tdi = {{ district_wise_tdi }}
     new Chart(district_horizontal_graph, {
@@ -185,7 +215,7 @@
                 }
             }
         }
-    });
+    }); {% endcomment %}
 </script>
 <!-- ****** -->
 
@@ -797,7 +827,7 @@
     const health1 = new Chart(document.getElementById('health-pie-district'), configdis1);
 
 
-    var myDattadis2Element = document.getElementById('my-data-education-district');
+     var myDattadis2Element = document.getElementById('my-data-education-district');
     var education_data = myDattadis2Element.getAttribute('data-my-data')
     const datadis2 = {
 
@@ -822,45 +852,40 @@
     };
     const eduaction1 = new Chart(document.getElementById('education-pie-district'), configdis2);
 
-
     var myDattadis3Element = document.getElementById('my-data-sol-district');
-    var sol_data = myDattadis3Element.getAttribute('data-my-data')
+    var sol_data = myDattadis3Element.getAttribute('data-my-data');
     const datadis3 = {
-
         datasets: [{
             label: '',
             data: {{ sol_ind_contri_to_dim }},
-        backgroundColor: [
-            '#B99230',
-            '#D9AC3A',
-            '#F5C242',
-            '#F8D38F',
-
-        ],
-        hoverOffset: 4
-          }]
-        };
-
+            backgroundColor: [
+                '#B99230',
+                '#D9AC3A',
+                '#F5C242',
+                '#F8D38F',
+            ],
+            hoverOffset: 4
+        }]
+    };
+    
     const configdis3 = {
         type: 'doughnut',
         data: datadis3,
-
         options: {
             plugins: {
                 datalabels: {
-                    anchor: "end",
-                    align: "right"
-                }
-            }
-        }
-
-    plugins: [ChartDataLabels],
+                    anchor: 'end',
+                    align: 'right',
+                },
+            },
+        },
     };
-
-
+    
+    // Include the correct plugins array format here
+    
+    
     const sol1 = new Chart(document.getElementById('sol-pie-district'), configdis3);
-
-
+    
 
 
 
