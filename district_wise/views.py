@@ -6,6 +6,8 @@ from home.models import Tribe
 from django.http import Http404
 from django.http import HttpResponse
 from django.http import HttpResponseBadRequest
+from django.forms import formset_factory
+from .forms import DistrictModelForm
 
 
 # Create your views here.
@@ -14,7 +16,7 @@ def district_view(request,slug1,slug2):
     tribes = Tribe.objects.all()
 
     if slug1 is not None and slug2 is not None:
-       district = District.objects.get(slug=slug1, year=slug2)
+       district = District.objects.get(name=slug1, year=slug2)
 
 
       
@@ -76,63 +78,83 @@ def test2_view(request):
     return render(request, 'district/test2.html', context=context)
 
 def form_view(request):
-    districts = District.objects.all()
-    context = {
-        'districts':districts,
-    }
-    if request.method == "POST":
-        district_name= request.POST.get('district_name')
-        print(district_name)
-        st_population = request.POST.get('st_population')
-        tot_population = request.POST.get('tot_population')
+    YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
 
-        # try:
-        #     district = District.objects.get(id=district_id)
-        # except District.DoesNotExist:
-        #     # Handle the case where the selected tribe doesn't exist
-        #     return HttpResponse('Selected tribe does not exist')
+    if request.method == 'POST':
+        print(f"Raw POST data: {request.POST}")
+        formset = YourModelFormSet(request.POST, prefix='form')
+        
+        for form in formset:
+                # Save each form indsividually
+            print(f"Form errors for {form.prefix}: {form.errors}")
+                
+            print(f"Field values for {form.prefix}: {form.cleaned_data}")
+            if form.is_valid():
+             form.save()
+
+            # Redirect after successful form submission to avoid resubmission on page refresh
+        return redirect('/')  # Replace 'success_page' with the actual URL or name of your success page
+    else:
+        formset = YourModelFormSet(prefix='form')
+
+    return render(request, 'form/district_form.html', {'formset': formset})
+    # districts = District.objects.all()
+    # context = {
+    #     'districts':districts,
+    # }
+    # if request.method == "POST":
+    #     district_name= request.POST.get('district_name')
+    #     print(district_name)
+    #     st_population = request.POST.get('st_population')
+    #     tot_population = request.POST.get('tot_population')
+
+    #     # try:
+    #     #     district = District.objects.get(id=district_id)
+    #     # except District.DoesNotExist:
+    #     #     # Handle the case where the selected tribe doesn't exist
+    #     #     return HttpResponse('Selected tribe does not exist')
         
         
         
-        district_object = District.objects.create(
-            name= district_name,
-            year=request.POST.get('Year'),
-            st_population = st_population,
-            total_population=tot_population,
-            W_BMI = request.POST.get('Women_whose_BMI_is_below_normal'),
-            C_UW = request.POST.get('Children_under_5_years_who_are_underweight'),
-            AN_W = request.POST.get('Women_age_15_to_49_years_who_are_anaemic'),
-            AN_C = request.POST.get('Children_age_6_to_59_months_who_are_anaemic'),
-            AHC_ANC = request.POST.get('Antenatal_care_in_first_trimester'),
-            AHC_Full_ANC = request.POST.get('Full_antenatal_care'),
-            AHC_PNC = request.POST.get('Post_natal_care'),
-            AHC_HI = request.POST.get('Health_insurance'),
-            Enrollment = request.POST.get('Enrolment'),
-            Equity = request.POST.get('Equity_Outcome'),
-            E_DropRate = request.POST.get('Drop_out_rate'),
-            S_Sani = request.POST.get('IC_score'),
-            S_CoFu = request.POST.get('Source_of_cooking_fuel'),
-            S_DrWa = request.POST.get('Source_of_drinking_water'),
-            S_Elec = request.POST.get('Electricity'),
+    #     district_object = District.objects.create(
+    #         name= district_name,
+    #         year=request.POST.get('Year'),
+    #         st_population = st_population,
+    #         total_population=tot_population,
+    #         W_BMI = request.POST.get('Women_whose_BMI_is_below_normal'),
+    #         C_UW = request.POST.get('Children_under_5_years_who_are_underweight'),
+    #         AN_W = request.POST.get('Women_age_15_to_49_years_who_are_anaemic'),
+    #         AN_C = request.POST.get('Children_age_6_to_59_months_who_are_anaemic'),
+    #         AHC_ANC = request.POST.get('Antenatal_care_in_first_trimester'),
+    #         AHC_Full_ANC = request.POST.get('Full_antenatal_care'),
+    #         AHC_PNC = request.POST.get('Post_natal_care'),
+    #         AHC_HI = request.POST.get('Health_insurance'),
+    #         Enrollment = request.POST.get('Enrolment'),
+    #         Equity = request.POST.get('Equity_Outcome'),
+    #         E_DropRate = request.POST.get('Drop_out_rate'),
+    #         S_Sani = request.POST.get('IC_score'),
+    #         S_CoFu = request.POST.get('Source_of_cooking_fuel'),
+    #         S_DrWa = request.POST.get('Source_of_drinking_water'),
+    #         S_Elec = request.POST.get('Electricity'),
             
-        )
-        district_object.save()
-        name=district_name,
-        year=request.POST.get('Year'),
-        if not year:
-            messages.error(request, 'Please provide a value for the Year field.')
-            return HttpResponseBadRequest("Year field is required.")
+    #     )
+    #     district_object.save()
+    #     name=district_name,
+    #     year=request.POST.get('Year'),
+    #     if not year:
+    #         messages.error(request, 'Please provide a value for the Year field.')
+    #         return HttpResponseBadRequest("Year field is required.")
 
-        try:
-            year = int(year[0])  # Convert 'year' to integer
-        except ValueError:
-            # Handle the case where 'year' is not a valid integer
-            messages.error(request, 'Invalid year value. Please provide a valid integer for the year.')
-            return HttpResponseBadRequest("Invalid year value.")
-        messages.success(request, 'Household added successfully!!!')
-        print(name)
-        print(year)
-        return redirect('district_view', slug1=name[0], slug2=year)
+    #     try:
+    #         year = int(year[0])  # Convert 'year' to integer
+    #     except ValueError:
+    #         # Handle the case where 'year' is not a valid integer
+    #         messages.error(request, 'Invalid year value. Please provide a valid integer for the year.')
+    #         return HttpResponseBadRequest("Invalid year value.")
+    #     messages.success(request, 'Household added successfully!!!')
+    #     print(name)
+    #     print(year)
+    #     return redirect('district_view', slug1=name[0], slug2=year)
 
 
-    return render(request, 'form/district_form.html',context=context)
+    # return render(request, 'form/district_form.html',context=context)

@@ -22,9 +22,60 @@
     <p>Click Here to <a href="{% url 'login' %}">login</a></p>
 </div>
 {% endif %}
+
+<style>
+    /* style.css */
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Container styles */
+.accountsbox {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.accounts-head {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Link styles */
+a {
+    color: #007bff;
+}
+
+/* Paragraph styles */
+p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .accountsbox {
+        max-width: 100%;
+    }
+}
+
+</style>
 {% endblock content %}
 
-{% block extra_css %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
