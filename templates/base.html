@@ -110,27 +110,11 @@
     </div>
 </body>
 
-<!-- BOOTSTRAP JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-
 <!-- JAVASCRIPT -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
-
-<!-- CDN LINKS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-    integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
-    crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- ****** -->
 
 <!-- CHART JS -->
@@ -140,9 +124,10 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- ****** -->
 
-<script>
-    // HOME SCRIPT
 
+
+<!-- HOME TRIBE GRAPH -->
+<script>
     // TRIBE STACKED GRAPH
     const tribe_stacked_graph = document.getElementById('tribe_stacked_graph');
 
@@ -176,55 +161,9 @@
         }
     });
 </script>
+<!-- ****** -->
 
-<!-- MAP SCRIPT -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Attach click event to each SVG path with class 'district-path'
-        $(".district-path").on("click", function () {
-            // Extract district ID from the data-district-id attribute
-            var districtId = $(this).attr("id");
-            console.log(districtId);
-
-            // Redirect to the district page using the district ID
-            window.location.href = "/district/" + districtId + "/2022";
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get all path elements with the class 'district-path'
-        const paths = document.querySelectorAll(".district-path");
-
-        // Get the elements for district name and values
-        const districtNameElement = document.querySelector(".district-name h3");
-        const districtValuesElement = document.querySelector(".district-values");
-
-        // Add mouseover event listener to each path
-        paths.forEach(function (path) {
-            path.addEventListener("mouseover", function () {
-                // Get the id attribute of the path
-                const districtId = path.id;
-                // const district_tdi = {{ district.objects}};
-
-                // Set the district name and values dynamically
-                districtNameElement.textContent = districtId;
-                // districtValuesElement.textContent = district_tdi;
-
-                // Display the district name and values elements
-                districtNameElement.style.display = "block";
-                districtValuesElement.style.display = "block";
-            });
-
-            // Add mouseout event listener to hide the elements
-            path.addEventListener("mouseout", function () {
-                districtNameElement.style.display = "none";
-                districtValuesElement.style.display = "none";
-            });
-        });
-    });
-</script>
-
+<!-- HOME DISTRICT GRAPH -->
 <script>
     // DISTRICT HORIZONTAL GRAPH
 {% comment %} 
@@ -278,6 +217,57 @@
         }
     }); {% endcomment %}
 </script>
+<!-- ****** -->
+
+<!-- HOME MAP SCRIPT -->
+<script>
+    $(document).ready(function () {
+        // Attach click event to each SVG path with class 'district-path'
+        $(".district-path").on("click", function () {
+            // Extract district ID from the data-district-id attribute
+            var districtId = $(this).attr("id");
+            console.log(districtId);
+
+            // Redirect to the district page using the district ID
+            window.location.href = "/district/" + districtId + "/2022";
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get all path elements with the class 'district-path'
+        const paths = document.querySelectorAll(".district-path");
+
+        // Get the elements for district name and values
+        const districtNameElement = document.querySelector(".district-name h3");
+        const districtValuesElement = document.querySelector(".district-values");
+
+        // Add mouseover event listener to each path
+        paths.forEach(function (path) {
+            path.addEventListener("mouseover", function () {
+                // Get the id attribute of the path
+                const districtId = path.id;
+                // const district_tdi = {{ district.objects}};
+
+                // Set the district name and values dynamically
+                districtNameElement.textContent = districtId;
+                // districtValuesElement.textContent = district_tdi;
+
+                // Display the district name and values elements
+                districtNameElement.style.display = "block";
+                districtValuesElement.style.display = "block";
+            });
+
+            // Add mouseout event listener to hide the elements
+            path.addEventListener("mouseout", function () {
+                districtNameElement.style.display = "none";
+                districtValuesElement.style.display = "none";
+            });
+        });
+    });
+</script>
+<!-- ****** -->
+
+
 
 <!-- TRIBE_WISE SCRIPT -->
 <script>
@@ -735,10 +725,8 @@
 
 
     //Dimension Index And TDI Graph *********
-    var graph2_data = {{ tribal_dimensional_index| safe}};
+    var graph2_data = {{ tribal_dimensional_index| safe }};
     const ctx = document.getElementById('graph2');
-
-
 
     var tdi = {{ tribe.tribal_index }};
 
@@ -746,22 +734,20 @@
         labels: ['Health Development Index', 'Education Development Index', 'Sol Development Index', 'Culture Development Index', 'Governance Development Index', 'Tribal Development Index'],
         datasets: [
             {
-                // label: ['Health Development Index','Education Development Index','Sol Development Index','Culture Development Index','Governance Development Index','Tribal Development Index'],
-                data: [...graph2_data, tdi], // Add the additional value to the data list
+                data: [...graph2_data, tdi],
                 backgroundColor: [
                     '#4472C4',
                     '#ED7D31',
                     '#A5A5A5',
                     '#FFC000',
                     '#5B9BD5',
-                    '#70AD47', // Color for the additional value
+                    '#70AD47',
                 ],
                 borderWidth: 1,
             },
         ],
     };
 
-    // Create the chart
     new Chart(ctx, {
         type: 'bar',
         data: data,
@@ -774,10 +760,8 @@
                             stepSize: 20,
                             beginAtZero: true,
                         },
-
                     },
                 ],
-
                 x: {
                     grid: {
                         drawOnChartArea: false,
@@ -808,12 +792,9 @@
 
     //**********************
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- ****** -->
 
 <!-- DISTRICT SCRIPT -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
 
 
@@ -1134,5 +1115,107 @@
 
     const vertical_bar_graph_district = new Chart(vertical_graph_element_district, config_vertical_bar_district);
 </script>
+<!-- ****** -->
+
+<!-- DISTRICT MAP SCRIPT -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var slug = "{{ name|safe }}";
+        if (slug) {
+            var pathElement = document.getElementById(slug);
+
+            if (pathElement) {
+                pathElement.classList.add("active");
+            }
+        }
+    });
+
+</script>
+<!-- ****** -->
+
+
+<!-- PDF SCRIPTS -->
+
+<!-- Load libraries -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<!-- Load jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<!-- Your existing scripts -->
+<script type="text/javascript">
+    function myfun(pa) {
+        var b = document.body.innerHTML;
+        var d = document.getElementById(pa).innerHTML;
+        document.body.innerHTML = d;
+        window.print();
+    }
+    window.jsPDF = window.jspdf.jsPDF;
+
+    function downloadPageWithCharts(containerId) {
+        // Capture the entire container element
+        var containerElement = document.getElementById(containerId);
+
+        // Get the dimensions of the container
+        var containerWidth = containerElement.offsetWidth;
+        var containerHeight = containerElement.offsetHeight;
+
+        // Set the dimensions of the canvas to match the container
+        containerElement.style.width = containerWidth + 'px';
+        containerElement.style.height = containerHeight + 'px';
+
+        // Get the download button element
+        var downloadButton = document.getElementById('download-button');
+
+        // Change button content to indicate downloading
+        downloadButton.innerHTML = 'Downloading...';
+
+        // Use html2canvas to capture the container element
+        html2canvas(containerElement, {
+            scale: 2,
+            onclone: function (document) {
+                // Set the willReadFrequently attribute
+                var ctx = document.querySelector('canvas').getContext('2d');
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.willReadFrequently = true;
+            }
+        }).then(function (canvas) {
+            // Create a new jsPDF instance with dimensions matching the canvas
+            var pdf = new jsPDF({ unit: 'px', format: [containerWidth, containerHeight] });
+
+            // Set margins and gaps
+            var marginTop = 100;
+            var marginBottom = 100;
+            var marginLeft = 50;
+            var marginRight = 50;
+
+            // Calculate offsets to center the canvas within the PDF
+            var yOffset = marginTop;
+            var xOffset = (pdf.internal.pageSize.width - (containerWidth * 0.9)) / 2;
+
+            // Scale the canvas before adding it to the PDF
+            var scaledWidth = containerWidth * 0.9;
+            var scaledHeight = containerHeight * 0.9;
+
+            pdf.scale(0.9);
+            pdf.addImage(canvas, 'PNG', xOffset, yOffset, scaledWidth, scaledHeight);
+            pdf.scale(1); // Reset the scale
+
+            // Save the PDF with a specific name
+            pdf.save('TDI_Report.pdf');
+
+            // Change button content back to normal
+            downloadButton.innerHTML = 'Download PDF';
+        });
+
+        // Restore the original dimensions of the container
+        containerElement.style.width = '';
+        containerElement.style.height = '';
+    }
+
+</script>
+<!-- ****** -->
+
 
 </html>
