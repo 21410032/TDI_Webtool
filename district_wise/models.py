@@ -7,10 +7,9 @@ import math
 class District(models.Model):
     code = models.FloatField(null=True, blank=True)
     name = models.CharField(null=True, blank=True,max_length=30)
-    slug=models.SlugField(unique=True,blank=True,null=True)
     year=models.FloatField(null=True, blank=True)
-    st_population = models.IntegerField(null=True, blank=True,)
-    total_population = models.IntegerField(null=True, blank=True,)
+    st_population = models.FloatField(null=True, blank=True,)
+    total_population = models.FloatField(null=True, blank=True,)
     #HEALTH
     W_BMI = models.FloatField(null=True, blank=True,)
     C_UW = models.FloatField(null=True, blank=True,)
