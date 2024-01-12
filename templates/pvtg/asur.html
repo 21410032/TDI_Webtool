@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="page1-parent">
+<div class="page1-parent" id="tribe-pdf-page">
   <div class="page1">
     <div class="frame-parent22">
       <div class="tribe-logo-name-1-wrapper">
         <img class="tribe-logo-name-1-icon" alt="" src="/static/newimages/tribelogoname-1@2x.png" />
       </div>
       <div class="frame-parent23">
-        <div class="frame-parent24" style="background-image: url(../media/{{tribe.tribe_image.first.main_image}});">
+        <div class="frame-parent24"
+          style="background-image: url(../media/{{tribe.tribe_image.first.main_image}}) !important;">
           <div class="frame"></div>
           <div class="frame-parent25">
             <div class="frame-wrapper3">
@@ -276,4 +277,8 @@
     </div>
   </div>
 </div>
+
+<button id="download-button" onclick="downloadPageWithCharts('tribe-pdf-page')" class="login-btn" type="button"
+  style="position: static;">Download PDF</button>
+
 {% endblock %}

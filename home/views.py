@@ -1,10 +1,14 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.http import Http404
-from .models import Household, Tribe
+from .models import Household, Tribe,Tribe_Image
 from district_wise.models import District
 from django.http import HttpResponse
+
+
 # Create your views here.
+
+
 
 
 def tribe_detail_view(request, slug):
@@ -49,9 +53,9 @@ def tribe_detail_view(request, slug):
         'tribal_dimensional_index': tribal_dimensional_index,
         'dimension_contribution_to_tdi': dimension_contribution_to_tdi,
         'districts' : districts,
+    }
         
 
-    }
 
     return render(request, 'pvtg/asur.html', context=context)
 
@@ -182,3 +186,48 @@ def form_view(request):
 
 
     return render(request, 'form/form.html',context=context)
+
+
+    
+def tribe_pdf_view(request, slug):
+    tribe = Tribe.objects.get(slug = slug)
+    tribes = Tribe.objects.all()
+    
+
+    total_tribals = tribe.get_total_tribals
+    household = Household.objects.all()
+    districts = District.objects.all()
+    
+    contributions_to_dimension = tribe.indicator_contributions_to_dimension
+
+    health_contributions_to_dimension = contributions_to_dimension[0] if contributions_to_dimension and len(contributions_to_dimension) > 0 else None
+    education_contributions_to_dimension = contributions_to_dimension[1] if contributions_to_dimension and len(contributions_to_dimension) > 1 else None
+    sol_contributions_to_dimension = contributions_to_dimension[2] if contributions_to_dimension and len(contributions_to_dimension) > 2 else None
+    culture_contributions_to_dimension = contributions_to_dimension[3] if contributions_to_dimension and len(contributions_to_dimension) > 3 else None
+    governance_contributions_to_dimension = contributions_to_dimension[4] if contributions_to_dimension and len(contributions_to_dimension) > 4 else None
+
+    tribal_dimensional_index = tribe.tribal_dimensional_index
+    dimension_contribution_to_tdi = tribe.dimension_contribution_to_tdi
+
+    
+    
+    context = {
+        'household': household,
+        'total_tribals': total_tribals,
+        'tribe': tribe,
+        'tribes' : tribes,
+        'health_contributions_to_dimension': health_contributions_to_dimension,
+        'education_contributions_to_dimension': education_contributions_to_dimension,
+        'sol_contributions_to_dimension': sol_contributions_to_dimension,
+        'culture_contributions_to_dimension': culture_contributions_to_dimension,
+        'governance_contributions_to_dimension': governance_contributions_to_dimension,
+        'tribal_dimensional_index': tribal_dimensional_index,
+        'dimension_contribution_to_tdi': dimension_contribution_to_tdi,
+        'districts' : districts,
+    }
+    return render(request, 'pdfs/tribe_pdf.html', context)
+
+
+    
+
+

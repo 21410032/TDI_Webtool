@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="frame-parent45">
+<div class="frame-parent45" id="district-pdf-page">
   <div class="frame-parent46">
     <div class="frame-parent47">
       <div class="bokaro-parent">
@@ -478,20 +478,7 @@
   </div>
 </div>
 
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-
-    var slug = "{{ name|safe }}";
-    if (slug) {
-      var pathElement = document.getElementById(slug);
-
-      if (pathElement) {
-        pathElement.classList.add("active");
-      }
-    }
-  });
-
-</script>
+<button id="download-button" onclick="downloadPageWithCharts('district-pdf-page')" class="login-btn" type="button"
+  style="position: static;">Download PDF</button>
 
 {% endblock %}
