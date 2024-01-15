@@ -2,7 +2,9 @@ from django.db import models
 from django.db.models import Sum
 from django.core.cache import cache
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 
 # Create your models here.
@@ -16,6 +18,7 @@ class Tribe(models.Model):
     slug=models.SlugField(unique=True,blank=True,null=True)
     intensity = models.FloatField(null=True, blank=True)
     tdi = models.FloatField(null=True, blank=True)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='districts', default='7219142469')
 
 
     def save(self, *args, **kwargs):

@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="{% static 'newcss/global1.css' %}">
+    <link rel="stylesheet" href="{% static 'newcss/profile.css' %}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" />
+</head>
+
+<body>
+    <div class="profile">
+        <div class="profile-child"></div>
+        <div class="main-logo-group">
+            <div class="main-logo1">
+                <b class="tdi-webtool2">TDI Webtool</b>
+            </div>
+            <div class="nav-items1">
+                <div class="home1">HOME</div>
+                <div class="research2">RESEARCH</div>
+                <div class="team2">TEAM</div>
+                <div class="gallery1">GALLERY</div>
+                <div class="about-us3">ABOUT US</div>
+                <div class="contact-us1">CONTACT US</div>
+            </div>
+            <div class="iconamoonprofile-circle-fill-parent">
+                <img class="iconamoonprofile-circle-fill" alt="" src="./public/iconamoonprofilecirclefill@2x.png" />
+
+                <div class="login-btn2">
+                    <div class="logout">LOGOUT</div>
+                </div>
+            </div>
+        </div>
+        <div class="frame-parent22">
+            <img class="frame-child26" alt="" src="./public/frame-248@2x.png" />
+
+            <b class="profile-name-head">{{profile.first_name}}</b>
+            <div class="frame-parent23">
+                <div class="my-account-parent">
+                    <div class="my-account">My Account</div>
+                    <div class="login-btn3">
+                        <div class="logout">SETTINGS</div>
+                    </div>
+                </div>
+                <div class="frame-parent24">
+                    <div class="user-information-parent">
+                        <b class="user-information">User Information</b>
+                        <div class="frame-parent25">
+                            <div class="frame-parent26">
+                                <div class="full-name-parent">
+                                    <div class="profile-credential-head">FULL NAME</div>
+                                    <div class="profile-credential-box">
+                                        <div class="profile-credential">{{profile.first_name}} {{profile.first_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="full-name-parent">
+                                    <div class="profile-credential-head">EMAIl</div>
+                                    <div class="profile-credential-box">
+                                        <div class="profile-credential">{{profile.email}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="frame-parent26">
+                                <div class="full-name-parent">
+                                    <div class="profile-credential-head">PHONE NUMBER</div>
+                                    <div class="profile-credential-box">
+                                        <div class="profile-credential">{{profile.phone_number}}</div>
+                                    </div>
+                                </div>
+                                <div class="full-name-parent">
+                                    <div class="profile-credential-head">AGE</div>
+                                    <div class="profile-credential-box">
+                                        <div class="profile-credential">20</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-information-parent">
+                        <b class="user-information">MY DATA</b>
+                        <div class="frame-parent28">
+                            <div class="frame-parent29">
+                                <div class="tribe-wise-data-wrapper">
+                                    <div class="tribe-wise-data">TRIBE-WISE DATA</div>
+                                </div>
+                                <div class="frame-wrapper3">
+                                    <div class="add-parent">
+                                        <div class="tribe-wise-data">ADD</div>
+                                        <div class="lets-iconsadd-duotone">
+                                            <img class="group-icon" alt="" src="./public/group.svg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="frame-parent30">
+                                <div class="district-wise-data-wrapper">
+                                    <div class="tribe-wise-data">DISTRICT-WISE DATA</div>
+                                </div>
+                                <div class="frame-wrapper3">
+                                    <div class="add-parent">
+                                        <div class="tribe-wise-data">ADD</div>
+                                        <div class="lets-iconsadd-duotone">
+                                            <img class="group-icon" alt="" src="./public/group.svg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
