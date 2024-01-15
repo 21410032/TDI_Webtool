@@ -306,24 +306,24 @@ class Tribe(models.Model):
 
         households = self.household.all()
         scores = {
-            'CD_score': 0,
-            'IM_score': 0,
-            'MC_score': 0,
-            'CM_score': 0,
-            'FS_score': 0,
-            'LE_score': 0,
-            'DRO_score': 0,
-            'IC_score': 0,
-            'OW_score': 0,
-            'SANI_score': 0,
-            'FUEL_score': 0,
-            'DRWA_score': 0,
+            'CD_score':    0,
+            'IM_score':    0,
+            'MC_score':    0,
+            'CM_score':    0,
+            'FS_score':    0,
+            'LE_score':    0,
+            'DRO_score':    0,
+            'IC_score':    0,
+            'OW_score':    0,
+            'SANI_score'   : 0,
+            'FUEL_score'   : 0,
+            'DRWA_score'   : 0,
             'ELECTR_score': 0,
-            'ASS_score': 0,
-            'LAN_score': 0,
-            'ARTS_score': 0,
-            'EV_score': 0,
-            'MEET_score': 0
+            'ASS_score':    0,
+            'LAN_score':    0,
+            'ARTS_score'   : 0,
+            'EV_score':    0,
+            'MEET_score'   : 0
         }
 
         total_members = self.get_total_tribals
