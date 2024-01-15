@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Corrected setting
+AUTH_USER_MODEL = 'accounts.Profile'
+
+
 
 # Application definition
 
@@ -147,10 +151,7 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTHENTICATION_BACKENDS = [
-   
-    'django.contrib.auth.backends.ModelBackend',
 
-    'allauth.account.auth_backends.AuthenticationBackend',
-    
-]
+
+#Environment variables
+admin_user = '7219142469'

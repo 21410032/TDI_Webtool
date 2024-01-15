@@ -396,62 +396,72 @@
         </div>
       </div>
       <div class="frame-parent53">
-        <div class="rectangle-wrapper1">
-          <canvas id="vertical-bar-graph-district"></canvas>
+        <div class="frame1">
+          <div class="rectangle-wrapper1">
+            <canvas id="vertical-bar-graph-district"></canvas>
+          </div>
+          <div class="dimensions-wrapper">
+            <div class="dimensions">DIMENSIONS</div>
+          </div>
         </div>
-        <div class="frame-parent54">
-          <div class="pie-box" style="background-image: url(/static/imagesdis/health-icon.png); height: 96px;">
-            <div class="pie-head">
-              <div>HEALTH</div>
-              
-            </div>
-            <!-- <img alt="" src=../media/images/health-icon.png class=pie-chart-frame> -->
-            <div class="pie-inside-box"><!-- LABELS -->
-              <div class="pie-chart-labels">
-                <p class="pie-item" id="cd">Nutrition</p>
-                <p class="pie-item" id="im">Aneamic</p>
-                <p class="pie-item" id="mc">Maternal Care</p>
-                <p class="pie-item" id="cm">Health Insurance</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 25px;">
+          <div class="indicators-wrapper" style="font-size: var(--font-size-4xl);">
+            <div class="indicators">Indicators</div>
+          </div>
+          <div class="frame-parent54">
+            <div class="pie-box" style="background-image: url(/static/imagesdis/health-icon.png); height: 96px;">
+              <div class="pie-head">
+                <div>HEALTH</div>
+
               </div>
-              <div id="my-data-health-district"></div>
-              <div class=pie-icon-1 style="left: 115.04px; top: -8.3px;">
-                <canvas id="health-pie-district" class="canvas-pie"></canvas>
+              <!-- <img alt="" src=../media/images/health-icon.png class=pie-chart-frame> -->
+              <div class="pie-inside-box"><!-- LABELS -->
+                <div class="pie-chart-labels">
+                  <p class="pie-item" id="cd">Nutrition</p>
+                  <p class="pie-item" id="im">Aneamic</p>
+                  <p class="pie-item" id="mc">Maternal Care</p>
+                  <p class="pie-item" id="cm">Health Insurance</p>
+                </div>
+                <div id="my-data-health-district"></div>
+                <div class=pie-icon-1 style="left: 115.04px; top: -8.3px;">
+                  <canvas id="health-pie-district" class="canvas-pie"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="pie-box" style="background-image: url(/static/imagesdis/education-icon.png); height: 94.8px;">
+              <div class="pie-head">
+                <div>EDUCATION</div>
+
+              </div>
+              <div class="pie-inside-box"><!-- LABELS -->
+                <div class="pie-chart-labels" style="left: 111.04px; top: -8.7px;">
+                  <p class="pie-item" id="yos">Enrollment</p>
+                  <p class="pie-item" id="do">Equity</p>
+                  <p class="pie-item" id="do">Drop Rate</p>
+                </div>
+                <div id="my-data-education-district"></div>
+                <div class="pie-icon-1"><canvas id="education-pie-district"></canvas></div>
+              </div>
+            </div>
+
+            <div class="pie-box"
+              style="background-image: url(/static/imagesdis/sol-icon.png); height: 94.8px; width: 208.71px">
+              <div class="pie-head">
+                <div>STANDARD OF LIVING</div>
+
+              </div>
+              <div class="pie-inside-box"><!-- LABELS -->
+                <div class="pie-chart-labels" style="font-size: 7.22px; margin-top: 8px;">
+                  <p class="pie-item" id="ic">Sanitation</p>
+                  <p class="pie-item" id="ow">Cooking Fuel</p>
+                  <p class="pie-item" id="san">Drinking Water</p>
+                  <p class="pie-item" id="fu">Electricity</p>
+                </div>
+                <div id="my-data-sol-district"></div>
+                <div class="pie-icon-1"><canvas id="sol-pie-district"></canvas></div>
               </div>
             </div>
           </div>
-           <div class="pie-box" style="background-image: url(/static/imagesdis/education-icon.png); height: 94.8px;">
-            <div class="pie-head">
-              <div>EDUCATION</div>
-              
-            </div>
-            <div class="pie-inside-box"><!-- LABELS -->
-              <div class="pie-chart-labels" style="left: 111.04px; top: -8.7px;">
-                <p class="pie-item" id="yos">Enrollment</p>
-                <p class="pie-item" id="do">Equity</p>
-                <p class="pie-item" id="do">Drop Rate</p>
-              </div>
-              <div id="my-data-education-district"></div>
-              <div class="pie-icon-1"><canvas id="education-pie-district"></canvas></div>
-            </div>
-          </div>
-          
-          <div class="pie-box"
-            style="background-image: url(/static/imagesdis/sol-icon.png); height: 94.8px; width: 208.71px">
-            <div class="pie-head">
-              <div>STANDARD OF LIVING</div>
-              
-            </div>
-            <div class="pie-inside-box"><!-- LABELS -->
-              <div class="pie-chart-labels" style="font-size: 7.22px; margin-top: 8px;">
-                <p class="pie-item" id="ic">Sanitation</p>
-                <p class="pie-item" id="ow">Cooking Fuel</p>
-                <p class="pie-item" id="san">Drinking Water</p>
-                <p class="pie-item" id="fu">Electricity</p>
-              </div>
-              <div id="my-data-sol-district"></div>
-              <div class="pie-icon-1"><canvas id="sol-pie-district"></canvas></div>
-            </div>
-          </div> 
         </div>
       </div>
     </div>

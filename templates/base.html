@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
 
@@ -56,52 +58,76 @@
                 <b class="tdi-webtool"><a href="{% url 'home' %}">TDI Webtool</a></b>
             </div>
             <div class="nav-items">
-                
-                   
-                  <div class="home">
-                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Tribe
-                    </a>
-                  
-                    <ul class="dropdown-menu">
+
+
+                <div class="home" id="tribeDropdown">
+
+                    <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        TRIBE
+                    </div>
+
+                    <ul class="dropdown-menu" aria-labelledby="tribeDropdown">
                         {% for tribe in tribes %}
-                      <li><a class="dropdown-item" href="/tribe/{{tribe.name}}">
-                        {{tribe.name}}
-                      </a></li>
-                      {% endfor %}
-                      
+                        <li><a class="dropdown-item" href="/tribe/{{ tribe.name }}">
+                                {{ tribe.name }}
+                            </a></li>
+                        {% endfor %}
                     </ul>
-                  </div>
+
+                </div>
+
                 <div class="home"><a href="#">RESEARCH</a></div>
-               
-                <div class="home">
-                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      District
-                    </a>
-                  
+
+                <div class="home" id="districtDropdown">
+                    <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        DISTRICT
+                    </div>
+
                     <ul class="dropdown-menu">
                         {% for district in district %}
-                      <li><a class="dropdown-item" href="/district/{{district.name}}/{{district.year}}">
-                        {{district.name}}
-                      </a></li>
-                      {% endfor %}
-                      
+                        <li><a class="dropdown-item" href="/district/{{district.name}}/{{district.year}}">
+                                {{district.name}}
+                            </a></li>
+                        {% endfor %}
+
                     </ul>
                 </div>
-                
+
                 <div class="home"><a href="#">GALLERY</a></div>
                 <div class="home"><a href="#">ABOUT US</a></div>
                 <div class="home"><a href="#">CONTACT US</a></div>
             </div>
-            <div class="login-btn">
-                <div class="login">
-                    {% if not request.user.is_authenticated %}
-                    <a href="{% url 'login'%}">LOGIN</a>
+            <div
+                style="display: flex;gap: 10px;justify-content: center;align-items: center;position: absolute;top: 29.5px;right: 73.2px;">
+                {% if not request.user.is_authenticated %}
+                <div class="login-btn">
+                    <div class="login">
+                        <a href="{% url 'login'%}">LOGIN</a>
+                    </div>
+                </div>
+                <div class="login-btn">
+                    <div class="login">
+                        <a href="{% url 'register'%}">REGISTER</a>
+                    </div>
                 </div>
                 {% else %}
-                <a href="{% url 'logout'%}">LOGOUT</a>
+
+                <div class="profile-pic">
+                    <a href="{% url 'profile' %}">
+                        <img src="{% if profile %}{% static 'media/' %}{{ profile.profile_pic }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
+                            class="nav-profile-icon" alt="">
+                    </a>
+                </div>
+
+
+                <div class="login-btn">
+                    <div class="login">
+                        <a href="{% url 'logout'%}">LOGOUT</a>
+                    </div>
+                </div>
+
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
 
@@ -166,7 +192,7 @@
 <!-- HOME DISTRICT GRAPH -->
 <script>
     // DISTRICT HORIZONTAL GRAPH
-{% comment %} 
+    {% comment %}
     const district_horizontal_graph = document.getElementById('district_horizontal_graph');
     var district_wise_tdi = {{ district_wise_tdi }}
     new Chart(district_horizontal_graph, {
@@ -827,7 +853,7 @@
     const health1 = new Chart(document.getElementById('health-pie-district'), configdis1);
 
 
-     var myDattadis2Element = document.getElementById('my-data-education-district');
+    var myDattadis2Element = document.getElementById('my-data-education-district');
     var education_data = myDattadis2Element.getAttribute('data-my-data')
     const datadis2 = {
 
@@ -858,16 +884,16 @@
         datasets: [{
             label: '',
             data: {{ sol_ind_contri_to_dim }},
-            backgroundColor: [
-                '#B99230',
-                '#D9AC3A',
-                '#F5C242',
-                '#F8D38F',
-            ],
-            hoverOffset: 4
+        backgroundColor: [
+            '#B99230',
+            '#D9AC3A',
+            '#F5C242',
+            '#F8D38F',
+        ],
+        hoverOffset: 4
         }]
     };
-    
+
     const configdis3 = {
         type: 'doughnut',
         data: datadis3,
@@ -880,12 +906,12 @@
             },
         },
     };
-    
+
     // Include the correct plugins array format here
-    
-    
+
+
     const sol1 = new Chart(document.getElementById('sol-pie-district'), configdis3);
-    
+
 
 
 
@@ -908,22 +934,45 @@
         ],
         borderWidth: 1
     }]
-      },
+        },
         options: {
+        indexAxis: 'x',
         scales: {
+            xAxes: [
+                {
+                    ticks: {
+                        stepSize: 20,
+                        beginAtZero: true,
+                    },
+                },
+            ],
+            x: {
+                grid: {
+                    drawOnChartArea: false,
+                    display: false,
+                },
+                ticks: {
+                    display: false
+                }
+            },
             y: {
-                beginAtZero: true
+                ticks: {
+                    stepSize: 0.2
+                }
             }
         },
         plugins: {
             datalabels: {
-                anchor: "start",
+                anchor: "end",
                 align: "top"
+            },
+            legend: {
+                display: false
             }
         }
     },
         plugins: [ChartDataLabels]
-    });
+});
 
 
 
@@ -966,7 +1015,7 @@
         ],
         // borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
-        barThickness: 24,
+        barThickness: 18,
           },
         ],
       };
@@ -977,8 +1026,8 @@
         type: 'bar',
         data: censored_data_district,
         options: {
-            maintainAspectRatio: false,
             indexAxis: 'y',
+            maintainAspectRatio: false,
             scales: {
                 xAxes: [
                     {
@@ -994,7 +1043,7 @@
                         ticks: {
                             stepSize: 1,
                             beginAtZero: true,
-                            maxTicksLimit: 21,
+                            maxTicksLimit: 20,
                             autoSkip: false
                         },
                     },
@@ -1020,7 +1069,7 @@
                 }
             }
         },
-        // plugins: [ChartDataLabels]
+        plugins: [ChartDataLabels]
     };
 
     const censored_graph_district = new Chart(document.getElementById('censored-graph-district'), config_censored_district);
@@ -1061,31 +1110,29 @@
         type: 'bar',
         data: vertical_bar_data_district,
         options: {
-            maintainAspectRatio: false,
-            barPercentage: 1, // Set to 1 to use the entire available space for each bar
-            categoryPercentage: 0.8, // Adjust this value if needed
+            barPercentage: 1, // To set the width
+            categoryPercentage: 1,
             indexAxis: 'x',
+            aspectRatio: 0.238, //To set height of the component
             scales: {
                 x: {
                     stacked: true,
                     beginAtZero: true,
-                    display: false,
-                    barWidth: 5, // Adjust this value to increase or decrease the width of the bars
+                    display: false
                 },
                 y: {
                     display: false,
                     stacked: true,
                     beginAtZero: true,
-                    ticks: {
-                        stepSize: 40,
-                    },
+                    // maxTicksLimit: 16,
+                    autoSkip: false,
                 },
             },
+
             plugins: {
                 datalabels: {
-                    anchor: 'start', // Center the labels inside the bars
-                    align: 'start', // Align the labels to the center
-                    offset: 30,
+                    anchor: 'center', // Center the labels inside the bars
+                    align: 'center', // Align the labels to the center
                     color: 'white', // Label color
                     font: {
                         weight: 'bold', // Label font weight
@@ -1093,15 +1140,13 @@
                     formatter: function (value, context) {
                         const label = vertical_bar_data_district.labels[context.dataIndex];
                         const dataset = vertical_bar_data_district.datasets[context.datasetIndex];
+                        const colorIndex = context.datasetIndex; // Get the color index
 
                         // Create a legend string
-                        const legend = dataset.label + ' Index\nScore : ' + value + '%';
+                        const legend = dataset.label + ',' + value;
 
-
-                        // Ensure legend stays inside the graph area
                         return legend;
                     },
-
                     display: 'auto',
                 },
                 legend: {
@@ -1109,7 +1154,7 @@
                 },
             },
         },
-        plugins: [ChartDataLabels],
+        plugins: [ChartDataLabels]
     };
 
 
