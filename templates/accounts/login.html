@@ -3,163 +3,166 @@
 
 
 <div class="accountsbox">
-  {% if not request.user.is_authenticated %}
-  <div class="accounts-head">
-    <h2>Login to your account</h2>
-  </div>
-  <form method="POST">
-    {% csrf_token %}
 
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" name="phone_number" placeholder="phone_number">
+    {% if not request.user.is_authenticated %}
+    <div class="accounts-head">
+        <h2>Login to your account</h2>
+
     </div>
+    <form method="POST">
+        {% csrf_token %}
 
-    <div class="form-group">
-      <label for="Password">Password</label>
-      <input type="password" class="form-control" name="password" placeholder="Password">
+        <div class="form-group">
+            <label for="username">Phone Number</label>
+            <input type="text" class="form-control" name="phone_number" placeholder="Username">
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+
+        <div class="form-group">
+            <a href="#" class="float-right">Forgot password?</a>
+            <label class="float-left custom-control custom-checkbox"> <input type="checkbox"
+                    class="custom-control-input" checked="">
+                <div class="custom-control-label">Remember</div>
+            </label>
+        </div><br><br>
+
+        <button type="submit" class="btn btn-primary">Login</button><br>
+    </form>
+    <p class="text-center mt-4">Don't have account? <a href="{% url 'register' %}">Sign up</a></p>
+
+    {% else %}
+    <div class="accounts-head" style="text-align: center;">
+        You've Already logged in <b>{{user.username}}</b>. Do you want to <a href="{% url 'logout' %}">Logout</a> ?
     </div>
-
-    <div class="form-group">
-      <a href="#" class="float-right">Forgot password?</a>
-      <label class="float-left custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input"
-          checked="">
-        <div class="custom-control-label">Remember</div>
-      </label>
-    </div><br><br>
-
-    <button type="submit" class="btn btn-primary">Login</button><br>
-  </form>
-  <p class="text-center mt-4">Don't have account? <a href="{% url 'register' %}">Sign up</a></p>
-
-  {% else %}
-  <div class="accounts-head" style="text-align: center;">
-    You've Already logged in <b>{{user.username}}</b>. Do you want to <a href="{% url 'logout' %}">Logout</a> ?
-  </div>
-  {% endif %}
+    {% endif %}
 </div>
 <style>
-  /* style.css */
-  
-  /* Body styles */
-  body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f4;
-  }
-  
-  /* Container styles */
-  .accountsbox {
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Header styles */
-  .accounts-head {
-      text-align: center;
-      margin-bottom: 20px;
-  }
-  
-  /* Form styles */
-  .form-group {
-      margin-bottom: 20px;
-  }
-  
-  label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-  }
-  
-  .form-control {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-  }
-  
-  /* Checkbox styles */
-  .custom-control {
-      margin-bottom: 20px;
-  }
-  
-  /* Button styles */
-  .btn-primary {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-  }
-  
-  /* Link styles */
-  a {
-      color: #007bff;
-  }
-  
-  /* Additional styles */
-  .text-center {
-      text-align: center;
-  }
-  
-  .float-left {
-      float: left;
-  }
-  
-  .float-right {
-      float: right;
-  }
-  /* Additional CSS for signup button and overall styling */
+    /* style.css */
 
-/* Button styles */
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-}
-
-/* Link styles */
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Additional form styles */
-.accountsbox {
-    text-align: center;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-    .accountsbox {
-        max-width: 100%;
+    /* Body styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
     }
-}
 
-  /* Responsive styles */
-  @media (max-width: 768px) {
-      .accountsbox {
-          max-width: 100%;
-      }
-  }
+    /* Container styles */
+    .accountsbox {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-  </style>
+    /* Header styles */
+    .accounts-head {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Form styles */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Checkbox styles */
+    .custom-control {
+        margin-bottom: 20px;
+    }
+
+    /* Button styles */
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Link styles */
+    a {
+        color: #007bff;
+    }
+
+    /* Additional styles */
+    .text-center {
+        text-align: center;
+    }
+
+    .float-left {
+        float: left;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    /* Additional CSS for signup button and overall styling */
+
+    /* Button styles */
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        /* Darker shade on hover */
+    }
+
+    /* Link styles */
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Additional form styles */
+    .accountsbox {
+        text-align: center;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .accountsbox {
+            max-width: 100%;
+        }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .accountsbox {
+            max-width: 100%;
+        }
+    }
+</style>
 
 
 {% endblock %}

@@ -1,8 +1,18 @@
-<div class="frame1">
-    <div class="rectangle-wrapper1">
-        <canvas id="vertical-bar-graph-district"></canvas>
-    </div>
-    <div class="dimensions-wrapper">
-        <div class="dimensions">DIMENSIONS</div>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+</head>
+
+<body>
+    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"0:1" }}</div>
+    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"1:2" }}</div>
+    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"2:3" }}</div>
+    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"3:4" }}</div>
+    <!-- Your content goes here -->
+</body>
+
+</html>
