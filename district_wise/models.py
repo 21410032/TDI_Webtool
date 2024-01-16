@@ -1,13 +1,15 @@
 from django.db import models
 from django.utils.text import slugify
 import math
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
-
+User = get_user_model()
 
 class District(models.Model):
     code = models.FloatField(null=True, blank=True)
     name = models.CharField(null=True, blank=True,max_length=30)
-    slug = models.SlugField(max_length=255, blank=True)
+    slug = models.SlugField(null=True, blank=True)
     year=models.FloatField(null=True, blank=True)
     st_population = models.FloatField(null=True, blank=True,)
     total_population = models.FloatField(null=True, blank=True,)
@@ -32,6 +34,8 @@ class District(models.Model):
     S_DrWa = models.FloatField(null=True, blank=True,)
     S_Elec = models.FloatField(null=True, blank=True)
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='districts',default='7667605908')
+
     
 
     def save(self, *args, **kwargs):
@@ -39,8 +43,8 @@ class District(models.Model):
         super(District, self).save(*args, **kwargs)
     
     
-    # def _str_(self):
-    #     return self.name
+    def __str__(self):
+        return f"{self.name} - {self.year}"
 
     def get_multiplier(self):
         ans = self.st_population/self.total_population
@@ -186,7 +190,7 @@ class District(models.Model):
             prod = prod*i
 
         arithmetic_tdi = round(total/length,2)
-        geometric_tdi = round(math.pow(prod, 1/length),2)
+        geometric_tdi = round(prod,2)
 
         return [geometric_tdi, arithmetic_tdi]
     
