@@ -34,7 +34,7 @@ class District(models.Model):
     S_DrWa = models.FloatField(null=True, blank=True,)
     S_Elec = models.FloatField(null=True, blank=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='districts', default='7219142469')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='districts',default='7667605908')
 
     
 
@@ -191,7 +191,7 @@ class District(models.Model):
             prod = prod*i
 
         arithmetic_tdi = round(total/length,2)
-        geometric_tdi = round(math.pow(prod, 1/length),2)
+        geometric_tdi = round(prod,2)
 
         return [geometric_tdi, arithmetic_tdi]
     

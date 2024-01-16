@@ -8,7 +8,8 @@ from django.forms import formset_factory
 from .forms import DistrictModelForm
 from django.contrib.auth import get_user_model
 from django.conf import settings
-
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 User = get_user_model()
 
 
@@ -16,14 +17,17 @@ User = get_user_model()
 def district_view(request,slug1,slug2):
 
 
-    user = User.objects.get(phone_number='7219142469')
+    user = User.objects.get(phone_number='7667605908')
 
     if request.method == "POST":
         user = request.user
 
     districts=District.objects.all().filter(user = user)
 
-    # tribes = Tribe.objects.all().filter(user = user)
+
+    tribes = Tribe.objects.all()
+    
+
     if slug1 is not None and slug2 is not None:
         district = District.objects.get(user = user, name=slug1, year=slug2)
 
@@ -73,25 +77,49 @@ def test2_view(request):
     }
     return render(request, 'district/test2.html', context=context)
 
+@login_required
 def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
 
+    districts = District.objects.all()
     if request.method == 'POST':
+
         print(f"Raw POST data: {request.POST}")
         formset = YourModelFormSet(request.POST, prefix='form')
-        
+        cleaned_data_list = [] 
+         # Create a list to store cleaned data for each form
+        year = request.POST.get('year')
+        print(year)
         for form in formset:
-                # Save each form indsividually
+            # Save each form individually
             print(f"Form errors for {form.prefix}: {form.errors}")
-                
             print(f"Field values for {form.prefix}: {form.cleaned_data}")
             if form.is_valid():
-             form.save()
+                district_instance = form.save(commit=False)
+                if request.user.is_authenticated:
+                    district_instance.user = request.user
+                district_instance.year =year
+                    
+                district_instance.save()
 
-            # Redirect after successful form submission to avoid resubmission on page refresh
-        return redirect('/')  # Replace 'success_page' with the actual URL or name of your success page
+                # Append cleaned data to the list
+                cleaned_data_list.append(form.cleaned_data)
+            else:
+                print(f"Form errors for {form.prefix}: {form.errors}")
+        if cleaned_data_list:
+    # Use the last element of the list to construct the redirect URL
+            last_data = cleaned_data_list[-1]
+            name = last_data['name']
+            
+
+    # Construct the redirect URL
+            redirect_url = f'/district/{name}/{year}'  # Using f-string for formatting
+
+    # Redirect to the constructed URL
+            return redirect(redirect_url)
+
+
     else:
         formset = YourModelFormSet(prefix='form')
 
-    return render(request, 'form/district_form.html', {'formset': formset})
-    
+    return render(request, 'form/district_form.html', {'formset': formset, 'districts': districts})

@@ -3,9 +3,11 @@
 
 
 <div class="accountsbox">
+
     {% if not request.user.is_authenticated %}
     <div class="accounts-head">
         <h2>Login to your account</h2>
+
     </div>
     <form method="POST">
         {% csrf_token %}
