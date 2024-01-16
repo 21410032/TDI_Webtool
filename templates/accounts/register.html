@@ -8,6 +8,16 @@
     <p style="color: red;">There is an error with your form!</p>
     {% endif %}
     <div class="accounts-head">
+        {% if form.errors %}
+        <p style="color: red;">There is an error with your form:</p>
+        <ul>
+            {% for field_errors in form.errors.values %}
+                {% for error in field_errors %}
+                    <li style="color: red;">{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
         <h2>Register your account</h2>
     </div>
     <form method="POST">

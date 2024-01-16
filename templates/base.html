@@ -77,12 +77,12 @@
                 </div>
 
                 <div class="home"><a href="#">RESEARCH</a></div>
-
-                <div class="home" id="districtDropdown">
-                    <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        DISTRICT
-                    </div>
-
+               
+                <div class="home">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      District
+                    </a>
+                  
                     <ul class="dropdown-menu">
                         {% for district in district %}
                         <li><a class="dropdown-item" href="/district/{{district.name}}/{{district.year}}">
@@ -92,7 +92,7 @@
 
                     </ul>
                 </div>
-
+                
                 <div class="home"><a href="#">GALLERY</a></div>
                 <div class="home"><a href="#">ABOUT US</a></div>
                 <div class="home"><a href="#">CONTACT US</a></div>
@@ -149,7 +149,11 @@
     integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- ****** -->
-
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="dropdown"]').dropdown();
+    });
+</script>
 
 
 <!-- HOME TRIBE GRAPH -->
