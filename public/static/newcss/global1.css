@@ -101,6 +101,7 @@ body {
   --padding-4xs: 9px;
 
   /* Border radiuses */
+  --br-smi: 13px;
   --br-151xl: 170px;
   --br-158xl-5: 177.5px;
   --br-39xl-4: 58.4px;

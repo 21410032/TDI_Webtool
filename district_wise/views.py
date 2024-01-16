@@ -23,7 +23,7 @@ def district_view(request,slug1,slug2):
 
     districts=District.objects.all().filter(user = user)
 
-    tribes = Tribe.objects.all().filter(user = user)
+    # tribes = Tribe.objects.all().filter(user = user)
     if slug1 is not None and slug2 is not None:
         district = District.objects.get(user = user, name=slug1, year=slug2)
 
@@ -53,7 +53,7 @@ def district_view(request,slug1,slug2):
       'sol_contri_to_tdi':sol_contri_to_tdi,
       'get_normalized_ind_scores':get_normalized_ind_scores,
       'name' : slug1,
-      'tribes' : tribes,
+    #   'tribes' : tribes,
       'get_score':get_score,
 
        

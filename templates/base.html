@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{% static 'newcss/index1.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/district-wise.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/tribe-wise.css' %}">
+    <link rel="stylesheet" href="{% static 'newcss/profile.css' %}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" />
@@ -114,8 +115,9 @@
 
                 <div class="profile-pic">
                     <a href="{% url 'profile' %}">
-                        <img src="{% if profile %}{% static 'media/' %}{{ profile.profile_pic }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
+                        <img src="{% if user %}{{ user.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
                             class="nav-profile-icon" alt="">
+
                     </a>
                 </div>
 
@@ -129,10 +131,11 @@
                 {% endif %}
             </div>
         </div>
+        {% block content %}
+        {% endblock %}
     </div>
 
-    {% block content %}
-    {% endblock %}
+
     </div>
 </body>
 
