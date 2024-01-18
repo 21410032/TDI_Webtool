@@ -34,7 +34,7 @@ class District(models.Model):
     S_DrWa = models.FloatField(null=True, blank=True,)
     S_Elec = models.FloatField(null=True, blank=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='districts',default='7667605908')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='districts',default='7219142469')
 
     
 
