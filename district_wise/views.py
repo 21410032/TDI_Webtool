@@ -16,18 +16,28 @@ User = get_user_model()
 # Create your views here.
 def district_view(request,slug1,slug2):
 
-    user = request.user
-    
+
+    user_phone_number = request.GET.get('user')
+    if user_phone_number:
+        user = User.objects.get(phone_number=user_phone_number)
+        print(user)
+
+    else:    
+        user = User.objects.get(phone_number='7667605908')
+
     print(user)
-    print(user)
-    districts=District.objects.all().filter(user = user)
+
+    print(slug1)
+    print(slug2)
+    districts=District.objects.filter(user = user)
+
 
 
     tribes = Tribe.objects.all()
     
 
     if slug1 is not None and slug2 is not None:
-        district = District.objects.get(user = user, name=slug1, year=slug2)
+        district = District.objects.get(user = user, slug=slug1, year=slug2)
 
 
     district_dimensional_index=district.get_dimension_scores()
@@ -79,28 +89,29 @@ def test2_view(request):
 @login_required
 def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
+    user = User.objects.get(phone_number='7667605908')
+    districts = District.objects.all().filter(user=user)
 
-    districts = District.objects.all()
     if request.method == 'POST':
         formset = YourModelFormSet(request.POST, prefix='form')
+
+        cleaned_data_list = [] 
+
         year = request.POST.get('year')
+        user_from_form = request.user if request.user.is_authenticated else user  # Use the user from the form if authenticated, otherwise use the default user
 
-        if formset.is_valid():
-            for form in formset:
-                if form.cleaned_data.get('DELETE', False):
-                    # If the form is marked for deletion, delete the corresponding object
-                    district_instance = form.instance
-                    district_instance.delete()
-                else:
-                    # Save the form if not marked for deletion
-                    district_instance = form.save(commit=False)
-                    district_instance.user = request.user if request.user.is_authenticated else None
-                    district_instance.year = year
-                    district_instance.save()
+        for form in formset:
+            if form.is_valid():
+                district_instance = form.save(commit=False)
+                district_instance.user = user_from_form
+                district_instance.year = year
+                district_instance.save()
+                cleaned_data_list.append(form.cleaned_data)
 
-            # Redirect to the constructed URL using the first form's data
-            name = formset[0].cleaned_data['name']
-            return redirect('district_view', name, year)
+        if cleaned_data_list:
+            redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
+            return redirect(redirect_url)
+
 
     else:
         formset = YourModelFormSet(prefix='form')

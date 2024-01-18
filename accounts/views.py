@@ -8,11 +8,11 @@ from .forms import ProfileCreationForm
 
 def register_view(request):
     if request.method == "POST":
-        form = ProfileCreationForm(request.POST)
+        form = ProfileCreationForm(request.POST, request.FILES)  # Include request.FILES here
         if form.is_valid():
             user = form.save()
             phone_number = form.cleaned_data['phone_number']
-            password = form.cleaned_data['password1']  # Use password1 for the first password field
+            password = form.cleaned_data['password1']
             user = authenticate(request, phone_number=phone_number, password=password)
             login(request, user)
             messages.success(request, 'Registration successful')
@@ -25,6 +25,7 @@ def register_view(request):
     }
 
     return render(request, 'accounts/register.html', context)
+
 
 
 
