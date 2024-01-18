@@ -9,7 +9,7 @@
       </div>
       <div class="frame-parent23">
         <div class="frame-parent24"
-          style="background-image: url(../media/{{tribe.tribe_image.first.main_image}}) !important;">
+          style="background-image: url({{tribe.tribe_image.first.main_image.url}}) !important;">
           <div class="frame"></div>
           <div class="frame-parent25">
             <div class="frame-wrapper3">
@@ -74,7 +74,7 @@
       </div>
       <div class="frame-parent30">
         <div class="frame-parent31">
-          <div class=pie-box style="background-image: url(../media/images/health-icon.png); height: 96px;">
+          <div class=pie-box style="background-image: url('/static/images/health-icon.png'); height: 96px;">
             <div class="pie-head">
               <div>HEALTH</div>
               <div id=my-data-health data-my-data={{indicator_contributions_to_dimension}}></div>
@@ -92,7 +92,7 @@
               </div>
             </div>
           </div>
-          <div class=pie-box style="background-image: url(../media/images/sol-icon.png);">
+          <div class=pie-box style="background-image: url('/static/images/sol-icon.png');">
             <div class="pie-head-sol">
               <div>STANDARD OF LIVING</div>
               <div id=my-data-sol></div>
@@ -109,7 +109,7 @@
               <div class=pie-icon-1><canvas id=sol-pie></canvas></div><!-- ------ -->
             </div>
           </div>
-          <div class=pie-box style="background-image: url(../media/images/governance-icon.png); height: 94.81px;">
+          <div class=pie-box style="background-image: url('/static/images/governance-icon.png'); height: 94.81px;">
             <div class=pie-head>
               <div>GOVERNANCE</div>
               <div id=my-data-governance></div>
@@ -126,7 +126,7 @@
           </div>
         </div>
         <div class="frame-parent32">
-          <div class=pie-box style="background-image: url(../media/images/education-icon.png); height: 94.8px;">
+          <div class=pie-box style="background-image: url('/static/images/education-icon.png'); height: 94.8px;">
             <div class=pie-head>
               <div>EDUCATION</div>
               <div id=my-data-education></div>
@@ -139,7 +139,7 @@
               <div class=pie-icon-1><canvas id=education-pie></canvas></div><!-- ------ -->
             </div>
           </div>
-          <div class=pie-box style="background-image: url(../media/images/culture-icon.png);">
+          <div class=pie-box style="background-image: url('/static/images/culture-icon.png');">
             <div class=pie-head>
               <div>CULTURE</div>
               <div id=my-data-culture></div>
@@ -179,7 +179,7 @@
         </div>
       </div>
       <div class="frame3">
-        <img class="tribe-logo-name-1-icon" alt="" src="../media/{{tribe.tribe_image.first.map_image}}" />
+        <img class="tribe-logo-name-1-icon" alt="" src="{{tribe.tribe_image.first.map_image.url}}" />
       </div>
     </div>
     <div class="frame-parent34">
@@ -266,7 +266,7 @@
           Sauria Parahia’s vernacular hut, crafted with local materials
         </div>
       </div>
-      <div class="frame-parent44" style="background-image: url(../media/{{tribe.tribe_image.first.village_image}});">
+      <div class="frame-parent44" style="background-image: url({{tribe.tribe_image.first.village_image.url}});">
         <div class="saheb-ganj-jharkhand-wrapper">
           <div class="saheb-ganj-jharkhand">{{tribe.tribe_image.first.village_desc}}</div>
         </div>

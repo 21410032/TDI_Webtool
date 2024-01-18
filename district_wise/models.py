@@ -47,8 +47,9 @@ class District(models.Model):
         return f"{self.name} - {self.year}"
 
     def get_multiplier(self):
-        ans = self.st_population/self.total_population
-        return ans
+        if self.st_population and self.total_population:
+            ans = self.st_population/self.total_population
+            return ans
     
 
     def get_indicator_st_scores(self):

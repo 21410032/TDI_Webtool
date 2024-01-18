@@ -5,6 +5,7 @@ from district_wise.models import District
 def home_view(request):
     tribes = Tribe.objects.all()
     districts = District.objects.all()
+    user = request.user
 
     tribe_wise_tdi = []
     for tribe in tribes:
@@ -27,6 +28,7 @@ def home_view(request):
         'tribe_wise_tdi' : tribe_wise_tdi,
         'districts_name' : districts_name,
         'district_wise_tdi' : district_wise_tdi,
+        'user' : user,
     }
     return render(request,'home/homepage.html',context=context)
 

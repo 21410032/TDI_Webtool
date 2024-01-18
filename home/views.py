@@ -214,7 +214,7 @@ def form_view(request):
 def tribe_pdf_view(request, slug):
     tribe = Tribe.objects.get(slug = slug)
     tribes = Tribe.objects.all()
-    
+    user = request.user
 
     total_tribals = tribe.get_total_tribals
     household = Household.objects.all()
@@ -246,6 +246,8 @@ def tribe_pdf_view(request, slug):
         'tribal_dimensional_index': tribal_dimensional_index,
         'dimension_contribution_to_tdi': dimension_contribution_to_tdi,
         'districts' : districts,
+        'user' : user,
+
     }
     return render(request, 'pdfs/tribe_pdf.html', context)
 

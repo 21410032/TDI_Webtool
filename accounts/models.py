@@ -9,7 +9,7 @@ class Profile(AbstractUser):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, unique=True)
-    profile_pic = models.ImageField(upload_to='profile_pic', blank=True, null=True)
+    profile_pic = models.ImageField(upload_to='images/profile_images', blank=True, null=True)
 
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
