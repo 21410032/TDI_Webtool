@@ -16,6 +16,7 @@ User = get_user_model()
 # Create your views here.
 def district_view(request,slug1,slug2):
 
+
     user_phone_number = request.GET.get('user')
     if user_phone_number:
         user = User.objects.get(phone_number=user_phone_number)
@@ -29,6 +30,7 @@ def district_view(request,slug1,slug2):
     print(slug1)
     print(slug2)
     districts=District.objects.filter(user = user)
+
 
 
     tribes = Tribe.objects.all()
@@ -83,6 +85,7 @@ def test2_view(request):
     }
     return render(request, 'district/test2.html', context=context)
 
+
 @login_required
 def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
@@ -91,6 +94,7 @@ def form_view(request):
 
     if request.method == 'POST':
         formset = YourModelFormSet(request.POST, prefix='form')
+
         cleaned_data_list = [] 
 
         year = request.POST.get('year')
@@ -108,7 +112,9 @@ def form_view(request):
             redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
             return redirect(redirect_url)
 
+
     else:
         formset = YourModelFormSet(prefix='form')
 
     return render(request, 'form/district_form.html', {'formset': formset, 'districts': districts})
+

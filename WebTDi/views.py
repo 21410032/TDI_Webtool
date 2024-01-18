@@ -32,6 +32,9 @@ def home_view(request):
     }
     return render(request,'home/homepage.html',context=context)
 
+def wallpaper_view(request):
+    return render(request,'gallery.html')
+
 def base_view(request):
     tribes = Tribe.objects.all()
     districts = District.objects.all()

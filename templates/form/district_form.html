@@ -204,6 +204,7 @@
       element.value = '';
     });
 
+
     // Increment the form index
     var formCountField = document.getElementById('id_form-TOTAL_FORMS');
     var newFormIndex = parseInt(formCountField.value);
@@ -223,11 +224,13 @@
       var labelFor = label.getAttribute('for');
       if (labelFor) {
         label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex - 1)));
+
       }
     });
     // Append the new form to the formset
     formsetDiv.appendChild(newForm);
   });
+
 
   // When the "Remove Last Form" button is clicked
   document.getElementById('remove-form').addEventListener('click', function () {
@@ -240,8 +243,6 @@
       formsetDiv.removeChild(lastForm);
     }
   });
-
-
 
 
 </script>
