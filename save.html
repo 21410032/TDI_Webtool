@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+CD_score = models.BooleanField(null = True, blank=True)
+IM_score = models.BooleanField(null = True, blank=True)
+MC_score = models.BooleanField(null = True, blank=True)
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-</head>
+CM_score = models.BooleanField(null = True, blank=True)
+FS_score = models.BooleanField(null = True, blank=True)
 
-<body>
-    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"0:1" }}</div>
-    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"1:2" }}</div>
-    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"2:3" }}</div>
-    <div class="digit-block">{{ unique_visitors|stringformat:"04d"|slice:"3:4" }}</div>
-    <!-- Your content goes here -->
-</body>
+# EDUCATION
+LE_score = models.BooleanField(null = True, blank=True)
+DRO_score = models.BooleanField(null = True, blank=True)
 
-</html>
+#SOL
+IC_score = models.BooleanField(null = True, blank=True)
+OW_score = models.BooleanField(null = True, blank=True)
+SANI_score = models.BooleanField(null = True, blank=True)
+FUEL_score = models.BooleanField(null = True, blank=True)
+DRWA_score = models.BooleanField(null = True, blank=True)
+ELECTR_score = models.BooleanField(null = True, blank=True)
+ASS_score = models.BooleanField(null = True, blank=True)
+
+#CULTURE
+LAN_score = models.BooleanField(null = True, blank=True)
+ARTS_score = models.BooleanField(null = True, blank=True)
+
+#GOVERNANCE
+EV_score = models.BooleanField(null = True, blank=True)
+MEET_score = models.BooleanField(null = True, blank=True)
