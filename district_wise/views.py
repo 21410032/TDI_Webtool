@@ -16,12 +16,10 @@ User = get_user_model()
 # Create your views here.
 def district_view(request,slug1,slug2):
 
-
-    user = User.objects.get(phone_number='7667605908')
-
-    if request.method == "POST":
-        user = request.user
-
+    user = request.user
+    
+    print(user)
+    print(user)
     districts=District.objects.all().filter(user = user)
 
 
@@ -77,49 +75,35 @@ def test2_view(request):
     }
     return render(request, 'district/test2.html', context=context)
 
+
 @login_required
 def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
 
     districts = District.objects.all()
     if request.method == 'POST':
-
-        print(f"Raw POST data: {request.POST}")
         formset = YourModelFormSet(request.POST, prefix='form')
-        cleaned_data_list = [] 
-         # Create a list to store cleaned data for each form
         year = request.POST.get('year')
-        print(year)
-        for form in formset:
-            # Save each form individually
-            print(f"Form errors for {form.prefix}: {form.errors}")
-            print(f"Field values for {form.prefix}: {form.cleaned_data}")
-            if form.is_valid():
-                district_instance = form.save(commit=False)
-                if request.user.is_authenticated:
-                    district_instance.user = request.user
-                district_instance.year =year
-                    
-                district_instance.save()
 
-                # Append cleaned data to the list
-                cleaned_data_list.append(form.cleaned_data)
-            else:
-                print(f"Form errors for {form.prefix}: {form.errors}")
-        if cleaned_data_list:
-    # Use the last element of the list to construct the redirect URL
-            last_data = cleaned_data_list[-1]
-            name = last_data['name']
-            
+        if formset.is_valid():
+            for form in formset:
+                if form.cleaned_data.get('DELETE', False):
+                    # If the form is marked for deletion, delete the corresponding object
+                    district_instance = form.instance
+                    district_instance.delete()
+                else:
+                    # Save the form if not marked for deletion
+                    district_instance = form.save(commit=False)
+                    district_instance.user = request.user if request.user.is_authenticated else None
+                    district_instance.year = year
+                    district_instance.save()
 
-    # Construct the redirect URL
-            redirect_url = f'/district/{name}/{year}'  # Using f-string for formatting
-
-    # Redirect to the constructed URL
-            return redirect(redirect_url)
-
+            # Redirect to the constructed URL using the first form's data
+            name = formset[0].cleaned_data['name']
+            return redirect('district_view', name, year)
 
     else:
         formset = YourModelFormSet(prefix='form')
 
     return render(request, 'form/district_form.html', {'formset': formset, 'districts': districts})
+
