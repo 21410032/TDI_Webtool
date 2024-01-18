@@ -12,15 +12,15 @@
         <p style="color: red;">There is an error with your form:</p>
         <ul>
             {% for field_errors in form.errors.values %}
-                {% for error in field_errors %}
-                    <li style="color: red;">{{ error }}</li>
-                {% endfor %}
+            {% for error in field_errors %}
+            <li style="color: red;">{{ error }}</li>
+            {% endfor %}
             {% endfor %}
         </ul>
-    {% endif %}
+        {% endif %}
         <h2>Register your account</h2>
     </div>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit" class="login-btn">Register</button>

@@ -15,10 +15,12 @@ class Tribe(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True, null=True, blank=True)
     incidence = models.FloatField(null=True, blank=True)
-    slug=models.SlugField(unique=True,blank=True,null=True)
     intensity = models.FloatField(null=True, blank=True)
     tdi = models.FloatField(null=True, blank=True)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='districts', default='7219142469')
+
+    def __str__(self):
+        return f"{self.name}({self.id})"
+    
 
 
     def save(self, *args, **kwargs):
@@ -410,11 +412,11 @@ class Tribe_Image(models.Model):
 
 
 class Household(models.Model):
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='households',default='7219142469')
     tribeID = models.ForeignKey(Tribe, on_delete=models.CASCADE, related_name="household", null=True, blank=True)
-    tribe_name = models.CharField(max_length=30,null=True, blank=True)
+    year = models.IntegerField()
     size = models.IntegerField(null= True, blank=True)
-    # decimal_field = models.DecimalField(max_digits=10, decimal_places=2,null= True, blank=True)
+    
     # HEALTH
     CD_score = models.BooleanField(null = True, blank=True)
     IM_score = models.BooleanField(null = True, blank=True)
@@ -444,7 +446,7 @@ class Household(models.Model):
     EV_score = models.BooleanField(null = True, blank=True)
     MEET_score = models.BooleanField(null = True, blank=True)
  
-
+    
     def __str__(self):
         return f"HH ({self.tribeID.name})"
 

@@ -4,23 +4,33 @@ from django.http import Http404
 from .models import Household, Tribe,Tribe_Image
 from district_wise.models import District
 from django.http import HttpResponse
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 # Create your views here.
-from .forms import TribeModelForm
+from .forms import HouseholdForm
 from django.forms import formset_factory
 
 
 
-def tribe_detail_view(request, slug):
-    tribes = Tribe.objects.all()
-    if slug is not None:
+def tribe_detail_view(request, slug, year):
+
+
+    user_phone_number = request.GET.get('user')
+    if user_phone_number:
+        user = User.objects.get(phone_number=user_phone_number)
+
+    else:    
+        user = User.objects.get(phone_number='7219142469')
+
+    tribes = Tribe.objects.filter(household__user=user, household__year='2022').distinct()
+
+    if slug and year is not None:
         try:
-            tribe = Tribe.objects.get(slug=slug)
+            tribe = Tribe.objects.get(household__user=user, slug=slug, household__year=year)
         except Tribe.DoesNotExist:
             raise Http404
-        except tribe.MultipleObjectsReturned:
-            tribe=tribe.objects.filter(slug=slug).first()
         except:
             raise Http404
 
@@ -143,72 +153,48 @@ def test_view(request):
     return render(request, 'pvtg/test.html', context)
 
 def form_view(request):
-    
-    YourModelFormSet = formset_factory(TribeModelForm, extra=1, can_delete=True, validate_max=True)
+    YourModelFormSet = formset_factory(HouseholdForm, extra=1, can_delete=True, validate_max=True)
+    user = User.objects.get(phone_number='7219142469')
+    tribes = Tribe.objects.filter(household__user=user, household__year='2022').distinct()
 
     if request.method == 'POST':
-        print(f"Raw POST data: {request.POST}")
         formset = YourModelFormSet(request.POST, prefix='form')
-        
-        for form in formset:
-                # Save each form indsividually
-            print(f"Form errors for {form.prefix}: {form.errors}")
-                
-            print(f"Field values for {form.prefix}: {form.cleaned_data}")
-            if form.is_valid():
-             form.save()
+        cleaned_data_list = []
+        # Set the initial year for each form
+    
+        year = request.POST.get('year')
 
-            # Redirect after successful form submission to avoid resubmission on page refresh
-        return redirect('/')  # Replace 'success_page' with the actual URL or name of your success page
+        user_from_form = request.user if request.user.is_authenticated else user
+
+        for form in formset:
+            if form.is_valid():
+  
+            
+                tribeID = form.cleaned_data['tribeID']
+                tribe, created = Tribe.objects.get_or_create(slug=tribeID)
+
+                household = form.save(commit=False)
+                household.user = user_from_form
+                household.tribe = tribe
+                household.year = year
+                household.save()
+                cleaned_data_list.append(form.cleaned_data)
+
+        if cleaned_data_list:
+            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
+            return redirect(redirect_url)
+        else:
+            # Print form errors to understand why validation failed
+            for form in formset:
+                print(form.errors)
+
     else:
         formset = YourModelFormSet(prefix='form')
 
-    return render(request, 'form/form.html', {'formset': formset})
-    tribes = Tribe.objects.all()
-    context = {
-        'tribes':tribes,
-    }
-    if request.method == "POST":
-        tribe_id = request.POST.get('tribe_id')
-        size = request.POST.get('HH_size')
+    return render(request, 'form/form.html', {'formset': formset, 'tribes': tribes})
 
-        try:
-            tribe = Tribe.objects.get(id=tribe_id)
-        except Tribe.DoesNotExist:
-            # Handle the case where the selected tribe doesn't exist
-            return HttpResponse('Selected tribe does not exist')
-        
-        
-        
-        HH_object = Household.objects.create(
-            tribeID = tribe,
-            size = size,
-            CD_score = request.POST.get('CD_score'),
-            IM_score = request.POST.get('IM_score'),
-            MC_score = request.POST.get('MC_score'),
-            CM_score = request.POST.get('CM_score'),
-            FS_score = request.POST.get('FS_score'),
-            LE_score = request.POST.get('LE_score'),
-            DRO_score = request.POST.get('DRO_score'),
-            IC_score = request.POST.get('IC_score'),
-            OW_score = request.POST.get('OW_score'),
-            SANI_score = request.POST.get('SANI_score'),
-            FUEL_score = request.POST.get('FUEL_score'),
-            DRWA_score = request.POST.get('DRWA_score'),
-            ELECTR_score = request.POST.get('ELECTR_score'),
-            ASS_score = request.POST.get('ASS_score'),
-            LAN_score = request.POST.get('LAN_score'),
-            ARTS_score = request.POST.get('ARTS_score'),
-            EV_score = request.POST.get('EV_score'),
-            MEET_score = request.POST.get('MEET_score'),
-        )
-        HH_object.save()
-        messages.success(request, 'Household added successfully!!!')
-        return redirect('form')
-
-
-    return render(request, 'form/form.html',context=context)
-
+    
+    
 
     
 def tribe_pdf_view(request, slug):

@@ -16,20 +16,26 @@ User = get_user_model()
 # Create your views here.
 def district_view(request,slug1,slug2):
 
+    user_phone_number = request.GET.get('user')
+    if user_phone_number:
+        user = User.objects.get(phone_number=user_phone_number)
+        print(user)
 
-    user = User.objects.get(phone_number='7667605908')
+    else:    
+        user = User.objects.get(phone_number='7667605908')
 
-    if request.method == "POST":
-        user = request.user
+    print(user)
 
-    districts=District.objects.all().filter(user = user)
+    print(slug1)
+    print(slug2)
+    districts=District.objects.filter(user = user)
 
 
     tribes = Tribe.objects.all()
     
 
     if slug1 is not None and slug2 is not None:
-        district = District.objects.get(user = user, name=slug1, year=slug2)
+        district = District.objects.get(user = user, slug=slug1, year=slug2)
 
 
     district_dimensional_index=district.get_dimension_scores()
@@ -80,44 +86,27 @@ def test2_view(request):
 @login_required
 def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
+    user = User.objects.get(phone_number='7667605908')
+    districts = District.objects.all().filter(user=user)
 
-    districts = District.objects.all()
     if request.method == 'POST':
-
-        print(f"Raw POST data: {request.POST}")
         formset = YourModelFormSet(request.POST, prefix='form')
         cleaned_data_list = [] 
-         # Create a list to store cleaned data for each form
+
         year = request.POST.get('year')
-        print(year)
+        user_from_form = request.user if request.user.is_authenticated else user  # Use the user from the form if authenticated, otherwise use the default user
+
         for form in formset:
-            # Save each form individually
-            print(f"Form errors for {form.prefix}: {form.errors}")
-            print(f"Field values for {form.prefix}: {form.cleaned_data}")
             if form.is_valid():
                 district_instance = form.save(commit=False)
-                if request.user.is_authenticated:
-                    district_instance.user = request.user
-                district_instance.year =year
-                    
+                district_instance.user = user_from_form
+                district_instance.year = year
                 district_instance.save()
-
-                # Append cleaned data to the list
                 cleaned_data_list.append(form.cleaned_data)
-            else:
-                print(f"Form errors for {form.prefix}: {form.errors}")
+
         if cleaned_data_list:
-    # Use the last element of the list to construct the redirect URL
-            last_data = cleaned_data_list[-1]
-            name = last_data['name']
-            
-
-    # Construct the redirect URL
-            redirect_url = f'/district/{name}/{year}'  # Using f-string for formatting
-
-    # Redirect to the constructed URL
+            redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
             return redirect(redirect_url)
-
 
     else:
         formset = YourModelFormSet(prefix='form')

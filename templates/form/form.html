@@ -13,379 +13,317 @@
   {% csrf_token %}
   {{ formset.management_form }}
 
+
+  <label for="id_year">Year:</label>
+  <input type="number" name="year" step="any" id="id_year" required>
   <div id="formset">
-      {% for form in formset %}
-      <div id="form">
-      
-        <p>
-     <label for="id_form-0-tribeID">TribeID:</label>
-     <select name="form-0-tribeID" id="id_form-0-tribeID" fdprocessedid="a92z0b">
-   <option value="" selected="">---------</option>
- 
-   <option value="1">Tribe object (1)</option>
- 
-   <option value="2">Tribe object (2)</option>
- 
-   <option value="3">Tribe object (3)</option>
- 
-   <option value="4">Tribe object (4)</option>
- 
-   <option value="5">Tribe object (5)</option>
- 
-   <option value="6">Tribe object (6)</option>
- 
-   <option value="7">Tribe object (7)</option>
- 
-   <option value="8">Tribe object (8)</option>
- 
-   <option value="9">Tribe object (9)</option>
- 
-   <option value="10">Tribe object (10)</option>
- 
-   <option value="11">Tribe object (11)</option>
- 
-   <option value="12">Tribe object (12)</option>
- 
-   <option value="13">Tribe object (13)</option>
- 
-   <option value="14">Tribe object (14)</option>
- 
-   <option value="15">Tribe object (15)</option>
- 
-   <option value="16">Tribe object (16)</option>
- 
-   <option value="17">Tribe object (17)</option>
- 
-   <option value="18">Tribe object (18)</option>
- 
-   <option value="19">Tribe object (19)</option>
- 
-   <option value="20">Tribe object (20)</option>
- 
-   <option value="21">Tribe object (21)</option>
- 
-   <option value="22">Tribe object (22)</option>
- 
-   <option value="23">Tribe object (23)</option>
- 
-   <option value="24">Tribe object (24)</option>
- 
-   <option value="25">Tribe object (25)</option>
- 
-   <option value="26">Tribe object (26)</option>
- 
-   <option value="27">Tribe object (27)</option>
- 
-   <option value="28">Tribe object (28)</option>
- 
-   <option value="29">Tribe object (29)</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-tribe_name">Tribe name:</label>
-     <input type="text" name="form-0-tribe_name" maxlength="30" id="id_form-0-tribe_name" fdprocessedid="88eg1">
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-size">Size:</label>
-     <input type="number" name="form-0-size" id="id_form-0-size" fdprocessedid="539hvs">
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-CD_score">CD score:</label>
-     <select name="form-0-CD_score" id="id_form-0-CD_score" fdprocessedid="btt0k">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-IM_score">IM score:</label>
-     <select name="form-0-IM_score" id="id_form-0-IM_score" fdprocessedid="ropznu">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-MC_score">MC score:</label>
-     <select name="form-0-MC_score" id="id_form-0-MC_score" fdprocessedid="qn8lnl">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-CM_score">CM score:</label>
-     <select name="form-0-CM_score" id="id_form-0-CM_score" fdprocessedid="dqv70q">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-FS_score">FS score:</label>
-     <select name="form-0-FS_score" id="id_form-0-FS_score" fdprocessedid="hvq9bh">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-LE_score">LE score:</label>
-     <select name="form-0-LE_score" id="id_form-0-LE_score" fdprocessedid="p2mt5b">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-DRO_score">DRO score:</label>
-     <select name="form-0-DRO_score" id="id_form-0-DRO_score" fdprocessedid="uifd2">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-IC_score">IC score:</label>
-     <select name="form-0-IC_score" id="id_form-0-IC_score" fdprocessedid="fe4lid">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-OW_score">OW score:</label>
-     <select name="form-0-OW_score" id="id_form-0-OW_score" fdprocessedid="8aub8c">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-SANI_score">SANI score:</label>
-     <select name="form-0-SANI_score" id="id_form-0-SANI_score" fdprocessedid="47iyj">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-FUEL_score">FUEL score:</label>
-     <select name="form-0-FUEL_score" id="id_form-0-FUEL_score" fdprocessedid="69fqko">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-DRWA_score">DRWA score:</label>
-     <select name="form-0-DRWA_score" id="id_form-0-DRWA_score" fdprocessedid="5502ce">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-ELECTR_score">ELECTR score:</label>
-     <select name="form-0-ELECTR_score" id="id_form-0-ELECTR_score" fdprocessedid="zcvwyi">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-ASS_score">ASS score:</label>
-     <select name="form-0-ASS_score" id="id_form-0-ASS_score" fdprocessedid="p01hin">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-LAN_score">LAN score:</label>
-     <select name="form-0-LAN_score" id="id_form-0-LAN_score" fdprocessedid="jby99">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-ARTS_score">ARTS score:</label>
-     <select name="form-0-ARTS_score" id="id_form-0-ARTS_score" fdprocessedid="77amy">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-EV_score">EV score:</label>
-     <select name="form-0-EV_score" id="id_form-0-EV_score" fdprocessedid="d56338">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-MEET_score">MEET score:</label>
-     <select name="form-0-MEET_score" id="id_form-0-MEET_score" fdprocessedid="kpsoct">
-   <option value="unknown" selected="">Unknown</option>
- 
-   <option value="true">Yes</option>
- 
-   <option value="false">No</option>
- 
- </select>
-     
-     
-   </p>
- 
-   
-   <p>
-     <label for="id_form-0-DELETE">Delete:</label>
-     <input type="checkbox" name="form-0-DELETE" id="id_form-0-DELETE">
-     
-     
-       
-     
-   </p>
- 
-  
-  
-        
+
+
+    {% for form in formset %}
+    <div id="form">
+      <p>
+        <label for="id_form-0-tribeID">Select Tribe</label>
+        <select name="form-0-tribeID" id="id_form-0-tribeID" fdprocessedid="88eg1">
+          {% for tribe in tribes %}
+          <option value="{{ tribe.slug }}">{{ tribe.name }}</option>
+          {% endfor %}
+        </select>
+
+
+      </p>
+
+      <p>
+        <label for="id_form-0-size">Size:</label>
+        <input type="number" name="form-0-size" id="id_form-0-size" fdprocessedid="539hvs">
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-CD_score">CD score:</label>
+        <select name="form-0-CD_score" id="id_form-0-CD_score" fdprocessedid="btt0k">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-IM_score">IM score:</label>
+        <select name="form-0-IM_score" id="id_form-0-IM_score" fdprocessedid="ropznu">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-MC_score">MC score:</label>
+        <select name="form-0-MC_score" id="id_form-0-MC_score" fdprocessedid="qn8lnl">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-CM_score">CM score:</label>
+        <select name="form-0-CM_score" id="id_form-0-CM_score" fdprocessedid="dqv70q">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-FS_score">FS score:</label>
+        <select name="form-0-FS_score" id="id_form-0-FS_score" fdprocessedid="hvq9bh">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-LE_score">LE score:</label>
+        <select name="form-0-LE_score" id="id_form-0-LE_score" fdprocessedid="p2mt5b">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-DRO_score">DRO score:</label>
+        <select name="form-0-DRO_score" id="id_form-0-DRO_score" fdprocessedid="uifd2">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-IC_score">IC score:</label>
+        <select name="form-0-IC_score" id="id_form-0-IC_score" fdprocessedid="fe4lid">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-OW_score">OW score:</label>
+        <select name="form-0-OW_score" id="id_form-0-OW_score" fdprocessedid="8aub8c">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-SANI_score">SANI score:</label>
+        <select name="form-0-SANI_score" id="id_form-0-SANI_score" fdprocessedid="47iyj">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-FUEL_score">FUEL score:</label>
+        <select name="form-0-FUEL_score" id="id_form-0-FUEL_score" fdprocessedid="69fqko">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-DRWA_score">DRWA score:</label>
+        <select name="form-0-DRWA_score" id="id_form-0-DRWA_score" fdprocessedid="5502ce">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-ELECTR_score">ELECTR score:</label>
+        <select name="form-0-ELECTR_score" id="id_form-0-ELECTR_score" fdprocessedid="zcvwyi">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-ASS_score">ASS score:</label>
+        <select name="form-0-ASS_score" id="id_form-0-ASS_score" fdprocessedid="p01hin">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-LAN_score">LAN score:</label>
+        <select name="form-0-LAN_score" id="id_form-0-LAN_score" fdprocessedid="jby99">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-ARTS_score">ARTS score:</label>
+        <select name="form-0-ARTS_score" id="id_form-0-ARTS_score" fdprocessedid="77amy">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-EV_score">EV score:</label>
+        <select name="form-0-EV_score" id="id_form-0-EV_score" fdprocessedid="d56338">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-MEET_score">MEET score:</label>
+        <select name="form-0-MEET_score" id="id_form-0-MEET_score" fdprocessedid="kpsoct">
+          <option value="unknown" selected="">Unknown</option>
+
+          <option value="true">Yes</option>
+
+          <option value="false">No</option>
+
+        </select>
+
+
+      </p>
+
+
+      <p>
+        <label for="id_form-0-DELETE">Delete:</label>
+        <input type="checkbox" name="form-0-DELETE" id="id_form-0-DELETE">
+
+
+
+
+      </p>
+
+
+
+
     </div>
-      {% endfor %}
+    {% endfor %}
   </div>
 
   <button type="button" id="add-form">Add Form</button>
@@ -395,44 +333,46 @@
 </form>
 <style>
   /* Container for the entire form */
-form {
+  form {
     max-width: 800px;
     margin: auto;
     padding: 30px;
     background-color: #f7f7f7;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-}
+  }
 
-/* Style formset container */
-#formset {
+  /* Style formset container */
+  #formset {
     margin-bottom: 30px;
-}
+  }
 
-/* Style each form within the formset */
-#form {
+  /* Style each form within the formset */
+  #form {
     border: 2px solid #3498db;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 30px;
     background-color: #fff;
     transition: box-shadow 0.3s ease;
-}
+  }
 
-/* Hover effect for each form */
-#form:hover {
+  /* Hover effect for each form */
+  #form:hover {
     box-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
-}
+  }
 
-/* Style form labels and input fields */
-label {
+  /* Style form labels and input fields */
+  label {
     display: block;
     margin-bottom: 12px;
     color: #333;
     font-weight: bold;
-}
+  }
 
-input, select, textarea {
+  input,
+  select,
+  textarea {
     width: 100%;
     padding: 14px;
     margin-bottom: 20px;
@@ -441,15 +381,18 @@ input, select, textarea {
     border-radius: 6px;
     background-color: #fff;
     transition: border-color 0.3s ease;
-}
+  }
 
-/* Hover effect for input fields */
-input:hover, select:hover, textarea:hover {
+  /* Hover effect for input fields */
+  input:hover,
+  select:hover,
+  textarea:hover {
     border-color: #3498db;
-}
+  }
 
-/* Style the "Add Form" and "Remove Last Form" buttons */
-#add-form, #remove-form {
+  /* Style the "Add Form" and "Remove Last Form" buttons */
+  #add-form,
+  #remove-form {
     background-color: #2ecc71;
     color: #fff;
     padding: 14px;
@@ -458,14 +401,15 @@ input:hover, select:hover, textarea:hover {
     border: none;
     border-radius: 6px;
     transition: background-color 0.3s ease;
-}
+  }
 
-#add-form:hover, #remove-form:hover {
+  #add-form:hover,
+  #remove-form:hover {
     background-color: #27ae60;
-}
+  }
 
-/* Style form submission button */
-input[type="submit"] {
+  /* Style form submission button */
+  input[type="submit"] {
     background-color: #3498db;
     color: #fff;
     padding: 14px;
@@ -473,70 +417,73 @@ input[type="submit"] {
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
+  }
 
-input[type="submit"]:hover {
+  input[type="submit"]:hover {
     background-color: #2980b9;
-}
+  }
 
-/* Responsive design for smaller screens */
-@media (max-width: 600px) {
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
     form {
-        padding: 20px;
+      padding: 20px;
     }
 
-    input, select, textarea {
-        margin-bottom: 14px;
+    input,
+    select,
+    textarea {
+      margin-bottom: 14px;
     }
 
-    #add-form, #remove-form, input[type="submit"] {
-        margin: 10px;
+    #add-form,
+    #remove-form,
+    input[type="submit"] {
+      margin: 10px;
     }
-}
-
+  }
 </style>
 <script>
   // When the "Add Form" button is clicked
   document.getElementById('add-form').addEventListener('click', function () {
-      // Get the div containing the form elements
-      var formsetDiv = document.getElementById('formset');
-  
-      // Get the last form in the formset
-      var lastForm = formsetDiv.lastElementChild;
-  
-      // Clone the last form
-      var newForm = lastForm.cloneNode(true);
-  
-      // Clear values in the cloned form
-      newForm.querySelectorAll('input, select, textarea').forEach(function (element) {
-          element.value = '';
-      });
-  
-      // Increment the form index
-      var formCountField = document.getElementById('id_form-TOTAL_FORMS');
-      var newFormIndex = parseInt(formCountField.value);
-      newFormIndex++;
-      formCountField.value = newFormIndex;
-  
-      // Update the IDs of form fields in the cloned form
-      newForm.querySelectorAll('[id]').forEach(function (element) {
-          element.id = element.id.replace(/-\d+/, '-' + (newFormIndex-1));
-      });
-  
-      // Update the names of form fields in the cloned form
-      newForm.querySelectorAll('[name]').forEach(function (element) {
-          element.name = element.name.replace(/-\d+/, '-' + (newFormIndex-1));
-      });
-      newForm.querySelectorAll('label').forEach(function (label) {
-          var labelFor = label.getAttribute('for');
-          if (labelFor) {
-              label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex-1)));
-          }
-      });
-      // Append the new form to the formset
-      formsetDiv.appendChild(newForm);
+    // Get the div containing the form elements
+    var formsetDiv = document.getElementById('formset');
+
+    // Get the last form in the formset
+    var lastForm = formsetDiv.lastElementChild;
+
+    // Clone the last form
+    var newForm = lastForm.cloneNode(true);
+
+    // Clear values in the cloned form
+    newForm.querySelectorAll('input, select, textarea').forEach(function (element) {
+      element.value = '';
+    });
+
+    // Increment the form index
+    var formCountField = document.getElementById('id_form-TOTAL_FORMS');
+    var newFormIndex = parseInt(formCountField.value);
+    newFormIndex++;
+    formCountField.value = newFormIndex;
+
+    // Update the IDs of form fields in the cloned form
+    newForm.querySelectorAll('[id]').forEach(function (element) {
+      element.id = element.id.replace(/-\d+/, '-' + (newFormIndex - 1));
+    });
+
+    // Update the names of form fields in the cloned form
+    newForm.querySelectorAll('[name]').forEach(function (element) {
+      element.name = element.name.replace(/-\d+/, '-' + (newFormIndex - 1));
+    });
+    newForm.querySelectorAll('label').forEach(function (label) {
+      var labelFor = label.getAttribute('for');
+      if (labelFor) {
+        label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex - 1)));
+      }
+    });
+    // Append the new form to the formset
+    formsetDiv.appendChild(newForm);
   });
-  
+
   // When the "Remove Last Form" button is clicked
   document.getElementById('remove-form').addEventListener('click', function () {
     // Get the div containing the form elements
@@ -544,13 +491,13 @@ input[type="submit"]:hover {
 
     // If there is more than one form, remove the last one
     if (formsetDiv.childElementCount > 1) {
-        var lastForm = formsetDiv.lastElementChild;
-        formsetDiv.removeChild(lastForm);
+      var lastForm = formsetDiv.lastElementChild;
+      formsetDiv.removeChild(lastForm);
     }
-});
+  });
 
 
-  
+
 
 </script>
 {% endblock content %}
