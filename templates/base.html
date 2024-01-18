@@ -70,7 +70,7 @@
 
                     <ul class="dropdown-menu" aria-labelledby="tribeDropdown">
                         {% for tribe in tribes %}
-                        <li><a class="dropdown-item" href="/tribe/{{ tribe.name }}">
+                        <li><a class="dropdown-item" href="/tribe/{{ tribe.slug }}/2022">
                                 {{ tribe.name }}
                             </a></li>
                         {% endfor %}
@@ -87,7 +87,7 @@
 
                     <ul class="dropdown-menu">
                         {% for district in district %}
-                        <li><a class="dropdown-item" href="/district/{{district.name}}/{{district.year}}">
+                        <li><a class="dropdown-item" href="/district/{{district.slug}}/{{district.year}}">
                                 {{district.name}}
                             </a></li>
                         {% endfor %}
