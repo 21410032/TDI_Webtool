@@ -228,7 +228,6 @@
         formsetDiv.appendChild(newForm);
     });
     
-    // When the "Remove Last Form" button is clicked
     document.getElementById('remove-form').addEventListener('click', function () {
       // Get the div containing the form elements
       var formsetDiv = document.getElementById('formset');
@@ -236,9 +235,28 @@
       // If there is more than one form, remove the last one
       if (formsetDiv.childElementCount > 1) {
           var lastForm = formsetDiv.lastElementChild;
-          formsetDiv.removeChild(lastForm);
+  
+          // Check if the last form is marked for deletion
+          var deleteCheckbox = lastForm.querySelector('[id$="-DELETE"]');
+          if (deleteCheckbox) {
+              // If marked for deletion, update the value of the DELETE checkbox
+              deleteCheckbox.checked = true;
+          } else {
+              // If not marked for deletion, clone the form and update the DELETE checkbox
+              var newForm = lastForm.cloneNode(true);
+  
+              // Update the value of the DELETE checkbox in the cloned form
+              var newDeleteCheckbox = newForm.querySelector('[id$="-DELETE"]');
+              if (newDeleteCheckbox) {
+                  newDeleteCheckbox.checked = true;
+              }
+  
+              // Append the new form to the formset
+              formsetDiv.appendChild(newForm);
+          }
       }
   });
+  
   
   
     
