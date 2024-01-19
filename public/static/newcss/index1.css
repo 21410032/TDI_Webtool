@@ -823,6 +823,7 @@ a {
   position: relative;
   gap: 60.14px;
   font-size: var(--font-size-xs-3);
+  color: var(--color-white);
 }
 .frame-child3 {
   position: relative;
@@ -852,13 +853,13 @@ a {
   mix-blend-mode: normal;
 }
 .wrapper-rectangle-101-child1 {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  width: 120px;
+  height: 120px;
+  object-fit:contain;
   position: absolute;
   left: -4px;
   top: 5px;
-  transform: scale(1.175);
+  box-shadow: -5.825px 5.825px 3.495px 0px rgba(0, 0, 0, 0.25);
 }
 .research-assistant {
   position: relative;
@@ -1547,5 +1548,9 @@ svg{
     font-family: var(--font-poppins);
   }
   
+
+  .download-button-div{
+    margin-bottom: 50px;
+  }
 
 

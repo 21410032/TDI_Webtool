@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load static %}
 <style>
     .main-logo-parent,
     .nav-items {
@@ -14,7 +14,7 @@
     }
 
     .home:hover {
-        font-weight: bold;
+        color: var(--bs-dark);
     }
 
     #tribeDropdown:hover,
@@ -27,7 +27,8 @@
 
 <div class="frame-parent22-profile">
     <div class="profile-image-frame">
-        <img class="frame-child26-profile" alt="" src="{{user.profile_pic.url}}" />
+        <img class="frame-child26-profile" alt=""
+            src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}" />
     </div>
 
     <b class="profile-name-head">{{profile.first_name}}</b>
