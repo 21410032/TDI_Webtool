@@ -25,7 +25,11 @@ def district_view(request,slug1,slug2):
     else:    
         user = User.objects.get(phone_number='7219142469')
 
-  
+    print(user)
+
+    print(slug1)
+    print(slug2)
+    District.objects.filter(W_BMI__isnull=True).delete()
     districts=District.objects.filter(user = user)
 
 
@@ -86,24 +90,38 @@ def test2_view(request):
 @login_required
 def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
-    user = User.objects.get(phone_number='7219142469')
+    user = User.objects.get(phone_number='7667605908')
+   
     districts = District.objects.all().filter(user=user)
+
 
     if request.method == 'POST':
         formset = YourModelFormSet(request.POST, prefix='form')
-
+        print(request.POST)
         cleaned_data_list = [] 
 
         year = request.POST.get('year')
         user_from_form = request.user if request.user.is_authenticated else user  # Use the user from the form if authenticated, otherwise use the default user
 
+        # ...
+
         for form in formset:
             if form.is_valid():
-                district_instance = form.save(commit=False)
-                district_instance.user = user_from_form
-                district_instance.year = year
-                district_instance.save()
-                cleaned_data_list.append(form.cleaned_data)
+                print(form.cleaned_data)
+                # Check if the form's cleaned data includes the DELETE field
+                if form.cleaned_data.get('DELETE', False):
+                    district_instance = form.instance
+                    district_instance.delete()
+                else:
+                    district_instance = form.save(commit=False)
+                    district_instance.user = user_from_form
+                    district_instance.year = year
+                    district_instance.save()
+                    cleaned_data_list.append(form.cleaned_data)
+
+# ...
+
+
 
         if cleaned_data_list:
             redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
