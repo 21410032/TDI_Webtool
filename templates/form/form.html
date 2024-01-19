@@ -20,7 +20,7 @@
   <label for="id_tribeID">Select Tribe</label>
   <select name="tribeID" id="id_tribeID" fdprocessedid="88eg1">
     {% for tribe in tribes %}
-    <option value="{{ tribe.id }}">{{ tribe.name }}</option>
+    <option value="{{ tribe.slug }}">{{ tribe.name }}</option>
     {% endfor %}
   </select>
 

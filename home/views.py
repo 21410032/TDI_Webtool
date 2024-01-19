@@ -6,6 +6,7 @@ from district_wise.models import District
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.conf import settings
 
 
 # Create your views here.
@@ -22,8 +23,7 @@ def tribe_detail_view(request, slug1, slug2):
         user = User.objects.get(phone_number=user_phone_number)
 
     else:    
-        user = User.objects.get(phone_number='7667605908')
-    print(user)
+        user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
 
     if slug1 and slug2 is not None:
@@ -93,7 +93,7 @@ def tribe_detail_view(request, slug1, slug2):
 
 def form_view(request):
     YourModelFormSet = formset_factory(HouseholdForm, extra=1, can_delete=True, validate_max=True)
-    user = User.objects.get(phone_number='7667605908')
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
     alltribes=Tribe.objects.all()
     if request.method == 'POST':
@@ -111,15 +111,15 @@ def form_view(request):
   
             
                 
-                tribe, created = Tribe.objects.get_or_create(user = request.user, year = year, slug=tribeID)
+                tribe, created = Tribe.objects.get_or_create(user = request.user, year = year, name = tribeID, slug=tribeID)
 
                 household = form.save(commit=False)
-                household.tribe = tribe
+                household.tribeID = tribe
                 household.save()
                 cleaned_data_list.append(form.cleaned_data)
 
         if cleaned_data_list:
-            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
+            redirect_url = f'/tribe/{tribeID}/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
         else:
             # Print form errors to understand why validation failed
