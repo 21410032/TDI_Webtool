@@ -16,21 +16,18 @@
 
   <label for="id_year">Year:</label>
   <input type="number" name="year" step="any" id="id_year" required>
+  <label for="tribe-dropdown">Select Tribe</label>
+  <select name="tribeID" id="tribe-dropdown" fdprocessedid="88eg1">
+    {% for tribe in alltribes %}
+      <option value="{{ tribe.slug }}">{{ tribe.name }}</option>
+    {% endfor %}
+  </select>
   <div id="formset">
 
 
     {% for form in formset %}
     <div id="form">
-      <p>
-        <label for="id_form-0-tribeID">Select Tribe</label>
-        <select name="form-0-tribeID" id="id_form-0-tribeID" fdprocessedid="88eg1">
-          {% for tribe in tribes %}
-          <option value="{{ tribe.slug }}">{{ tribe.name }}</option>
-          {% endfor %}
-        </select>
-
-
-      </p>
+     
 
       <p>
         <label for="id_form-0-size">Size:</label>

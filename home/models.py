@@ -12,8 +12,10 @@ User = get_user_model()
 
 
 class Tribe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='households',default='7219142469')
+    year = models.IntegerField()
     name = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True, null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True)
     incidence = models.FloatField(null=True, blank=True)
     intensity = models.FloatField(null=True, blank=True)
     tdi = models.FloatField(null=True, blank=True)
@@ -412,9 +414,7 @@ class Tribe_Image(models.Model):
 
 
 class Household(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='households',default='7219142469')
     tribeID = models.ForeignKey(Tribe, on_delete=models.CASCADE, related_name="household", null=True, blank=True)
-    year = models.IntegerField()
     size = models.IntegerField(null= True, blank=True)
     
     # HEALTH

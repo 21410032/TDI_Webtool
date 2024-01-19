@@ -20,10 +20,10 @@ def district_view(request,slug1,slug2):
     user_phone_number = request.GET.get('user')
     if user_phone_number:
         user = User.objects.get(phone_number=user_phone_number)
-        print(user)
+
 
     else:    
-        user = User.objects.get(phone_number='7667605908')
+        user = User.objects.get(phone_number='7219142469')
 
     print(user)
 
