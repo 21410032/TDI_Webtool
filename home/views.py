@@ -22,8 +22,8 @@ def tribe_detail_view(request, slug1, slug2):
         user = User.objects.get(phone_number=user_phone_number)
 
     else:    
-        user = User.objects.get(phone_number='7219142469')
-
+        user = User.objects.get(phone_number='7667605908')
+    print(user)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
 
     if slug1 and slug2 is not None:
@@ -93,9 +93,9 @@ def tribe_detail_view(request, slug1, slug2):
 
 def form_view(request):
     YourModelFormSet = formset_factory(HouseholdForm, extra=1, can_delete=True, validate_max=True)
-    user = User.objects.get(phone_number='7219142469')
+    user = User.objects.get(phone_number='7667605908')
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
-
+    alltribes=Tribe.objects.all()
     if request.method == 'POST':
         formset = YourModelFormSet(request.POST, prefix='form')
         cleaned_data_list = []
@@ -129,7 +129,7 @@ def form_view(request):
     else:
         formset = YourModelFormSet(prefix='form')
 
-    return render(request, 'form/form.html', {'formset': formset, 'tribes': tribes})
+    return render(request, 'form/form.html', {'formset': formset, 'tribes': tribes,'alltribes':alltribes})
 
     
     
