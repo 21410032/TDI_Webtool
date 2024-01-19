@@ -3,6 +3,7 @@ from django.db.models import Sum
 from django.core.cache import cache
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -21,7 +22,7 @@ class Tribe(models.Model):
     tdi = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name}({self.id})"
+        return f"{self.slug}"
     
 
 
@@ -346,6 +347,7 @@ class Tribe(models.Model):
         if total_members > 0:
                 ans = [round(scores[key] / total_members, 2) for key in scores]
         else:
+            ans = []
             error_message = "Number of household members cannot be zero"
             raise ValueError(error_message)  # Set ans to an empty list or another appropriate value when total_members is zero
         return ans
@@ -414,8 +416,8 @@ class Tribe_Image(models.Model):
 
 
 class Household(models.Model):
-    tribeID = models.ForeignKey(Tribe, on_delete=models.CASCADE, related_name="household", null=True, blank=True)
-    size = models.IntegerField(null= True, blank=True)
+    tribeID = models.ForeignKey(Tribe, on_delete=models.CASCADE, related_name="household", null=True)
+    size = models.IntegerField(null= True)
     
     # HEALTH
     CD_score = models.BooleanField(null = True, blank=True)
@@ -447,8 +449,8 @@ class Household(models.Model):
     MEET_score = models.BooleanField(null = True, blank=True)
  
     
-    def __str__(self):
-        return f"HH ({self.tribeID.name})"
+    # def __str__(self):
+    #     return f"HH ({self.tribeID.name})"
 
 
 
@@ -697,6 +699,24 @@ class Household(models.Model):
         self._cached_developed_indicators_members = result
         return result
 
-    
 
-      
+
+class User_Hitcounts(models.Model):
+    site_views = models.IntegerField(default=0)
+    last_refresh_time = models.DateTimeField(null=True, blank=True)
+
+    @classmethod
+    def get_site_views(cls):
+        # This method returns the total site views
+        instance, created = cls.objects.get_or_create(pk=1)
+        return instance.site_views
+
+    @classmethod
+    def increment_site_views(cls):
+        # This method increments the total site views
+        instance, created = cls.objects.get_or_create(pk=1)
+        if instance.last_refresh_time is None or (timezone.now() - instance.last_refresh_time).total_seconds() > 600:  # 300 seconds = 10 minutes
+            instance.site_views += 1
+            instance.last_refresh_time = timezone.now()
+            instance.save()
+        return instance.site_views

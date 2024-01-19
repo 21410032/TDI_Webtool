@@ -102,6 +102,7 @@ def form_view(request):
         # Set the initial year for each form
     
         year = request.POST.get('year')
+        tribeID = request.POST.get('tribeID')
 
         user_from_form = request.user if request.user.is_authenticated else user
 
@@ -109,8 +110,7 @@ def form_view(request):
             if form.is_valid():
   
             
-                tribeID = form.cleaned_data['tribeID']
-                print(tribeID)
+                
                 tribe, created = Tribe.objects.get_or_create(user = request.user, year = year, slug=tribeID)
 
                 household = form.save(commit=False)
