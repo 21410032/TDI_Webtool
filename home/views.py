@@ -15,7 +15,8 @@ from django.forms import formset_factory
 
 
 def tribe_detail_view(request, slug1, slug2):
-
+    print(slug1)
+    print(slug2)
 
     user_phone_number = request.GET.get('user')
     if user_phone_number:
@@ -24,17 +25,14 @@ def tribe_detail_view(request, slug1, slug2):
     else:    
         user = User.objects.get(phone_number='7667605908')
     print(user)
-    tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
+    tribes = Tribe.objects.filter(user=user).exclude(year='2020').distinct()
 
+    print(tribes)
     if slug1 and slug2 is not None:
-        try:
-            
-            tribe = Tribe.objects.get(user=user, year=slug2, slug = slug1)
-            
-        except Exception as e:
-            return e 
-
-    total_tribals = tribe.get_total_tribals
+         tribe = Tribe.objects.filter(user=user,name = slug1,year=slug2)
+        
+    print(tribe)
+    total_tribals = tribe.get_total_tribals()
     household = Household.objects.all()
     districts = District.objects.all()
     
@@ -94,44 +92,42 @@ def tribe_detail_view(request, slug1, slug2):
 def form_view(request):
     YourModelFormSet = formset_factory(HouseholdForm, extra=1, can_delete=True, validate_max=True)
     user = User.objects.get(phone_number='7667605908')
-    tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
-    alltribes=Tribe.objects.all()
+    tribes = Tribe.objects.filter(user=user, year='2022').distinct()
+    alltribes = Tribe.objects.all()
+
     if request.method == 'POST':
         formset = YourModelFormSet(request.POST, prefix='form')
         cleaned_data_list = []
+
         # Set the initial year for each form
-    
         year = request.POST.get('year')
 
         user_from_form = request.user if request.user.is_authenticated else user
 
+        tribeID = request.POST.get('tribeID')
+        print(f'Tribe ID: {tribeID}')
+
         for form in formset:
             if form.is_valid():
-  
-            
-                tribeID = form.cleaned_data['tribeID']
-                print(tribeID)
-                tribe, created = Tribe.objects.get_or_create(user = request.user, year = year, slug=tribeID)
-
+                tribe = Tribe.objects.get_or_create(user=request.user, year=year, name=tribeID)
                 household = form.save(commit=False)
                 household.tribe = tribe
                 household.save()
                 cleaned_data_list.append(form.cleaned_data)
 
+                # Print form data
+                print(f'Form Data: {form.cleaned_data}')
+
         if cleaned_data_list:
-            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
+            redirect_url = f'/tribe/{tribeID}/{year}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
-        else:
-            # Print form errors to understand why validation failed
-            for form in formset:
-                print(form.errors)
+       
 
     else:
         formset = YourModelFormSet(prefix='form')
 
-    return render(request, 'form/form.html', {'formset': formset, 'tribes': tribes,'alltribes':alltribes})
+    return render(request, 'form/form.html', {'formset': formset, 'tribes': tribes, 'alltribes': alltribes})
 
-    
     
 
     
