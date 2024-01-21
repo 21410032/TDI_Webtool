@@ -1,10 +1,16 @@
 from django.shortcuts import render
-from home.models import Tribe
+from home.models import Tribe, User_Hitcounts
 from district_wise.models import District
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your views here.
+
+
 def home_view(request):
+    user = User.objects.get(phone_number='7219142469')
     tribes = Tribe.objects.all()
-    districts = District.objects.all()
+    districts=District.objects.filter(user = user)
     user = request.user
 
     tribe_wise_tdi = []
@@ -30,10 +36,25 @@ def home_view(request):
         'district_wise_tdi' : district_wise_tdi,
         'user' : user,
     }
+
+
+# Visitors Count
+# Increment the total site views
+    User_Hitcounts.increment_site_views()
+
+    # Retrieve the total site views
+    total_site_views = User_Hitcounts.get_site_views()
+
+    # Pass the total_site_views to the template context
+    context['total_site_views'] = total_site_views
+
     return render(request,'home/homepage.html',context=context)
+
+
 
 def wallpaper_view(request):
     return render(request,'gallery.html')
+
 
 def base_view(request):
     tribes = Tribe.objects.all()

@@ -11,9 +11,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class HouseholdResource(resources.ModelResource):
-    # user = Field(column_name='user', attribute='user', widget=ForeignKeyWidget(User, 'phone_number'))
-    # year = Field(column_name='year', attribute='year', widget=ForeignKeyWidget(Tribe, 'year'))
-    # tribeID = Field(column_name='tribeID', attribute='tribeID', widget=ForeignKeyWidget(Tribe, 'slug'))
+    user = Field(column_name='user', attribute='tribeID__user', widget=ForeignKeyWidget(User, 'phone_number'))
+    year = Field(column_name='year', attribute='tribeID__year', widget=ForeignKeyWidget(Tribe, 'year'))
+    tribeID = Field(column_name='tribeID', attribute='tribeID__slug', widget=ForeignKeyWidget(Tribe, 'slug'))
 
     class Meta:
         model = Household
