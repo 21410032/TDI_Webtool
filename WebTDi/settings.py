@@ -169,5 +169,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
 #Environment variables
-admin_user = '7219142469'
+ADMIN_USER_PHONE_NUMBER = '1234567890'
