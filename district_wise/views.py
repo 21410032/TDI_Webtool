@@ -25,10 +25,6 @@ def district_view(request,slug1,slug2):
     else:    
         user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
 
-    print(user)
-
-    print(slug1)
-    print(slug2)
     District.objects.filter(W_BMI__isnull=True).delete()
     districts=District.objects.filter(user = user)
 

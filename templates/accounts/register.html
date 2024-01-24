@@ -1,97 +1,186 @@
-{% extends "base.html" %}
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-
-{% if not request.user.is_authenticated %}
-<div class="accountsbox">
-    {% if form.errors %}
-    <p style="color: red;">There is an error with your form!</p>
-    {% endif %}
-    <div class="accounts-head">
-        {% if form.errors %}
-        <p style="color: red;">There is an error with your form:</p>
-        <ul>
-            {% for field_errors in form.errors.values %}
-            {% for error in field_errors %}
-            <li style="color: red;">{{ error }}</li>
-            {% endfor %}
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <h2>Register your account</h2>
+    <link rel="stylesheet" href="{% static 'newcss/globalregister.css' %}">
+    <link rel="stylesheet" href="{% static 'newcss/register.css' %}">
+    {% comment %} <link rel="stylesheet" href="newcss/register.css" /> {% endcomment %}
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300&display=swap"
+    />
+  </head>
+  <body>
+    <div class="header-frame">
+      <section class="frame-parent">
+        <div class="frame-child"></div>
+        <div class="frame-item"></div>
+        <div class="first-name-frame-parent">
+          <div class="first-name-frame">
+            <div class="last-name-frame">
+              <div class="main-logo-frame">
+                <div class="main-logo">
+                  <b class="tdi-webtool">TDI Webtool</b>
+                </div>
+              </div>
+              <div class="already-have-account-text">
+                <div class="vector-vector-frame">
+                  <div class="sign-up">Sign Up</div>
+                  <div class="please-enter-your">Please enter your details</div>
+                </div>
+              </div>
+              {% if not request.user.is_authenticated %}
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="sign-up-frame">
+                    <div class="login-btn">
+                      <img
+                        class="iconamoonprofile-fill"
+                        loading="eager"
+                        alt=""
+                        src="./public/iconamoonprofilefill.svg"
+                      />
+    
+                      <div class="email-frame">
+                        <input
+                        class="login-button"
+                        placeholder="First Name"
+                        type="text"
+                        name="first_name"
+                      />
+                        {% comment %} <div class="first-name">First Name</div> {% endcomment %}
+                      </div>
+                    </div>
+                    <div class="logo-frame">
+                      <img
+                        class="iconamoonprofile-fill1"
+                        loading="eager"
+                        alt=""
+                        src="./public/iconamoonprofilefill-1.svg"
+                      />
+    
+                      <div class="last-name-wrapper">
+                        <input
+                        class="login-button"
+                        placeholder="Last Name"
+                        name="last_name"
+                        type="text"
+                      />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sign-up-frame1">
+                    <div class="iconamoonprofile-fill-parent">
+                      <img
+                        class="iconamoonprofile-fill2"
+                        loading="eager"
+                        alt=""
+                        src="./public/iconamoonprofilefill-2.svg"
+                      />
+    
+                      <div class="email-wrapper">
+                        <input
+                        class="login-button"
+                        placeholder="Email"
+                        type="text"
+                        name="email"
+                      />
+                      </div>
+                    </div>
+                    <div class="iconamoonprofile-fill-group">
+                      <img
+                        class="iconamoonprofile-fill3"
+                        loading="eager"
+                        alt=""
+                        src="./public/iconamoonprofilefill-3.svg"
+                      />
+    
+                      <div class="phone-number-wrapper">
+                        <input
+                        class="login-button"
+                        placeholder="Phone Number"
+                        type="text"
+                        name="phone_number"
+                      />
+                      </div>
+                    </div>
+                    <div class="iconamoonprofile-fill-group">
+                        <img
+                          class="iconamoonprofile-fill3"
+                          loading="eager"
+                          alt=""
+                          src="./public/iconamoonprofilefill-3.svg"
+                        />
+                      <div class="password1-wrapper">
+                        <div class="password1-wrapper"><input type="password" name="password1" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1" fdprocessedid="tx14ue" placeholder="Password"></div>
+                      </div>
+                    </div>
+                      <ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>
+                 <div class="iconamoonprofile-fill-group"> 
+                    <img
+                        class="iconamoonprofile-fill3"
+                        loading="eager"
+                        alt=""
+                        src="./public/iconamoonprofilefill-3.svg"
+                    /> 
+                    <div class="password2-wrapper">
+                        <input type="password" name="password2" autocomplete="new-password" required="" aria-describedby="id_password2_helptext" id="id_password2" fdprocessedid="x938j9" placeholder="Password2">
+                    </div>
+                 </div>
+                 <div class="iconamoonprofile-fill-group"> 
+                    <img
+                        class="iconamoonprofile-fill3"
+                        loading="eager"
+                        alt=""
+                        src="./public/iconamoonprofilefill-3.svg"
+                    /> 
+                    <div class="profile_pic-wrapper">
+                        <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic">
+                    </div>
+                 </div>
+                  </div>
+                  <div class="sign-up-frame2">
+                    <div class="login-btn1">
+                     <button type="submit" class="login-btn">Register</button>
+                    </div>
+                  </div>
+                
+            </form>
+            {% else %}
+              <div class="sign-in-btn">
+                <div class="already-have-an">Already have an account?</div>
+                <div class="sign-in">Sign In</div>
+              </div>
+              {% endif %}
+              
+              
+              <div class="contact-us"></div>
+            </div>
+          </div>
+          <div class="header-nav-bar">
+            <b class="home">HOME</b>
+            <b class="research">RESEARCH</b>
+            <b class="team">TEAM</b>
+            <b class="gallery">GALLERY</b>
+            <b class="about-us">ABOUT US</b>
+            <b class="contact-us1">CONTACT US</b>
+          </div>
+        </div>
+      </section>
     </div>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="login-btn">Register</button>
-    </form>
-</div>
+  </body>
+</html>
 
-{% else %}
 
-{% endif %}
-<style>
-    /* style.css */
 
-    /* Body styles */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f4;
-    }
 
-    /* Container styles */
-    .accountsbox {
-        max-width: 400px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
 
-    /* Header styles */
-    .accounts-head {
-        text-align: center;
-        margin-bottom: 20px;
-    }
 
-    /* Form styles */
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Input styles */
-    input[type="text"],
-    input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    /* Button styles */
-    .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    /* Error message styles */
-    p.error-message {
-        color: red;
-        margin-bottom: 15px;
-    }
-
-    /* Responsive styles */
-    @media (max-width: 768px) {
-        .accountsbox {
-            max-width: 100%;
-        }
-    }
-</style>
-{% endblock %}
+ 
