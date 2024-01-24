@@ -8,6 +8,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.conf import settings
 
+from tablib import Dataset
+from .resources import *
+
 
 # Create your views here.
 from .forms import HouseholdForm
@@ -95,41 +98,110 @@ def form_view(request):
     YourModelFormSet = formset_factory(HouseholdForm, extra=1, can_delete=True, validate_max=True)
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
-    alltribes=Tribe.objects.all()
+    alltribes_defined=Tribe.objects.filter(user = user)
+    formset = YourModelFormSet(request.POST, prefix='form')
     if request.method == 'POST':
-        formset = YourModelFormSet(request.POST, prefix='form')
-        cleaned_data_list = []
-        # Set the initial year for each form
-    
+
+
         year = request.POST.get('year')
-        tribeID = request.POST.get('tribeID')
-
-        user_from_form = request.user if request.user.is_authenticated else user
-
-        for form in formset:
-            if form.is_valid():
-  
-            
-                
-                tribe, created = Tribe.objects.get_or_create(user = request.user, year = year, name = tribeID, slug=tribeID)
-
-                household = form.save(commit=False)
-                household.tribeID = tribe
-                household.save()
-                cleaned_data_list.append(form.cleaned_data)
-
-        if cleaned_data_list:
-            redirect_url = f'/tribe/{tribeID}/{request.POST["year"]}?user={user_from_form.phone_number}'
-            return redirect(redirect_url)
+        
+        if request.user.is_authenticated:
+            user_from_form = request.user  #user instance
         else:
-            # Print form errors to understand why validation failed
+            return HttpResponse('Login first')
+        
+          #tribe instance
+        
+        if 'households_excel_file' in request.FILES:
+            new_households = request.FILES['households_excel_file']
+            household_resource = HouseholdResource()
+            dataset = Dataset()
+            imported_households = dataset.load(new_households.read(), format = 'xlsx')
+            imported_households_dict = dataset.dict
+
+            
+            for data in imported_households_dict:
+                slug = data.get('tribeID')
+
+                if not Tribe.objects.filter(user=user, slug=slug).exists():
+                    return HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for valid tribe name.')
+                
+                tribe, created = Tribe.objects.get_or_create(user = request.user,year = year, name = slug, slug=slug)
+
+                household_data = {
+                    'tribeID': tribe,  # Assign the Tribe instance directly
+                    'size': data.get('size'),
+                    'CD_score':bool(data.get('CD_score')),
+                    'IM_score':bool(data.get('IM_score')),
+                    'MC_score':bool(data.get('MC_score')),
+                    'CM_score':bool(data.get('CM_score')),
+                    'FS_score':bool(data.get('FS_score')),
+                    'LE_score':bool(data.get('LE_score')),
+                    'DRO_score':bool(data.get('DRO_score')),
+                    'IC_score':bool(data.get('IC_score')),
+                    'OW_score':bool(data.get('OW_score')),
+                    'SANI_score':bool(data.get('SANI_score')),
+                    'FUEL_score':bool(data.get('FUEL_score')),
+                    'DRWA_score':bool(data.get('DRWA_score')),
+                    'ELECTR_score':bool(data.get('ELECTR_score')),
+                    'ASS_score':bool(data.get('ASS_score')),
+                    'LAN_score':bool(data.get('LAN_score')),
+                    'ARTS_score':bool(data.get('ARTS_score')),
+                    'EV_score':bool(data.get('EV_score')),
+                    'MEET_score':bool(data.get('MEET_score'))
+                }
+                household_form = HouseholdForm(household_data)
+                if household_form.is_valid():
+                    household_form.save()
+            
+            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
+            return redirect(redirect_url)
+
+
+                
+
+        else:
+            cleaned_data_list = []
+            # Set the initial year for each form
+
+            
+            
+            
             for form in formset:
-                print(form.errors)
+                # Get the Tribe object corresponding to the slug
+        
+                # print(form)
+
+                if form.is_valid():
+                    tribe = form.cleaned_data.get('tribeID')
+                    slug = tribe.slug
+                    newtribe, created = Tribe.objects.get_or_create(user=request.user, year=year, name=slug, slug=slug)
+                    form.instance.tribeID = newtribe
+
+                    household = form.save(commit=False)
+                    household.save()
+
+                    cleaned_data_list.append(household)
+                else:
+                    # Print form errors to understand why validation failed
+                    print(form.errors)
+
+            if cleaned_data_list:
+                redirect_url = f'/tribe/{slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
+                return redirect(redirect_url)
+
 
     else:
         formset = YourModelFormSet(prefix='form')
 
-    return render(request, 'form/form.html', {'formset': formset, 'tribes': tribes,'alltribes':alltribes})
+    context = {
+        'tribes': tribes,
+        'alltribes':alltribes_defined,
+    }
+
+    if formset:
+        context['formset'] = formset
+    return render(request, 'form/form.html',context)
 
     
     

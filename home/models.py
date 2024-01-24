@@ -24,7 +24,7 @@ class Tribe(models.Model):
     tdi = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.slug}"
+        return f"{self.slug}-{self.year}"
     
 
 
@@ -451,8 +451,8 @@ class Household(models.Model):
     MEET_score = models.BooleanField(null = True, blank=True)
  
     
-    # def __str__(self):
-    #     return f"HH ({self.tribeID.name})"
+    def __str__(self):
+        return f"HH ({self.tribeID.name})-{self.tribeID.year}"
 
 
 
