@@ -5,6 +5,7 @@ class HouseholdForm(forms.ModelForm):
     class Meta:
         model = Household
         fields = [
+            'tribeID',
             'size',
             'CD_score',   
             'IM_score',   
