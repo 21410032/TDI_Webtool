@@ -2,10 +2,12 @@ from django.db import models
 from django.db.models import Sum
 from django.core.cache import cache
 from django.utils.text import slugify
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 
+from django.contrib.auth import get_user_model
 User = get_user_model()
+
+from django.conf import settings
 
 
 # Create your models here.
@@ -13,7 +15,7 @@ User = get_user_model()
 
 
 class Tribe(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='households',default='7219142469')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tribe',default=settings.ADMIN_USER_PHONE_NUMBER)
     year = models.IntegerField()
     name = models.CharField(max_length=50)
     slug = models.SlugField(null=True, blank=True)

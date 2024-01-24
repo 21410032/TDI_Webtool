@@ -4,356 +4,357 @@
 
 {% if messages %}
 <ul class="messages">
-  {% for message in messages %}
-  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-    {% endfor %}
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
 </ul>
 {% endif %}
 <form method="post">
-  {% csrf_token %}
-  {{ formset.management_form }}
-  <label for="id_year">Year:</label>
-  <input type="number" name="year" step="any" id="id_year" required>
-
-  <div id="formset">
-    {% for form in formset %}
-    <div id="form">
-      <label for="id_form-0-name">Name:</label>
-      <select name="form-0-name" id="id_form-0-name" fdprocessedid="isxhvk">
-        {% for district in districts %}
-        <option value="{{ district.slug }}">{{ district.slug }}</option>
-        {% endfor %}
-      </select>
-
-
-
-
-
-
-
-
-      <p>
-        <label for="id_form-0-st_population">St population:</label>
-        <input type="number" name="form-0-st_population" step="any" id="id_form-0-st_population" fdprocessedid="glejfu">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-total_population">Total population:</label>
-        <input type="number" name="form-0-total_population" step="any" id="id_form-0-total_population"
-          fdprocessedid="2nu804">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-W_BMI">W BMI:</label>
-        <input type="number" name="form-0-W_BMI" step="any" id="id_form-0-W_BMI" fdprocessedid="c0h97a">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-C_UW">C UW:</label>
-        <input type="number" name="form-0-C_UW" step="any" id="id_form-0-C_UW" fdprocessedid="gb1gt">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-AN_W">AN W:</label>
-        <input type="number" name="form-0-AN_W" step="any" id="id_form-0-AN_W" fdprocessedid="m73un">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-AN_C">AN C:</label>
-        <input type="number" name="form-0-AN_C" step="any" id="id_form-0-AN_C" fdprocessedid="358vcq">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-AHC_ANC">AHC ANC:</label>
-        <input type="number" name="form-0-AHC_ANC" step="any" id="id_form-0-AHC_ANC" fdprocessedid="wpwaq9">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-AHC_Full_ANC">AHC Full ANC:</label>
-        <input type="number" name="form-0-AHC_Full_ANC" step="any" id="id_form-0-AHC_Full_ANC" fdprocessedid="csaf3m">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-AHC_PNC">AHC PNC:</label>
-        <input type="number" name="form-0-AHC_PNC" step="any" id="id_form-0-AHC_PNC" fdprocessedid="9iy313j">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-AHC_HI">AHC HI:</label>
-        <input type="number" name="form-0-AHC_HI" step="any" id="id_form-0-AHC_HI" fdprocessedid="9t9wc2">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-Enrollment">Enrollment:</label>
-        <input type="number" name="form-0-Enrollment" step="any" id="id_form-0-Enrollment" fdprocessedid="mk8n8a">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-Equity">Equity:</label>
-        <input type="number" name="form-0-Equity" step="any" id="id_form-0-Equity" fdprocessedid="cr2mf8">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-E_DropRate">E DropRate:</label>
-        <input type="number" name="form-0-E_DropRate" step="any" id="id_form-0-E_DropRate" fdprocessedid="zy0fv">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-S_Sani">S Sani:</label>
-        <input type="number" name="form-0-S_Sani" step="any" id="id_form-0-S_Sani" fdprocessedid="nki0g">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-S_CoFu">S CoFu:</label>
-        <input type="number" name="form-0-S_CoFu" step="any" id="id_form-0-S_CoFu" fdprocessedid="w2sqd9">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-S_DrWa">S DrWa:</label>
-        <input type="number" name="form-0-S_DrWa" step="any" id="id_form-0-S_DrWa" fdprocessedid="984vzc">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-S_Elec">S Elec:</label>
-        <input type="number" name="form-0-S_Elec" step="any" id="id_form-0-S_Elec" fdprocessedid="9c6rpp">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-DELETE">Delete:</label>
-        <input type="checkbox" name="form-0-DELETE" id="id_form-0-DELETE">
-
-
-
-
-      </p>
-
-    </div>
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <label for="id_year">Year:</label>
+    <input type="number" name="year" step="any" id="id_year" required>
+
+    <div id="formset">
+        {% for form in formset %}
+        <div id="form">
+          <label for="id_form-0-name">Name:</label>
+<select name="form-0-name" id="id_form-0-name" fdprocessedid="isxhvk">
+    {% for district in districts %}
+        
     {% endfor %}
-  </div>
+</select>
+ 
+   
+   
 
-  <button type="button" id="add-form">Add Form</button>
-  <button type="button" id="remove-form">Remove Last Form</button>
+ 
+ 
+ 
+   
+   <p>
+     <label for="id_form-0-st_population">St population:</label>
+     <input type="number" name="form-0-st_population" step="any" id="id_form-0-st_population" fdprocessedid="glejfu">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-total_population">Total population:</label>
+     <input type="number" name="form-0-total_population" step="any" id="id_form-0-total_population" fdprocessedid="2nu804">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-W_BMI">W BMI:</label>
+     <input type="number" name="form-0-W_BMI" step="any" id="id_form-0-W_BMI" fdprocessedid="c0h97a">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-C_UW">C UW:</label>
+     <input type="number" name="form-0-C_UW" step="any" id="id_form-0-C_UW" fdprocessedid="gb1gt">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-AN_W">AN W:</label>
+     <input type="number" name="form-0-AN_W" step="any" id="id_form-0-AN_W" fdprocessedid="m73un">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-AN_C">AN C:</label>
+     <input type="number" name="form-0-AN_C" step="any" id="id_form-0-AN_C" fdprocessedid="358vcq">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-AHC_ANC">AHC ANC:</label>
+     <input type="number" name="form-0-AHC_ANC" step="any" id="id_form-0-AHC_ANC" fdprocessedid="wpwaq9">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-AHC_Full_ANC">AHC Full ANC:</label>
+     <input type="number" name="form-0-AHC_Full_ANC" step="any" id="id_form-0-AHC_Full_ANC" fdprocessedid="csaf3m">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-AHC_PNC">AHC PNC:</label>
+     <input type="number" name="form-0-AHC_PNC" step="any" id="id_form-0-AHC_PNC" fdprocessedid="9iy313j">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-AHC_HI">AHC HI:</label>
+     <input type="number" name="form-0-AHC_HI" step="any" id="id_form-0-AHC_HI" fdprocessedid="9t9wc2">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-Enrollment">Enrollment:</label>
+     <input type="number" name="form-0-Enrollment" step="any" id="id_form-0-Enrollment" fdprocessedid="mk8n8a">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-Equity">Equity:</label>
+     <input type="number" name="form-0-Equity" step="any" id="id_form-0-Equity" fdprocessedid="cr2mf8">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-E_DropRate">E DropRate:</label>
+     <input type="number" name="form-0-E_DropRate" step="any" id="id_form-0-E_DropRate" fdprocessedid="zy0fv">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-S_Sani">S Sani:</label>
+     <input type="number" name="form-0-S_Sani" step="any" id="id_form-0-S_Sani" fdprocessedid="nki0g">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-S_CoFu">S CoFu:</label>
+     <input type="number" name="form-0-S_CoFu" step="any" id="id_form-0-S_CoFu" fdprocessedid="w2sqd9">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-S_DrWa">S DrWa:</label>
+     <input type="number" name="form-0-S_DrWa" step="any" id="id_form-0-S_DrWa" fdprocessedid="984vzc">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-S_Elec">S Elec:</label>
+     <input type="number" name="form-0-S_Elec" step="any" id="id_form-0-S_Elec" fdprocessedid="9c6rpp">
+     
+     
+   </p>
+ 
+   
+   <p>
+     <label for="id_form-0-DELETE">Delete:</label>
+     <input type="checkbox" name="form-0-DELETE" id="id_form-0-DELETE">
+     
+     
+       
+     
+   </p>
+         
+     </div>
+        {% endfor %}
+    </div>
 
-  <input type="submit" value="Submit">
+    <button type="button" id="add-form">Add Form</button>
+    <button type="button" id="remove-form">Remove Last Form</button>
+
+    <input type="submit" value="Submit">
 </form>
 <script>
-  // When the "Add Form" button is clicked
-  document.getElementById('add-form').addEventListener('click', function () {
-    // Get the div containing the form elements
-    var formsetDiv = document.getElementById('formset');
-
-    // Get the last form in the formset
-    var lastForm = formsetDiv.lastElementChild;
-
-    // Clone the last form
-    var newForm = lastForm.cloneNode(true);
-
-    // Clear values in the cloned form
-    newForm.querySelectorAll('input, select, textarea').forEach(function (element) {
-      element.value = '';
+    // When the "Add Form" button is clicked
+    document.getElementById('add-form').addEventListener('click', function () {
+        // Get the div containing the form elements
+        var formsetDiv = document.getElementById('formset');
+    
+        // Get the last form in the formset
+        var lastForm = formsetDiv.lastElementChild;
+    
+        // Clone the last form
+        var newForm = lastForm.cloneNode(true);
+    
+        // Clear values in the cloned form
+        newForm.querySelectorAll('input, select, textarea').forEach(function (element) {
+            element.value = '';
+        });
+    
+        // Increment the form index
+        var formCountField = document.getElementById('id_form-TOTAL_FORMS');
+        var newFormIndex = parseInt(formCountField.value);
+        newFormIndex++;
+        formCountField.value = newFormIndex;
+    
+        // Update the IDs of form fields in the cloned form
+        newForm.querySelectorAll('[id]').forEach(function (element) {
+            element.id = element.id.replace(/-\d+/, '-' + (newFormIndex-1));
+        });
+    
+        // Update the names of form fields in the cloned form
+        newForm.querySelectorAll('[name]').forEach(function (element) {
+            element.name = element.name.replace(/-\d+/, '-' + (newFormIndex-1));
+        });
+        newForm.querySelectorAll('label').forEach(function (label) {
+            var labelFor = label.getAttribute('for');
+            if (labelFor) {
+                label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex-1)));
+            }
+        });
+        // Append the new form to the formset
+        formsetDiv.appendChild(newForm);
     });
-
-
-    // Increment the form index
-    var formCountField = document.getElementById('id_form-TOTAL_FORMS');
-    var newFormIndex = parseInt(formCountField.value);
-    newFormIndex++;
-    formCountField.value = newFormIndex;
-
-    // Update the IDs of form fields in the cloned form
-    newForm.querySelectorAll('[id]').forEach(function (element) {
-      element.id = element.id.replace(/-\d+/, '-' + (newFormIndex - 1));
-    });
-
-    // Update the names of form fields in the cloned form
-    newForm.querySelectorAll('[name]').forEach(function (element) {
-      element.name = element.name.replace(/-\d+/, '-' + (newFormIndex - 1));
-    });
-    newForm.querySelectorAll('label').forEach(function (label) {
-      var labelFor = label.getAttribute('for');
-      if (labelFor) {
-        label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex - 1)));
-
+    
+    document.getElementById('remove-form').addEventListener('click', function () {
+      var formsetDiv = document.getElementById('formset');
+  
+      if (formsetDiv.childElementCount > 1) {
+          var lastForm = formsetDiv.lastElementChild;
+          var deleteCheckbox = lastForm.querySelector('[id$="-DELETE"]');
+  
+          if (deleteCheckbox) {
+              if (deleteCheckbox.checked) {
+                  // Hide the form and disable its inputs
+                  lastForm.style.display = 'none';
+                  lastForm.querySelectorAll('input, select, textarea').forEach(function (element) {
+                      element.disabled = true;
+                  });
+              } else {
+                  // If not marked for deletion, set the DELETE field to true
+                  deleteCheckbox.checked = true;
+              }
+          }
       }
-    });
-    // Append the new form to the formset
-    formsetDiv.appendChild(newForm);
   });
-
-
-  // When the "Remove Last Form" button is clicked
-  document.getElementById('remove-form').addEventListener('click', function () {
-    // Get the div containing the form elements
-    var formsetDiv = document.getElementById('formset');
-
-    // If there is more than one form, remove the last one
-    if (formsetDiv.childElementCount > 1) {
-      var lastForm = formsetDiv.lastElementChild;
-      formsetDiv.removeChild(lastForm);
-    }
-  });
-
+  
+  
+  
+  
+    
 
 </script>
 <style>
+ 
   /* Container for the entire form */
   form {
-    max-width: 800px;
-    margin: auto;
-    padding: 30px;
-    background-color: #f7f7f7;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      background-color: #f7f7f7;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
   }
-
+  
   /* Style formset container */
   #formset {
-    margin-bottom: 30px;
+      margin-bottom: 30px;
   }
-
+  
   /* Style each form within the formset */
   #form {
-    border: 2px solid #e74c3c;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 30px;
-    background-color: #fff;
-    transition: box-shadow 0.3s ease;
+      border: 2px solid #e74c3c;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      background-color: #fff;
+      transition: box-shadow 0.3s ease;
   }
-
+  
   /* Hover effect for each form */
   #form:hover {
-    box-shadow: 0 0 30px rgba(231, 76, 60, 0.5);
+      box-shadow: 0 0 30px rgba(231, 76, 60, 0.5);
   }
-
+  
   /* Style form labels and input fields */
   label {
-    display: block;
-    margin-bottom: 12px;
-    color: #333;
-    font-weight: bold;
+      display: block;
+      margin-bottom: 12px;
+      color: #333;
+      font-weight: bold;
   }
-
-  input,
-  select,
-  textarea {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    background-color: #fff;
-    transition: border-color 0.3s ease;
+  
+  input, select, textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
   }
-
+  
   /* Hover effect for input fields */
-  input:hover,
-  select:hover,
-  textarea:hover {
-    border-color: #e74c3c;
+  input:hover, select:hover, textarea:hover {
+      border-color: #e74c3c;
   }
-
+  
   /* Style the "Add Form" and "Remove Last Form" buttons */
-  #add-form,
-  #remove-form {
-    background-color: #3498db;
-    color: #fff;
-    padding: 14px;
-    margin: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
+  #add-form, #remove-form {
+      background-color: #3498db;
+      color: #fff;
+      padding: 14px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
   }
-
-  #add-form:hover,
-  #remove-form:hover {
-    background-color: #2980b9;
+  
+  #add-form:hover, #remove-form:hover {
+      background-color: #2980b9;
   }
-
+  
   /* Style form submission button */
   input[type="submit"] {
-    background-color: #e74c3c;
-    color: #fff;
-    padding: 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+      background-color: #e74c3c;
+      color: #fff;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
   }
-
+  
   input[type="submit"]:hover {
-    background-color: #c0392b;
+      background-color: #c0392b;
   }
-
+  
   /* Responsive design for smaller screens */
   @media (max-width: 600px) {
-    form {
-      padding: 20px;
-    }
-
-    input,
-    select,
-    textarea {
-      margin-bottom: 14px;
-    }
-
-    #add-form,
-    #remove-form,
-    input[type="submit"] {
-      margin:
-    }
+      form {
+          padding: 20px;
+      }
+  
+      input, select, textarea {
+          margin-bottom: 14px;
+      }
+  
+      #add-form, #remove-form, input[type="submit"] {
+          margin: 
+      }  
 </style>
 {% endblock content %}

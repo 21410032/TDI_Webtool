@@ -54,87 +54,87 @@
     </div>
     {% endfor %} {% endif %}
 
-    
-        <div class="main-logo-parent">
-            <div class="main-logo">
-                <b class="tdi-webtool"><a href="{% url 'home' %}">TDI Webtool</a></b>
-            </div>
-            <div class="nav-items">
 
-
-                <div class="home" id="tribeDropdown">
-
-                    <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        TRIBE
-                    </div>
-
-                    <ul class="dropdown-menu" aria-labelledby="tribeDropdown">
-                        {% for tribe in tribes %}
-                        <li><a class="dropdown-item" href="/tribe/{{ tribe.slug }}/2022">
-                                {{ tribe.name }}
-                            </a></li>
-                        {% endfor %}
-                    </ul>
-
-                </div>
-
-                <div class="home"><a href="#">RESEARCH</a></div>
-
-                <div class="home" id="districtDropdown">
-                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        District
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        {% for district in district %}
-                        <li><a class="dropdown-item" href="/district/{{district.slug}}/{{district.year}}">
-                                {{district.name}}
-                            </a></li>
-                        {% endfor %}
-
-                    </ul>
-                </div>
-
-                <div class="home"><a href="/gallery">GALLERY</a></div>
-                <div class="home"><a href="#">ABOUT US</a></div>
-                <div class="home"><a href="#">CONTACT US</a></div>
-            </div>
-            <div
-                style="display: flex;gap: 10px;justify-content: center;align-items: center;position: absolute;top: 29.5px;right: 73.2px;">
-                {% if not request.user.is_authenticated %}
-                <div class="login-btn">
-                    <div class="login">
-                        <a href="{% url 'login'%}">LOGIN</a>
-                    </div>
-                </div>
-                <div class="login-btn">
-                    <div class="login">
-                        <a href="{% url 'register'%}">REGISTER</a>
-                    </div>
-                </div>
-                {% else %}
-
-                <div class="profile-pic">
-                    <a href="{% url 'profile' %}">
-                        <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
-                            class="nav-profile-icon" alt="">
-
-                    </a>
-                </div>
-
-
-                <div class="login-btn">
-                    <div class="login">
-                        <a href="{% url 'logout'%}">LOGOUT</a>
-                    </div>
-                </div>
-
-                {% endif %}
-            </div>
+    <div class="main-logo-parent">
+        <div class="main-logo">
+            <b class="tdi-webtool"><a href="{% url 'home' %}">TDI Webtool</a></b>
         </div>
-        {% block content %}
-        {% endblock %}
-    
+        <div class="nav-items">
+
+
+            <div class="home" id="tribeDropdown">
+
+                <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    TRIBE
+                </div>
+
+                <ul class="dropdown-menu" aria-labelledby="tribeDropdown">
+                    {% for tribe in tribes %}
+                    <li><a class="dropdown-item" href="/tribe/{{ tribe.slug }}/2022">
+                            {{ tribe.name }}
+                        </a></li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            <div class="home"><a href="#">RESEARCH</a></div>
+
+            <div class="home" id="districtDropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    District
+                </a>
+
+                <ul class="dropdown-menu">
+                    {% for district in district %}
+                    <li><a class="dropdown-item" href="/district/{{district.slug}}/{{district.year}}">
+                            {{district.name}}
+                        </a></li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+
+            <div class="home"><a href="/gallery">GALLERY</a></div>
+            <div class="home"><a href="#">ABOUT US</a></div>
+            <div class="home"><a href="#">CONTACT US</a></div>
+        </div>
+        <div
+            style="display: flex;gap: 10px;justify-content: center;align-items: center;position: absolute;top: 29.5px;right: 73.2px;">
+            {% if not request.user.is_authenticated %}
+            <div class="login-btn">
+                <div class="login">
+                    <a href="{% url 'login'%}">LOGIN</a>
+                </div>
+            </div>
+            <div class="login-btn">
+                <div class="login">
+                    <a href="{% url 'register'%}">REGISTER</a>
+                </div>
+            </div>
+            {% else %}
+
+            <div class="profile-pic">
+                <a href="{% url 'profile' %}">
+                    <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
+                        class="nav-profile-icon" alt="">
+
+                </a>
+            </div>
+
+
+            <div class="login-btn">
+                <div class="login">
+                    <a href="{% url 'logout'%}">LOGOUT</a>
+                </div>
+            </div>
+
+            {% endif %}
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+
 
 
     </div>

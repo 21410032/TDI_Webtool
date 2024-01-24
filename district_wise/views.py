@@ -23,12 +23,8 @@ def district_view(request,slug1,slug2):
 
 
     else:    
-        user = User.objects.get(phone_number='7219142469')
+        user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
 
-    print(user)
-
-    print(slug1)
-    print(slug2)
     District.objects.filter(W_BMI__isnull=True).delete()
     districts=District.objects.filter(user = user)
 
@@ -90,7 +86,7 @@ def test2_view(request):
 @login_required
 def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
-    user = User.objects.get(phone_number='7667605908')
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
    
     districts = District.objects.all().filter(user=user)
 
