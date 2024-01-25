@@ -19,8 +19,7 @@ from django.forms import formset_factory
 
 
 def tribe_detail_view(request, slug1, slug2):
-    print(slug1)
-    print(slug2)
+
 
     user_phone_number = request.GET.get('user')
     if user_phone_number:
@@ -30,12 +29,15 @@ def tribe_detail_view(request, slug1, slug2):
         user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
 
-    print(tribes)
     if slug1 and slug2 is not None:
-         tribe = Tribe.objects.filter(user=user,name = slug1,year=slug2)
-        
-    print(tribe)
-    total_tribals = tribe.get_total_tribals()
+        try:
+            
+            tribe = Tribe.objects.get(user=user, year=slug2, slug = slug1)
+            
+        except Exception as e:
+            return e 
+
+    total_tribals = tribe.get_total_tribals
     household = Household.objects.all()
     districts = District.objects.all()
     
@@ -70,9 +72,6 @@ def tribe_detail_view(request, slug1, slug2):
 
 
     return render(request, 'pvtg/asur.html', context=context)
-
-    # return render(request, 'base.html')
-
 
 
 # def test_view(request):
