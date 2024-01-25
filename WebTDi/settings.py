@@ -170,6 +170,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+
+
 #Environment variables
 from dotenv import load_dotenv
 load_dotenv()
