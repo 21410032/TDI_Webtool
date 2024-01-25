@@ -1,18 +1,14 @@
 {% load static %}
 
-
-
-
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="{% static 'newcss/globallogin.css' %}">
-    <link rel="stylesheet" href="{% static 'newcss/login.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'newcss/globallogin.css' %}" />
+    <link rel="stylesheet" href="{% static 'newcss/login.css' %}" />
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap"
@@ -42,10 +38,9 @@
               </div>
               <div class="h-o-m-e-r-e-s-e-a-r-c-h-t-e-a">
                 <div class="f-r-a-m-e-container">
-                  
-                    {% if not request.user.is_authenticated %}
-                    <form method="POST">
-                      {% csrf_token %}
+                  {% if not request.user.is_authenticated %}
+                  <form method="POST">
+                    {% csrf_token %}
                     <div class="f-r-a-m-e5">
                       <div class="f-r-a-m-e6">
                         <div class="iconamoonprofile-fill-parent">
@@ -77,18 +72,20 @@
                           />
                         </div>
                       </div>
-                      <div class="login-btn"> <button type="submit" class="login-btn1"><div class="login">Login</div></button></div>
+                      <div class="login-btn">
+                        <button type="submit" class="login-btn1">
+                          <div class="login">Login</div>
+                        </button>
+                      </div>
                     </div>
-                    
                   </form>
-                    
-                  
 
                   {% else %}
-  <div class="accounts-head" style="text-align: center;">
-      You've Already logged in <b>{{user.username}}</b>. Do you want to <a href="{% url 'logout' %}">Logout</a> ?
-  </div>
-  {% endif %}
+                  <div class="accounts-head" style="text-align: center">
+                    You've Already logged in <b>{{user.username}}</b>. Do you
+                    want to <a href="{% url 'logout' %}">Logout</a> ?
+                  </div>
+                  {% endif %}
                 </div>
                 <div class="research-gallery">
                   <div class="about-us-frame">
@@ -138,41 +135,55 @@
   </body>
 </html>
 
-{% comment %} <div class="accountsbox">
-
+{% comment %}
+<div class="accountsbox">
   {% if not request.user.is_authenticated %}
   <div class="accounts-head">
-      <h2>Login to your account</h2>
-
+    <h2>Login to your account</h2>
   </div>
   <form method="POST">
-      {% csrf_token %}
+    {% csrf_token %}
 
-      <div class="form-group">
-          <label for="username">Phone Number</label>
-          <input type="text" class="form-control" name="phone_number" placeholder="Username">
-      </div>
+    <div class="form-group">
+      <label for="username">Phone Number</label>
+      <input
+        type="text"
+        class="form-control"
+        name="phone_number"
+        placeholder="Username"
+      />
+    </div>
 
-      <div class="form-group">
-          <label for="Password">Password</label>
-          <input type="password" class="form-control" name="password" placeholder="Password">
-      </div>
+    <div class="form-group">
+      <label for="Password">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        placeholder="Password"
+      />
+    </div>
 
-      <div class="form-group">
-          <a href="#" class="float-right">Forgot password?</a>
-          <label class="float-left custom-control custom-checkbox"> <input type="checkbox"
-                  class="custom-control-input" checked="">
-              <div class="custom-control-label">Remember</div>
-          </label>
-      </div><br><br>
+    <div class="form-group">
+      <a href="#" class="float-right">Forgot password?</a>
+      <label class="float-left custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" checked="" />
+        <div class="custom-control-label">Remember</div>
+      </label>
+    </div>
+    <br /><br />
 
-      <button type="submit" class="btn btn-primary">Login</button><br>
+    <button type="submit" class="btn btn-primary">Login</button><br />
   </form>
-  <p class="text-center mt-4">Don't have account? <a href="{% url 'register' %}">Sign up</a></p>
+  <p class="text-center mt-4">
+    Don't have account? <a href="{% url 'register' %}">Sign up</a>
+  </p>
 
   {% else %}
-  <div class="accounts-head" style="text-align: center;">
-      You've Already logged in <b>{{user.username}}</b>. Do you want to <a href="{% url 'logout' %}">Logout</a> ?
+  <div class="accounts-head" style="text-align: center">
+    You've Already logged in <b>{{user.username}}</b>. Do you want to
+    <a href="{% url 'logout' %}">Logout</a> ?
   </div>
   {% endif %}
-</div> {% endcomment %}
+</div>
+{% endcomment %}

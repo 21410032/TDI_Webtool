@@ -9,323 +9,342 @@
     {% endfor %}
 </ul>
 {% endif %}
-<form method="post">
+<form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ formset.management_form }}
 
+  <label for="id_year">Select Year:</label>
+  <input type="number" name="year" step="any" id="id_year" required placeholder="Year">
 
-  <label for="id_year">Year:</label>
-  <input type="number" name="year" step="any" id="id_year" required>
 
-  <label for="id_tribeID">Select Tribe</label>
-  <select name="tribeID" id="id_tribeID" fdprocessedid="88eg1">
-    {% for tribe in tribes %}
-    <option value="{{ tribe.slug }}">{{ tribe.name }}</option>
-    {% endfor %}
+
+
+  <!-- <label for="entryType">Select Data Entry Type:</label> -->
+  <select id="entryType" onchange="toggleForms()">
+    <option value="" disabled selected hidden>-- Data Input Type</option>
+    <option value="manual">Manual Entry</option>
+    <option value="file">Upload Excel</option>
   </select>
 
-  <div id="formset">
-    {% for form in formset %}
-    <div id="form">
-
-      <p>
-        <label for="id_form-0-size">Size:</label>
-        <input type="number" name="form-0-size" id="id_form-0-size" fdprocessedid="539hvs">
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-CD_score">CD score:</label>
-        <select name="form-0-CD_score" id="id_form-0-CD_score" fdprocessedid="btt0k">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-IM_score">IM score:</label>
-        <select name="form-0-IM_score" id="id_form-0-IM_score" fdprocessedid="ropznu">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-MC_score">MC score:</label>
-        <select name="form-0-MC_score" id="id_form-0-MC_score" fdprocessedid="qn8lnl">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-CM_score">CM score:</label>
-        <select name="form-0-CM_score" id="id_form-0-CM_score" fdprocessedid="dqv70q">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-FS_score">FS score:</label>
-        <select name="form-0-FS_score" id="id_form-0-FS_score" fdprocessedid="hvq9bh">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-LE_score">LE score:</label>
-        <select name="form-0-LE_score" id="id_form-0-LE_score" fdprocessedid="p2mt5b">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-DRO_score">DRO score:</label>
-        <select name="form-0-DRO_score" id="id_form-0-DRO_score" fdprocessedid="uifd2">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-IC_score">IC score:</label>
-        <select name="form-0-IC_score" id="id_form-0-IC_score" fdprocessedid="fe4lid">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-OW_score">OW score:</label>
-        <select name="form-0-OW_score" id="id_form-0-OW_score" fdprocessedid="8aub8c">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-SANI_score">SANI score:</label>
-        <select name="form-0-SANI_score" id="id_form-0-SANI_score" fdprocessedid="47iyj">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-FUEL_score">FUEL score:</label>
-        <select name="form-0-FUEL_score" id="id_form-0-FUEL_score" fdprocessedid="69fqko">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-DRWA_score">DRWA score:</label>
-        <select name="form-0-DRWA_score" id="id_form-0-DRWA_score" fdprocessedid="5502ce">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-ELECTR_score">ELECTR score:</label>
-        <select name="form-0-ELECTR_score" id="id_form-0-ELECTR_score" fdprocessedid="zcvwyi">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-ASS_score">ASS score:</label>
-        <select name="form-0-ASS_score" id="id_form-0-ASS_score" fdprocessedid="p01hin">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-LAN_score">LAN score:</label>
-        <select name="form-0-LAN_score" id="id_form-0-LAN_score" fdprocessedid="jby99">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-ARTS_score">ARTS score:</label>
-        <select name="form-0-ARTS_score" id="id_form-0-ARTS_score" fdprocessedid="77amy">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-EV_score">EV score:</label>
-        <select name="form-0-EV_score" id="id_form-0-EV_score" fdprocessedid="d56338">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-MEET_score">MEET score:</label>
-        <select name="form-0-MEET_score" id="id_form-0-MEET_score" fdprocessedid="kpsoct">
-          <option value="unknown" selected="">Unknown</option>
-
-          <option value="true">Yes</option>
-
-          <option value="false">No</option>
-
-        </select>
-
-
-      </p>
-
-
-      <p>
-        <label for="id_form-0-DELETE">Delete:</label>
-        <input type="checkbox" name="form-0-DELETE" id="id_form-0-DELETE">
-
-
-
-
-      </p>
-
-
-
-
-    </div>
-    {% endfor %}
+  <div class="file_upload_box" id="HH_fileUpload_form" style="display: none;">
+    <input type="file" name="households_excel_file" placeholder="Choose file">
   </div>
 
-  <button type="button" id="add-form">Add Form</button>
-  <button type="button" id="remove-form">Remove Last Form</button>
 
-  <input type="submit" value="Submit">
+  <div id="HH_manual_data_form" style="display: none;">
+
+    <div id="formset">
+
+
+
+      {% for form in formset %}
+
+      <div id="form">
+
+        <select name="form-0-tribeID" id="id_form-0-tribeID">
+          <!-- <option value="" disabled selected>-- Select Tribe</option> -->
+          {% for tribe in tribes %}
+          <option value="{{ tribe }}">{{ tribe.name }}</option>
+          {% endfor %}
+        </select>
+
+        <p>
+          <label for="id_form-0-size">Size:</label>
+          <input type="number" name="form-0-size" id="id_form-0-size" fdprocessedid="539hvs">
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-CD_score">CD score:</label>
+          <select name="form-0-CD_score" id="id_form-0-CD_score" fdprocessedid="btt0k">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-IM_score">IM score:</label>
+          <select name="form-0-IM_score" id="id_form-0-IM_score" fdprocessedid="ropznu">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-MC_score">MC score:</label>
+          <select name="form-0-MC_score" id="id_form-0-MC_score" fdprocessedid="qn8lnl">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-CM_score">CM score:</label>
+          <select name="form-0-CM_score" id="id_form-0-CM_score" fdprocessedid="dqv70q">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-FS_score">FS score:</label>
+          <select name="form-0-FS_score" id="id_form-0-FS_score" fdprocessedid="hvq9bh">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-LE_score">LE score:</label>
+          <select name="form-0-LE_score" id="id_form-0-LE_score" fdprocessedid="p2mt5b">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-DRO_score">DRO score:</label>
+          <select name="form-0-DRO_score" id="id_form-0-DRO_score" fdprocessedid="uifd2">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-IC_score">IC score:</label>
+          <select name="form-0-IC_score" id="id_form-0-IC_score" fdprocessedid="fe4lid">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-OW_score">OW score:</label>
+          <select name="form-0-OW_score" id="id_form-0-OW_score" fdprocessedid="8aub8c">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-SANI_score">SANI score:</label>
+          <select name="form-0-SANI_score" id="id_form-0-SANI_score" fdprocessedid="47iyj">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-FUEL_score">FUEL score:</label>
+          <select name="form-0-FUEL_score" id="id_form-0-FUEL_score" fdprocessedid="69fqko">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-DRWA_score">DRWA score:</label>
+          <select name="form-0-DRWA_score" id="id_form-0-DRWA_score" fdprocessedid="5502ce">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-ELECTR_score">ELECTR score:</label>
+          <select name="form-0-ELECTR_score" id="id_form-0-ELECTR_score" fdprocessedid="zcvwyi">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-ASS_score">ASS score:</label>
+          <select name="form-0-ASS_score" id="id_form-0-ASS_score" fdprocessedid="p01hin">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-LAN_score">LAN score:</label>
+          <select name="form-0-LAN_score" id="id_form-0-LAN_score" fdprocessedid="jby99">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-ARTS_score">ARTS score:</label>
+          <select name="form-0-ARTS_score" id="id_form-0-ARTS_score" fdprocessedid="77amy">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-EV_score">EV score:</label>
+          <select name="form-0-EV_score" id="id_form-0-EV_score" fdprocessedid="d56338">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-MEET_score">MEET score:</label>
+          <select name="form-0-MEET_score" id="id_form-0-MEET_score" fdprocessedid="kpsoct">
+            <option value="unknown" selected="">Unknown</option>
+
+            <option value="true">Yes</option>
+
+            <option value="false">No</option>
+
+          </select>
+
+
+        </p>
+
+
+        <p>
+          <label for="id_form-0-DELETE">Delete:</label>
+          <input type="checkbox" name="form-0-DELETE" id="id_form-0-DELETE">
+
+
+
+
+        </p>
+
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="button" id="add-form">Add Form</button>
+    <button type="button" id="remove-form">Remove Last Form</button>
+  </div>
+
+  <!-- <input type="submit" value="Submit"> -->
+  <button type="submit" class="tribe_form_submit">Submit</button>
 </form>
 <style>
   /* Container for the entire form */
@@ -367,6 +386,7 @@
   }
 
   input,
+  .tribe_form_submit,
   select,
   textarea {
     width: 100%;
@@ -381,6 +401,7 @@
 
   /* Hover effect for input fields */
   input:hover,
+  .tribe_form_submit:hover,
   select:hover,
   textarea:hover {
     border-color: #3498db;
@@ -405,7 +426,7 @@
   }
 
   /* Style form submission button */
-  input[type="submit"] {
+  .tribe_form_submit {
     background-color: #3498db;
     color: #fff;
     padding: 14px;
@@ -415,7 +436,7 @@
     transition: background-color 0.3s ease;
   }
 
-  input[type="submit"]:hover {
+  .tribe_form_submit[type="submit"]:hover {
     background-color: #2980b9;
   }
 
@@ -426,6 +447,7 @@
     }
 
     input,
+    .tribe_form_submit,
     select,
     textarea {
       margin-bottom: 14px;
@@ -433,13 +455,13 @@
 
     #add-form,
     #remove-form,
-    input[type="submit"] {
+    .tribe_form_submit {
       margin: 10px;
     }
   }
 </style>
 <script>
-  // When the "Add Form" button is clicked
+
   document.getElementById('add-form').addEventListener('click', function () {
     // Get the div containing the form elements
     var formsetDiv = document.getElementById('formset');
@@ -480,7 +502,6 @@
     formsetDiv.appendChild(newForm);
   });
 
-  // When the "Remove Last Form" button is clicked
   document.getElementById('remove-form').addEventListener('click', function () {
     // Get the div containing the form elements
     var formsetDiv = document.getElementById('formset');
@@ -491,6 +512,25 @@
       formsetDiv.removeChild(lastForm);
     }
   });
+
+
+  function toggleForms() {
+    var entryType = document.getElementById("entryType").value;
+    var manualForm = document.getElementById("HH_manual_data_form");
+    var fileUploadForm = document.getElementById("HH_fileUpload_form");
+    var slugSelect = document.getElementById("id_form-0-tribeID");
+
+
+    if (entryType === "manual") {
+      manualForm.style.display = "block";
+      fileUploadForm.style.display = "none";
+      slugSelect.setAttribute("required", "required");
+    } else if (entryType === "file") {
+      manualForm.style.display = "none";
+      fileUploadForm.style.display = "block";
+      slugSelect.removeAttribute("required");
+    }
+  }
 
 
 
