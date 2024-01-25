@@ -171,4 +171,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #Environment variables
-ADMIN_USER_PHONE_NUMBER = '1234567890'
+from dotenv import load_dotenv
+load_dotenv()
+
+# ADMIN_USER_PHONE_NUMBER = '1234567890'
+ADMIN_USER_PHONE_NUMBER = os.environ.get('ADMIN_USER_PHONE_NUMBER')
