@@ -108,6 +108,7 @@ def form_view(request):
                 tribe, created = Tribe.objects.get_or_create(user = request.user,year = year, name = slug, slug=slug)
 
                 household_data = {
+                    'tribe_slug':slug,
                     'size': data.get('size'),
                     'CD_score':bool(data.get('CD_score')),
                     'IM_score':bool(data.get('IM_score')),
@@ -133,6 +134,9 @@ def form_view(request):
                     household = household_form.save(commit=False)
                     household.tribeID = tribe
                     household.save()
+
+                else:
+                    print(household_form.errors)
             
             redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
