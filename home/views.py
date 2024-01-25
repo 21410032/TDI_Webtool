@@ -74,29 +74,11 @@ def tribe_detail_view(request, slug1, slug2):
     return render(request, 'pvtg/asur.html', context=context)
 
 
-# def test_view(request):
-    
-#     tribe = Tribe.objects.get(id = 2)
-#     total_tribals = tribe.get_total_tribals
-#     household = Household.objects.all()
-    
-    
-    
-#     context = {
-#         'household' : household,
-#         'total_tribals' : total_tribals,
-#         'tribe' : tribe,
-        
-
-#     }
-#     return render(request, 'pvtg/test.html', context)
-
 def form_view(request):
-    YourModelFormSet = formset_factory(HouseholdForm, extra=1, can_delete=True, validate_max=True)
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
     alltribes_defined=Tribe.objects.filter(user = user)
-    formset = YourModelFormSet(request.POST, prefix='form')
+    YourModelFormSet = formset_factory(HouseholdForm, extra=1, can_delete=True, validate_max=True)
     if request.method == 'POST':
 
 
@@ -126,7 +108,6 @@ def form_view(request):
                 tribe, created = Tribe.objects.get_or_create(user = request.user,year = year, name = slug, slug=slug)
 
                 household_data = {
-                    'tribeID': tribe,  # Assign the Tribe instance directly
                     'size': data.get('size'),
                     'CD_score':bool(data.get('CD_score')),
                     'IM_score':bool(data.get('IM_score')),
@@ -149,7 +130,9 @@ def form_view(request):
                 }
                 household_form = HouseholdForm(household_data)
                 if household_form.is_valid():
-                    household_form.save()
+                    household = household_form.save(commit=False)
+                    household.tribeID = tribe
+                    household.save()
             
             redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
@@ -159,32 +142,27 @@ def form_view(request):
 
         else:
             cleaned_data_list = []
-            # Set the initial year for each form
-
             
-            
-            
-            for form in formset:
-                # Get the Tribe object corresponding to the slug
+            formset = YourModelFormSet(request.POST, prefix='form')
         
-                # print(form)
-
-                if form.is_valid():
-                    tribe = form.cleaned_data.get('tribeID')
-                    slug = tribe.slug
-                    newtribe, created = Tribe.objects.get_or_create(user=request.user, year=year, name=slug, slug=slug)
-                    form.instance.tribeID = newtribe
-
+            if formset.is_valid():
+                for form in formset:
+                    tribe_slug = form.cleaned_data['tribe_slug']
+                    tribe, created = Tribe.objects.get_or_create(user=request.user, year=year, name=tribe_slug, slug=tribe_slug)
                     household = form.save(commit=False)
+                    household.tribeID = tribe
                     household.save()
-
                     cleaned_data_list.append(household)
-                else:
-                    # Print form errors to understand why validation failed
-                    print(form.errors)
+            
+            
+            else:
+                # Print form errors to understand why validation failed
+                print(formset.errors)
+    
+                    
 
             if cleaned_data_list:
-                redirect_url = f'/tribe/{slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
+                redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
                 return redirect(redirect_url)
 
 
