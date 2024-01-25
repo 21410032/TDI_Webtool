@@ -202,6 +202,7 @@ def form_view(request):
     return render(request, 'form/form.html',context)
 
     
+    
 
     
 def tribe_pdf_view(request, slug):

@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 def home_view(request):
-    user = User.objects.get(phone_number='7667605908')
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.all()
     districts=District.objects.filter(user = user)
     user = request.user
