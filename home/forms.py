@@ -3,41 +3,41 @@ from .models import Household
 
 class HouseholdForm(forms.ModelForm):
 
-    tribe_choices = [
-    ('kawar', 'Kawar'),
-    ('baiga', 'Baiga'),
-    ('gorait', 'Gorait'),
-    ('kol', 'Kol'),
-    ('karmali', 'Karmali'),
-    ('chik_baraik', 'Chik Baraik'),
-    ('kisan', 'Kisan'),
-    ('kora', 'Kora'),
-    ('gond', 'Gond'),
-    ('Binjhia', 'Binjhia'),
-    ('Chero', 'Chero'),
-    ('Mehli', 'Mehli'),
-    ('Santal', 'Santal'),
-    ('Oraon', 'Oraon'),
-    ('Kharia', 'Kharia'),
-    ('munda', 'Munda'),
-    ('kharwar', 'Kharwar'),
-    ('bhumij', 'Bhumij'),
-    ('bedia', 'Bedia'),
-    ('lohra', 'Lohra'),
-    ('ho', 'Ho'),
-    ('sauria_parhaiya', 'Sauria Parhaiya'),
-    ('savar', 'Savar'),
-    ('parhiya', 'Parhiya'),
-    ('mal_paharia', 'Mal Paharia'),
-    ('korwa', 'Korwa'),
-    ('birjia', 'Birjia'),
-    ('birhor', 'Birhor'),
-    ('asur', 'Asur'),
-]
+#     tribe_choices = [
+#     ('kawar', 'Kawar'),
+#     ('baiga', 'Baiga'),
+#     ('gorait', 'Gorait'),
+#     ('kol', 'Kol'),
+#     ('karmali', 'Karmali'),
+#     ('chik_baraik', 'Chik Baraik'),
+#     ('kisan', 'Kisan'),
+#     ('kora', 'Kora'),
+#     ('gond', 'Gond'),
+#     ('Binjhia', 'Binjhia'),
+#     ('Chero', 'Chero'),
+#     ('Mehli', 'Mehli'),
+#     ('Santal', 'Santal'),
+#     ('Oraon', 'Oraon'),
+#     ('Kharia', 'Kharia'),
+#     ('munda', 'Munda'),
+#     ('kharwar', 'Kharwar'),
+#     ('bhumij', 'Bhumij'),
+#     ('bedia', 'Bedia'),
+#     ('lohra', 'Lohra'),
+#     ('ho', 'Ho'),
+#     ('sauria_parhaiya', 'Sauria Parhaiya'),
+#     ('savar', 'Savar'),
+#     ('parhiya', 'Parhiya'),
+#     ('mal_paharia', 'Mal Paharia'),
+#     ('korwa', 'Korwa'),
+#     ('birjia', 'Birjia'),
+#     ('birhor', 'Birhor'),
+#     ('asur', 'Asur'),
+# ]
 
 
 
-    tribe_slug = forms.ChoiceField(choices=tribe_choices, required=True, label='Tribe')
+#     tribe_slug = forms.ChoiceField(choices=tribe_choices, required=True, label='Tribe')
     class Meta:
         model = Household
         fields = [

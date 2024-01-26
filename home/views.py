@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 from tablib import Dataset
 from .resources import *
@@ -19,24 +20,31 @@ from django.forms import formset_factory
 
 
 def tribe_detail_view(request, slug1, slug2):
-
-
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    print(user)
+    tribe_of_slug = Tribe.objects.get(user=user, year = '2022', slug = slug1)
+    print(tribe_of_slug)
     user_phone_number = request.GET.get('user')
+    print(user_phone_number)
     if user_phone_number:
         user = User.objects.get(phone_number=user_phone_number)
 
     else:    
         user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    print(user)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
-
+    print(tribes)
     if slug1 and slug2 is not None:
+        print(slug1)
+        print(slug2)
         try:
             
             tribe = Tribe.objects.get(user=user, year=slug2, slug = slug1)
             
         except Exception as e:
             return e 
-
+    print(tribe)
+    # tribe_of_slug = Tribe.objects.get(slug = slug1)
     total_tribals = tribe.get_total_tribals
     household = Household.objects.all()
     districts = District.objects.all()
@@ -52,11 +60,12 @@ def tribe_detail_view(request, slug1, slug2):
     tribal_dimensional_index = tribe.tribal_dimensional_index
     dimension_contribution_to_tdi = tribe.dimension_contribution_to_tdi
 
-    
+    # print(tribe_of_slug.tribe_image.first.map_image.url)
     
     context = {
         'household': household,
         'total_tribals': total_tribals,
+        'tribe_of_slug':tribe_of_slug,
         'tribe': tribe,
         'tribes' : tribes,
         'health_contributions_to_dimension': health_contributions_to_dimension,
@@ -73,7 +82,7 @@ def tribe_detail_view(request, slug1, slug2):
 
     return render(request, 'pvtg/asur.html', context=context)
 
-
+@login_required(login_url='/accounts/login/')
 def form_view(request):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
@@ -83,7 +92,8 @@ def form_view(request):
 
 
         year = request.POST.get('year')
-        
+        tribe_slug = request.POST.get('tribe_slug')
+        print(tribe_slug)
         if request.user.is_authenticated:
             user_from_form = request.user  #user instance
         else:
@@ -138,20 +148,24 @@ def form_view(request):
                 else:
                     print(household_form.errors)
             
-            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
+            if tribe_slug is not None:
+                redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
+            else:
+                tribe_slug = 'asur'
+                redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
 
 
                 
 
+            
         else:
             cleaned_data_list = []
-            
             formset = YourModelFormSet(request.POST, prefix='form')
         
             if formset.is_valid():
                 for form in formset:
-                    tribe_slug = form.cleaned_data['tribe_slug']
+                    
                     tribe, created = Tribe.objects.get_or_create(user=request.user, year=year, name=tribe_slug, slug=tribe_slug)
                     household = form.save(commit=False)
                     household.tribeID = tribe
