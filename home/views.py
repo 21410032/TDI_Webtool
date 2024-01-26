@@ -239,8 +239,3 @@ def tribe_pdf_view(request, slug):
 
     }
     return render(request, 'pdfs/tribe_pdf.html', context)
-
-
-    
-
-
