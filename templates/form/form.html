@@ -9,6 +9,8 @@
     {% endfor %}
 </ul>
 {% endif %}
+
+
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ formset.management_form }}
@@ -16,8 +18,9 @@
   <label for="id_year">Select Year:</label>
   <input type="number" name="year" step="any" id="id_year" required placeholder="Year">
 
+  
 
-
+  
 
   <!-- <label for="entryType">Select Data Entry Type:</label> -->
   <select id="entryType" onchange="toggleForms()">
@@ -32,15 +35,23 @@
 
 
   <div id="HH_manual_data_form" style="display: none;">
-
+    <select id="tribename" name="tribe_slug" onchange="toggleForms()">
+      <option value="" disabled selected hidden>tribe</option>
+      
+        {% for tribe in tribes %}
+        <option value="{{tribe.slug}}" >{{tribe.slug}}</option> 
+        {% endfor %}
+     
+    </select>
     <div id="formset">
 
-
+    <div id="form">
 
       {% for form in formset %}
-      {{ form.tribe_slug }}
+      
       {{ form.as_p }}
       {% endfor %}
+    </div>
     </div>
 
     <button type="button" id="add-form">Add Form</button>
@@ -165,20 +176,20 @@
   }
 </style>
 <script>
-
   document.getElementById('add-form').addEventListener('click', function () {
     // Get the div containing the form elements
     var formsetDiv = document.getElementById('formset');
 
-    // Get the last form in the formset
-    var lastForm = formsetDiv.lastElementChild;
+    // Get the template form HTML from the first form in the formset
+    var templateHTML = formsetDiv.firstElementChild.outerHTML;
 
-    // Clone the last form
-    var newForm = lastForm.cloneNode(true);
+    // Create a new form using the template HTML
+    var newForm = document.createElement('div');
+    newForm.innerHTML = templateHTML;
 
     // Clear values in the cloned form
     newForm.querySelectorAll('input, select, textarea').forEach(function (element) {
-      element.value = '';
+        element.value = '';
     });
 
     // Increment the form index
@@ -189,22 +200,26 @@
 
     // Update the IDs of form fields in the cloned form
     newForm.querySelectorAll('[id]').forEach(function (element) {
-      element.id = element.id.replace(/-\d+/, '-' + (newFormIndex - 1));
+        element.id = element.id.replace(/-\d+/, '-' + (newFormIndex - 1));
     });
 
     // Update the names of form fields in the cloned form
     newForm.querySelectorAll('[name]').forEach(function (element) {
-      element.name = element.name.replace(/-\d+/, '-' + (newFormIndex - 1));
+        element.name = element.name.replace(/-\d+/, '-' + (newFormIndex - 1));
     });
+
+    // Update the 'for' attribute of labels in the cloned form
     newForm.querySelectorAll('label').forEach(function (label) {
-      var labelFor = label.getAttribute('for');
-      if (labelFor) {
-        label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex - 1)));
-      }
+        var labelFor = label.getAttribute('for');
+        if (labelFor) {
+            label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex - 1)));
+        }
     });
+
     // Append the new form to the formset
     formsetDiv.appendChild(newForm);
-  });
+});
+
 
   document.getElementById('remove-form').addEventListener('click', function () {
     // Get the div containing the form elements
