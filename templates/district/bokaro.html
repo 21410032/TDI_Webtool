@@ -5,9 +5,9 @@
   <div class="frame-parent46">
     <div class="frame-parent47">
       <div class="bokaro-parent">
-        <div class="bokaro">{{name}}</div>
+        <div class="bokaro">{{district.name}}</div>
         <div class="district-wise-snapshot">
-          District wise Snapshot of TDI
+          District wise Snapshot of TDI, Year : {{district.year}}
         </div>
       </div>
       <div class="rectangle-frame">
@@ -472,7 +472,10 @@
         <div class="bokaro">Indicator wise Development Score</div>
       </div>
       <div class="frame-wrapper9">
-        <div class="frame-child19"><canvas id="censored-graph-district"></canvas></div>
+        <div class="frame-child19">
+          <canvas id="censored-graph-district"></canvas>
+
+        </div>
       </div>
     </div>
     <div class="frame-parent59">
@@ -485,6 +488,38 @@
         <div class="frame-child19">
           <div id="my-graph2-data">
             <canvas id="graph2_dis"></canvas>
+          </div>
+        </div>
+        <div class="graph-color-labels-frame">
+          <div class="color-labels-div">
+            <div class="color-labels-wrapper">
+              <div class="color-label" id="H-label-dis">Health Development Index</div>
+            </div>
+            <div class="color-labels-wrapper">
+
+              <div class="color-label" id="G-label-dis">Geometric TDI</div>
+            </div>
+          </div>
+          <div class="color-labels-div">
+            <div class="color-labels-wrapper">
+              <img class="vector-icon" alt="" src="./public/vector.svg" />
+
+              <div class="color-label" id="E-label-dis">Education Development Index</div>
+            </div>
+            <div class="color-labels-wrapper">
+              <img class="vector-icon" alt="" src="./public/vector.svg" />
+
+              <div class="color-label" id="A-label-dis">Arithmetic TDI</div>
+            </div>
+          </div>
+          <div class="color-labels-div">
+            <div class="color-labels-wrapper">
+              <img class="vector-icon" alt="" src="./public/vector.svg" />
+
+              <div class="color-label" id="S-label-dis">SOL Development Index</div>
+            </div>
+            <div class="color-labels-wrapper">
+            </div>
           </div>
         </div>
       </div>

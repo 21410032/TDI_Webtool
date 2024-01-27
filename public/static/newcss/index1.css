@@ -1561,5 +1561,12 @@ svg{
 
   .download-button-div{
     margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
+  .custom-dropdown {
+    max-height: 200px; /* Set your desired fixed height */
+    overflow-y: auto;
+}

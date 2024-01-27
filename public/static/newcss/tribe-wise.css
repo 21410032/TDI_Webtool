@@ -55,7 +55,7 @@
   max-width: 100%;
   overflow: hidden;
   max-height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .tribe-logo-name-1-wrapper {
   align-self: stretch;
@@ -1083,4 +1083,88 @@
     .tribe_form_submit {
       margin: 10px;
     }
+  }
+
+  /* Color labels */
+
+  .vector-icon {
+    width: 11px;
+    position: relative;
+    height: 10.4px;
+  }
+  .color-label {
+    position: relative;
+    letter-spacing: -0.01em;
+    line-height: 150%;
+  }
+
+
+  .color-label::before{
+    width: 10px;
+    height: 10px;
+    content: '';
+    margin-right: 6px;
+    display: inline-block;
+    /* margin-top: 1px;
+    margin-right: 3px; */
+  }
+
+  #H-label::before {
+    background-color: #4472C4;
+}
+  #E-label::before {
+    background-color: #ED7D31;
+}
+  #S-label::before {
+    background-color: #A5A5A5;
+}
+  #C-label::before {
+    background-color: #FFC000;
+}
+  #G-label::before {
+    background-color: #5B9BD5;
+}
+  #T-label::before {
+    background-color: #70AD47;
+}
+
+
+#H-label-dis::before{
+  background-color: #4273B1;
+}
+#G-label-dis::before{
+  background-color: #B86029;
+}
+#E-label-dis::before{
+  background-color: #5E813F;
+}
+#A-label-dis::before{
+  background-color: #385492;
+}
+#S-label-dis::before{
+  background-color: #B89230;
+}
+
+  .color-labels-div,
+  .color-labels-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--gap-5xs-7);
+  }
+  .color-labels-div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-3xs);
+  }
+  .graph-color-labels-frame {
+    align-self: stretch;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 18px 10px;
   }
