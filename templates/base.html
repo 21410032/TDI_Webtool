@@ -68,7 +68,7 @@
                     TRIBE
                 </div>
 
-                <ul class="dropdown-menu" aria-labelledby="tribeDropdown">
+                <ul class="dropdown-menu custom-dropdown" aria-labelledby="tribeDropdown">
                     {% for tribe in tribes %}
                     <li><a class="dropdown-item" href="/tribe/{{ tribe.slug }}/2022">
                             {{ tribe.name }}
@@ -85,8 +85,8 @@
                     District
                 </a>
 
-                <ul class="dropdown-menu">
-                    {% for district in district %}
+                <ul class="dropdown-menu custom-dropdown">
+                    {% for district in districts %}
                     <li><a class="dropdown-item" href="/district/{{district.slug}}/{{district.year}}">
                             {{district.name}}
                         </a></li>
@@ -285,11 +285,11 @@
             path.addEventListener("mouseover", function () {
                 // Get the id attribute of the path
                 const districtId = path.id;
-                // const district_tdi = {{ district.objects}};
+
 
                 // Set the district name and values dynamically
                 districtNameElement.textContent = districtId;
-                // districtValuesElement.textContent = district_tdi;
+
 
                 // Display the district name and values elements
                 districtNameElement.style.display = "block";
