@@ -15,10 +15,8 @@ a {
 
 .main-logo {
   display: flex;
-  position: absolute;
-  top: 29.5px;
-  left: 73.2px;
   flex-direction: row;
+  font-size: 20px;
   align-items: center;
   justify-content: center;
 }
@@ -28,7 +26,6 @@ a {
 }
 .nav-items {
   display: flex;
-  position: absolute;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
@@ -165,8 +162,8 @@ a {
 }
 .frame-child {
   position: absolute;
-  top: 3px;
-  right: 333px;
+  top: 1px;
+  right: 341px;
   border-radius: 5px;
   background-color: var(--purple-tdi);
   width: 160px;
@@ -199,6 +196,10 @@ a {
   width: 80px;
   height: 80px;
   z-index: 0;
+  transition: transform 0.3s ease-in-out;
+  background-size: contain; /* This value will make the image cover the entire div */
+    background-position: center; /* Center the image within the div */
+    background-repeat: no-repeat;
 }
 .tribe2-2-1 {
   position: absolute;
@@ -218,12 +219,13 @@ a {
   position: relative;
   gap: var(--gap-3xs);
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  
 
 }
 
-.ellipse-parent :hover{
+.frame-item:hover{
   transform: scale(1.1);
+  color: red;
 }
 .tribe-wise-tdi {
   position: relative;
@@ -1374,14 +1376,22 @@ svg{
 .jhnew1-1-1-wrapper path {
   stroke: #01171b;
     stroke-width: .25;
-    transition: transform 0.4s, fill 0.4s;
 
 }
 
-.jhnew1-1-1-wrapper path:hover {
-  fill: rgba(96, 95, 95, 0.143) !important;
-  cursor: pointer !important;
+
+
+  .district-group{
+    transition: transform 0.4s, fill 0.4s;
+    display: inline-block;
   }
+
+  .district-group:hover {
+    fill: rgba(96, 95, 95, 0.143) !important;
+    cursor: pointer !important;
+    transform: scale(1.01);
+    }
+
   
 
   #bokaro {
