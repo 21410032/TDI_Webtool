@@ -91,6 +91,7 @@ WSGI_APPLICATION = 'WebTDi.wsgi.application'
 
 # --->Deployment purpose
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tditool',
@@ -102,7 +103,7 @@ DATABASES = {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
-}
+
 
 
 #--->Development purpose
