@@ -27,8 +27,9 @@
 
 <div class="frame-parent22-profile">
     <div class="profile-image-frame">
-        <img class="frame-child26-profile" alt=""
-            src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}" />
+        <a href="">
+            <img class="frame-child26-profile" alt=""
+                src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}" /></a>
     </div>
 
     <b class="profile-name-head">{{profile.first_name}}</b>

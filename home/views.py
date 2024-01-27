@@ -35,8 +35,6 @@ def tribe_detail_view(request, slug1, slug2):
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
     print(tribes)
     if slug1 and slug2 is not None:
-        print(slug1)
-        print(slug2)
         try:
             
             tribe = Tribe.objects.get(user=user, year=slug2, slug = slug1)
@@ -83,7 +81,7 @@ def tribe_detail_view(request, slug1, slug2):
     return render(request, 'pvtg/asur.html', context=context)
 
 @login_required(login_url='/accounts/login/')
-def form_view(request):
+def tribe_form_view(request):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
     alltribes_defined=Tribe.objects.filter(user = user)
@@ -194,7 +192,7 @@ def form_view(request):
 
     if formset:
         context['formset'] = formset
-    return render(request, 'form/form.html',context)
+    return render(request, 'form/tribe_form.html',context)
 
     
     

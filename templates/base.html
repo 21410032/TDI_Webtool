@@ -99,8 +99,7 @@
             <div class="home"><a href="#">ABOUT US</a></div>
             <div class="home"><a href="#">CONTACT US</a></div>
         </div>
-        <div
-            style="display: flex;gap: 10px;justify-content: center;align-items: center;position: absolute;top: 29.5px;right: 73.2px;">
+        <div style="display: flex;gap: 10px;justify-content: center;align-items: center;">
             {% if not request.user.is_authenticated %}
             <div class="login-btn">
                 <div class="login">
@@ -167,7 +166,7 @@
 
 
 <!-- HOME TRIBE GRAPH -->
-<script>
+<!-- <script>
     // TRIBE STACKED GRAPH
     const tribe_stacked_graph = document.getElementById('tribe_stacked_graph');
 
@@ -200,13 +199,13 @@
             }
         }
     });
-</script>
+</script> -->
 <!-- ****** -->
 
 <!-- HOME DISTRICT GRAPH -->
-<script>
+<!-- <script>
     // DISTRICT HORIZONTAL GRAPH
-    {% comment %}
+
     const district_horizontal_graph = document.getElementById('district_horizontal_graph');
     var district_wise_tdi = {{ district_wise_tdi }}
     new Chart(district_horizontal_graph, {
@@ -255,17 +254,17 @@
                 }
             }
         }
-    }); {% endcomment %}
-</script>
+    });
+</script> -->
 <!-- ****** -->
 
 <!-- HOME MAP SCRIPT -->
 <script>
     $(document).ready(function () {
-        // Attach click event to each SVG path with class 'district-path'
-        $(".district-path").on("click", function () {
-            // Extract district ID from the data-district-id attribute
-            var districtId = $(this).attr("id");
+        // Attach click event to each SVG group with class 'district-group'
+        $(".district-group").on("click", function () {
+            // Extract district ID from the clicked group's path element
+            var districtId = $(this).find(".district-path").attr("id");
             console.log(districtId);
 
             // Redirect to the district page using the district ID

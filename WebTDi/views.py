@@ -14,9 +14,9 @@ def home_view(request):
     districts=District.objects.filter(user = user)
     user = request.user
 
-    tribe_wise_tdi = []
-    for tribe in tribes:
-        tribe_wise_tdi.append(tribe.tribal_index)
+    # tribe_wise_tdi = []
+    # for tribe in tribes:
+    #     tribe_wise_tdi.append(tribe.tribal_index)
     
 
 
@@ -25,16 +25,16 @@ def home_view(request):
         districts_name.append(district.name)
 
 
-    district_wise_tdi = []
-    for district in districts:
-        district_wise_tdi.append(district.get_tdi_score()[0])
+    # district_wise_tdi = []
+    # for district in districts:
+    #     district_wise_tdi.append(district.get_tdi_score()[0])
 
     context = {
         'tribes' : tribes,
         'district' :districts,
-        'tribe_wise_tdi' : tribe_wise_tdi,
+        # 'tribe_wise_tdi' : tribe_wise_tdi,
         'districts_name' : districts_name,
-        'district_wise_tdi' : district_wise_tdi,
+        # 'district_wise_tdi' : district_wise_tdi,
         'user' : user,
     }
 
@@ -49,7 +49,7 @@ def home_view(request):
     # Pass the total_site_views to the template context
     context['total_site_views'] = total_site_views
 
-    return render(request,'home/homepage.html',context=context)
+    return render(request,'home/index.html',context=context)
 
 
 
