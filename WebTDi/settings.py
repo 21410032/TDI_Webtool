@@ -107,7 +107,7 @@ WSGI_APPLICATION = 'WebTDi.wsgi.application'
 
 #--->Development purpose
 DATABASES = {
-   'default': {
+'default': {
 'ENGINE': 'django.db.backends.mysql',
 'NAME': 'tditool',
 'USER': 'admin',
