@@ -1,112 +1,52 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="{% static 'newcss/globallogout.css' %}">
-    <link rel="stylesheet" href="{% static 'newcss/logout.css' %}">
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
-    />
-  </head>
-  <body>
-    <div class="logoutcontainer">
-      <main class="frame-parent">
-        <section class="frame-child"></section>
-        
-        <section class="f-r-a-m-etop-parent">
-          {% if request.user.is_authenticated %}
-        <form method="POST">
-          {% csrf_token %}
-          <div class="f-r-a-m-etop">
-            <h1 class="confirm-logout">Confirm logout</h1>
-          </div>
-          <div class="lineseparator">
-            <div class="frameconfirmmessage"></div>
-          </div>
-          <div class="f-r-a-m-elogoutquestion">
-            <h3 class="are-you-sure">Are you sure you want to log out?</h3>
-            <div class="loginbuttongroup">
-              <button class="login-btn">
-                <div class="cancel">Cancel</div>
-              </button>
-              <button class="login-btn1">
-                <div class="ok">Ok</div>
-              </button>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="{% static 'newcss/globallogout.css' %}">
+  <link rel="stylesheet" href="{% static 'newcss/logout.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" />
+</head>
+
+<body>
+  <div class="frame-parent">
+    {% if request.user.is_authenticated %}
+    <div class="frame-group">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="frame-child"></div>
+        <div class="frame-wrapper">
+          <div class="confirm-logout-parent">
+            <b class="confirm-logout">Confirm logout</b>
+            <div class="frame-item"></div>
+            <div class="are-you-sure">Are you sure you want to log out?</div>
+            <div class="login-btn-parent">
+              <div class="login-btn1" style="background-color: white; color: black;     border: 1px solid #000000db;">
+                <div class="cancel"><a href="{% url 'home' %}">Cancel</a></div>
+              </div>
+              <div>
+                <button class="login-btn1" style="border: none;" type="submit">Ok</button>
+
+              </div>
             </div>
           </div>
-        </form>
-        </section>
-      
+        </div>
+      </form>
+    </div>
 
-      {% else %}
-<div class="accountsbox">
-    <div class="accounts-head">
+    {% else %}
+    <div class="accountsbox">
+      <div class="accounts-head">
         <h2>You are already logged out.</h2>
+      </div>
+      <p>Click Here to <a href="{% url 'login' %}">login</a></p>
     </div>
-    <p>Click Here to <a href="{% url 'login' %}">login</a></p>
-</div>
-{% endif %}
-      </main>
-    </div>
-  </body>
+    {% endif %}
+  </div>
+</body>
+
 </html>
-
-
-{% comment %} {% extends "base.html" %}
-{% block content %}
-{% if request.user.is_authenticated %}
-
-
-
-       
-            <div class="logoutcontainer">
-                <form method="POST">
-                    {% csrf_token %}
-              <main class="frame-parent">
-                <section class="frame-child"></section>
-                <section class="f-r-a-m-etop-parent">
-                  <div class="f-r-a-m-etop">
-                    <h1 class="confirm-logout">Confirm logout</h1>
-                  </div>
-                  <div class="lineseparator">
-                    <div class="frameconfirmmessage"></div>
-                  </div>
-                  <div class="f-r-a-m-elogoutquestion">
-                    <h3 class="are-you-sure">Are you sure you want to log out?</h3>
-                    <div class="loginbuttongroup">
-                      <button class="login-btn">
-                        <div class="cancel">Cancel</div>
-                      </button>
-                      <button class="login-btn1">
-                        <div class="ok">Ok</div>
-                      </button>
-                    </div>
-                  </div>
-                </section>
-              </main>
-            </form>
-            </div>
-         
-    
-</div>
-
-{% else %}
-<div class="accountsbox">
-    <div class="accounts-head">
-        <h2>You are already logged out.</h2>
-    </div>
-    <p>Click Here to <a href="{% url 'login' %}">login</a></p>
-</div>
-{% endif %}
-
-
-{% endblock content %}
- {% endcomment %}

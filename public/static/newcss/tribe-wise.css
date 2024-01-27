@@ -968,3 +968,119 @@
   color: var(--color-gray-200);
   font-family: var(--font-poppins);
 }
+
+
+
+/*Form css */
+  /* Container for the entire form */
+  form {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    background-color: #f7f7f7;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  /* Style formset container */
+  #formset {
+    margin-bottom: 30px;
+  }
+
+  /* Style each form within the formset */
+  #form {
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+  }
+
+  /* Hover effect for each form */
+  #form:hover {
+    box-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
+  }
+
+  /* Style form labels and input fields */
+  label {
+    display: block;
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  input,
+  .tribe_form_submit,
+  select,
+  textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+
+  /* Hover effect for input fields */
+  input:hover,
+  .tribe_form_submit:hover,
+  select:hover,
+  textarea:hover {
+    border-color: #3498db;
+  }
+
+  /* Style the "Add Form" and "Remove Last Form" buttons */
+  #add-form,
+  #remove-form {
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 14px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+
+  #add-form:hover,
+  #remove-form:hover {
+    background-color: #27ae60;
+  }
+
+  /* Style form submission button */
+  .tribe_form_submit {
+    background-color: #3498db;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .tribe_form_submit[type="submit"]:hover {
+    background-color: #2980b9;
+  }
+
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
+    form {
+      padding: 20px;
+    }
+
+    input,
+    .tribe_form_submit,
+    select,
+    textarea {
+      margin-bottom: 14px;
+    }
+
+    #add-form,
+    #remove-form,
+    .tribe_form_submit {
+      margin: 10px;
+    }
+  }

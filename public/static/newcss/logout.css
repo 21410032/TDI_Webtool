@@ -1,276 +1,128 @@
 .frame-child {
-    width: 100%;
     position: absolute;
-    margin: 0 !important;
-    top: -76px;
-    left: -85px;
-    border-radius: var(--br-18xl) var(--br-18xl) 0 var(--br-18xl);
-    background-color: #c0d4d0;
-    height: 100%;
+    top: calc(50% - 134.5px);
+    left: calc(50% - 202.5px);
+    border-radius: 16.35px 16.35px 0 16.35px;
+    background-color: var(--blue-tdi);
+    box-shadow: 10px 10px 6px 1px rgba(0, 0, 0, 0.2);
+    width: 383px;
+    height: 250.2px;
     overflow: hidden;
-    flex-shrink: 0;
-}
-
-.confirm-logout {
-    margin: 0;
-    height: 84px;
-    width: 484px;
+  }
+  .confirm-logout,
+  .frame-item {
     position: relative;
-    font-size: inherit;
-    font-weight: 400;
-    font-family: inherit;
-    display: inline-block;
-    text-shadow: 3px 0 0#1e4c3e, 0 3px 0#1e4c3e, -3px 0 0#1e4c3e, 0-3px 0#1e4c3e;
-    max-width: 100%;
-}
-
-.f-r-a-m-etop {
-    width: 760px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    max-width: 100%;
-}
-
-.frameconfirmmessage {
-    height: 6px;
-    flex: 1;
+  }
+  .frame-item {
+    align-self: stretch;
+    border-top: 1.9px solid #314f46;
+    box-sizing: border-box;
+    height: 1.9px;
+  }
+  .are-you-sure {
     position: relative;
-    border-top: 6px solid #314f46;
-    box-sizing: border-box;
-    max-width: 100%;
-}
-
-.lineseparator {
-    width: 760px;
-    height: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 0 8px 0 0;
-    box-sizing: border-box;
-    max-width: 100%;
-}
-
-.are-you-sure,
-.cancel {
-    position: relative;
-    display: inline-block;
-}
-
-.are-you-sure {
-    margin: 0;
-    height: 58px;
-    font-size: inherit;
-    font-weight: 400;
-    font-family: inherit;
-    text-shadow: 1.4px 0 0#000, 0 1.4px 0#000, -1.4px 0 0#000, 0-1.4px 0#000;
-}
-
-.cancel {
-    height: 48px;
-    font-size: var(--font-size-13xl);
-    font-weight: 600;
-    font-family: var(--font-poppins);
-    color: #30442f;
-    text-align: left;
-}
-
-.login-btn {
-    cursor: pointer;
-    border: 2px solid var(--color-darkslategray-100);
-    padding: 8.89301586151123px 0;
-    background-color: var(--gray);
-    flex: 1;
-    border-radius: 22.36px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-width: 135px;
-}
-
-.login-btn1:hover,
-.login-btn:hover {
-    background-color: #dbdbdb;
-    border: 2px solid var(--color-cadetblue-100);
-    box-sizing: border-box;
-}
-
-.ok {
-    height: 48px;
-    position: relative;
-    font-size: var(--font-size-13xl);
-    font-weight: 600;
-    font-family: var(--font-poppins);
-    color: #f8fff8;
-    text-align: left;
-    display: inline-block;
-}
-
-.login-btn1,
-.loginbuttongroup {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.login-btn1 {
-    cursor: pointer;
-    border: 2px solid var(--color-darkslategray-100);
-    padding: 8.89301586151123px 0;
-    background-color: #92c6d6;
-    flex: 1;
-    border-radius: 22.36px;
-    box-sizing: border-box;
-    flex-direction: column;
-    align-items: center;
-    min-width: 135px;
-}
-
-.login-btn1:hover {
-    background-color: #5e94a3;
-}
-
-.loginbuttongroup {
-    width: 431px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: var(--gap-52xl);
-    max-width: 100%;
-}
-
-.f-r-a-m-elogoutquestion,
-.f-r-a-m-etop-parent {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    max-width: 100%;
-}
-
-.f-r-a-m-elogoutquestion {
-    align-items: flex-start;
-    gap: 113px;
-    font-size: 48px;
-    color: #1d4d41;
-}
-
-.f-r-a-m-etop-parent {
-    flex: 1;
-    border-radius: var(--br-18xl) var(--br-18xl) 0 var(--br-18xl);
-    background-color: #ebf4f2;
-    overflow: hidden;
-    align-items: center;
-    padding: 132px var(--padding-xl) var(--padding-142xl) 100px;
-    box-sizing: border-box;
-    gap: var(--gap-52xl);
-    z-index: 1;
-    text-align: left;
-    font-size: 69px;
-    color: #203336;
+    font-size: 14.8px;
     font-family: var(--font-inter);
-}
-
-.frame-parent,
-.logoutcontainer {
+  }
+  .cancel {
     position: relative;
+    font-weight: 600;
+  }
+  .login-btn {
+    width: 55.5px;
+    border-radius: var(--br-6xs-9);
+    background-color: var(--gray);
+    border: 0.6px solid var(--color-darkslategray-100);
+    box-sizing: border-box;
+    height: 20.4px;
+    flex-direction: column;
+    padding: 2.7435216903686523px 0;
+  }
+  .login-btn,
+  .login-btn-parent,
+  .login-btn1 {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .login-btn1 {
+    border-radius: 24.82px;
+    background-color: var(--blue-tdi);
+    width: 80px;
+    height: 33px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+    box-sizing: border-box;
+    font-size: 11px;
+    cursor: pointer;
+    color: var(--gray);
+    position: relative;
+    font-weight: 600;
 }
 
-.frame-parent {
-    width: 1134px;
+.login-btn1:hover{
+    transform: scale(1.1);
+}
+
+
+  .login-btn-parent {
+    flex-direction: row;
+    gap: 21.9px;
+    font-size: var(--font-size-3xs-9);
+    color: #30442f;
+  }
+  .confirm-logout-parent {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    max-width: 100%;
-}
-
-.logoutcontainer {
-    width: 100%;
-    background-color: #88b8be;
+    gap: 26px;
+  }
+  .frame-wrapper {
+    position: absolute;
+    top: calc(50% - 109.5px);
+    left: calc(50% - 172.5px);
+    border-radius: 11.41px 11.41px 11.41px 11.41px;
+    background-color: var(--gray);
+    box-shadow: 10px 10px 13px 1px rgba(0, 0, 0, 0.21);
+    width: 366px;
+    height: 244px;
     overflow: hidden;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding: var(--padding-142xl) 120px 119px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40.72239303588867px 45.349937438964844px;
     box-sizing: border-box;
-    letter-spacing: normal;
-}
-
-@media screen and (max-width: 1200px) {
-    .logoutcontainer {
-        padding-left: var(--padding-41xl);
-        padding-right: var(--padding-41xl);
-        box-sizing: border-box;
-    }
-}
-
-@media screen and (max-width: 1050px) {
-    .confirm-logout {
-        font-size: 55px;
-    }
-
-    .are-you-sure {
-        font-size: 38px;
-    }
-
-    .cancel,
-    .ok {
-        font-size: var(--font-size-7xl);
-    }
-
-    .f-r-a-m-etop-parent {
-        gap: var(--gap-16xl);
-        padding-left: 50px;
-        box-sizing: border-box;
-    }
-}
-
-@media screen and (max-width: 750px) {
-    .f-r-a-m-elogoutquestion {
-        gap: 56px;
-    }
-
-    .f-r-a-m-etop-parent {
-        padding-top: 86px;
-        padding-bottom: 105px;
-        box-sizing: border-box;
-    }
-
-    .logoutcontainer {
-        padding-left: var(--padding-11xl);
-        padding-right: var(--padding-11xl);
-        box-sizing: border-box;
-    }
-}
-
-@media screen and (max-width: 450px) {
-    .confirm-logout {
-        font-size: 41px;
-    }
-
-    .are-you-sure {
-        font-size: 29px;
-    }
-
-    .cancel,
-    .ok {
-        font-size: var(--font-size-lgi);
-    }
-
-    .loginbuttongroup {
-        gap: var(--gap-16xl);
-    }
-
-    .f-r-a-m-elogoutquestion {
-        gap: 28px;
-    }
-
-    .f-r-a-m-etop-parent {
-        gap: 18px;
-        padding-left: var(--padding-xl);
-        box-sizing: border-box;
-    }
-}
+  }
+  .frame-group,
+  .frame-parent {
+    width: 405px;
+    position: relative;
+    height: 269px;
+  }
+  .frame-parent {
+    width: 100%;
+    background-color: #fff;
+    height: 720px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 231px 496px;
+    box-sizing: border-box;
+    text-align: left;
+    font-size: 25px;
+    color: var(--color-black);
+    font-family: var(--font-poppins);
+  }
+  
+  a{
+    color: inherit;
+    text-decoration: none;
+  }
