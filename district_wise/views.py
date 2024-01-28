@@ -84,7 +84,8 @@ def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
    
-    districts = District.objects.all().filter(user=user)
+    tribes = Tribe.objects.filter(user = user, year='2022')
+    districts=District.objects.filter(user = user, year='2022')
 
 
     if request.method == 'POST':
@@ -121,5 +122,11 @@ def form_view(request):
     else:
         formset = YourModelFormSet(prefix='form')
 
-    return render(request, 'form/district_form.html', {'formset': formset, 'districts': districts})
+
+    context = {
+        'tribes' : tribes,
+      'districts' :districts,
+      'formset': formset,
+    }
+    return render(request, 'form/district_form.html', context)
 

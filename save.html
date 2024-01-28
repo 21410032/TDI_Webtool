@@ -1,97 +1,34 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-
-    <link rel="stylesheet" href="./global.css" />
-    <link rel="stylesheet" href="./index.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" />
-</head>
-
-<body>
-    <div class="frame-parent">
-        <div class="frame-group">
-            <div class="score-graph-1-wrapper">
-                <img class="score-graph-1-icon" alt="" src="./public/scoregraph-1@2x.png" />
-            </div>
-            <div class="graph-color-labels-frame">
-                <div class="color-labels-div">
-                    <div class="color-labels-wrapper">
-                        <img class="vector-icon" alt="" src="./public/vector.svg" />
-
-                        <div class="color-label">Health Development Index</div>
-                    </div>
-                    <div class="color-labels-wrapper">
-                        <img class="vector-icon" alt="" src="./public/vector.svg" />
-
-                        <div class="color-label">Culture Development Index</div>
-                    </div>
-                </div>
-                <div class="color-labels-div">
-                    <div class="color-labels-wrapper">
-                        <img class="vector-icon" alt="" src="./public/vector.svg" />
-
-                        <div class="color-label">Education Development Index</div>
-                    </div>
-                    <div class="color-labels-wrapper">
-                        <img class="vector-icon" alt="" src="./public/vector.svg" />
-
-                        <div class="color-label">Governance Development Index</div>
-                    </div>
-                </div>
-                <div class="color-labels-div">
-                    <div class="color-labels-wrapper">
-                        <img class="vector-icon" alt="" src="./public/vector.svg" />
-
-                        <div class="color-label">SOL Development Index</div>
-                    </div>
-                    <div class="color-labels-wrapper">
-                        <img class="vector-icon" alt="" src="./public/vector.svg" />
-
-                        <div class="color-label">Tribal Development Index</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-
-</html>
+/home/ubuntu/project/TDI_Webtool
 
 
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
 
-.vector-icon {
-width: 11px;
-position: relative;
-height: 10.4px;
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/project/TDI_Webtool
+EnvironmentFile=/home/ubuntu/project/TDI_Webtool/.env
+ExecStart=/home/ubuntu/project/env/bin/gunicorn \
+--access-logfile - \
+--workers 3 \
+--bind unix:/run/gunicorn.sock \
+WebTDi.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+server {
+listen 80;
+server_name 16.170.219.125;
+
+location = /favicon.ico { access_log off; log_not_found off; }
+
+location / {
+include proxy_params;
+proxy_pass http://unix:/run/gunicorn.sock;
 }
-.color-label {
-position: relative;
-letter-spacing: -0.01em;
-line-height: 150%;
-}
-.color-labels-div,
-.color-labels-wrapper {
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: flex-start;
-gap: var(--gap-5xs-7);
-}
-.color-labels-div {
-flex-direction: column;
-align-items: flex-start;
-gap: var(--gap-3xs);
-}
-.graph-color-labels-frame {
-align-self: stretch;
-flex: 1;
-overflow: hidden;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
-padding: 18px 10px;
 }
