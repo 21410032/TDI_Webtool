@@ -23,6 +23,9 @@ class Tribe(models.Model):
     intensity = models.FloatField(null=True, blank=True)
     tdi = models.FloatField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('user', 'year', 'slug')
+
     def __str__(self):
         return f"{self.slug}-{self.year}"
     

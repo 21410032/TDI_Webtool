@@ -68,10 +68,11 @@ a {
 
 .main-logo-parent {
   position: relative;
-  height: 101px;
+  height: 100px;
   display: flex;;
   width: 100%;
   justify-content: space-around;
+  margin-bottom: 20px;
   align-items: center;
   z-index: 10;
 }
