@@ -116,16 +116,7 @@ DATABASES = {
 # }
 
 
-# DATABASES = {
-# 'default': {
-# 'ENGINE': 'django.db.backends.mysql',
-# 'NAME': 'tditool',
-# 'USER': 'admin',
-# 'PASSWORD': 'Accpass1234',
-# 'HOST': 'webtdi.cfcpo5wgsodm.eu-north-1.rds.amazonaws.com', # Or an IP Address that your DB is hosted on
-# 'PORT': '3306',
-# }
-# }
+
 
 
 # Password validation

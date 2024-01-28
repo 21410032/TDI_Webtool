@@ -3,6 +3,12 @@ body {
   line-height: normal;
 }
 
+
+.inline-texts{
+  text-transform: capitalize;
+  color: inherit;
+}
+
 :root {
   /* fonts */
   --font-poppins: Poppins;
@@ -60,6 +66,7 @@ body {
   --color-steelblue: #2e75b6;
 
   /* Gaps */
+  --gap-5xs-7: 7.7px;
   --gap-61xl: 80px;
   --gap-9xl: 28px;
   --gap-3xs: 10px;
@@ -112,4 +119,8 @@ body {
   --br-3xl-4: 22.4px;
   --br-6xs: 7px;
   --br-9xs: 4px;
+
+
+
+
 }

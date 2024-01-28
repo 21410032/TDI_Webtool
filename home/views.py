@@ -21,19 +21,20 @@ from django.forms import formset_factory
 
 def tribe_detail_view(request, slug1, slug2):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    print(user)
+    tribes = Tribe.objects.filter(user = user, year='2022')
+    districts=District.objects.filter(user = user, year='2022')
     tribe_of_slug = Tribe.objects.get(user=user, year = '2022', slug = slug1)
-    print(tribe_of_slug)
+   
     user_phone_number = request.GET.get('user')
-    print(user_phone_number)
+
     if user_phone_number:
         user = User.objects.get(phone_number=user_phone_number)
 
     else:    
         user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    print(user)
-    tribes = Tribe.objects.filter(user=user, year = '2022').distinct()
-    print(tribes)
+
+    
+
     if slug1 and slug2 is not None:
         try:
             
@@ -41,11 +42,10 @@ def tribe_detail_view(request, slug1, slug2):
             
         except Exception as e:
             return e 
-    print(tribe)
+
     # tribe_of_slug = Tribe.objects.get(slug = slug1)
     total_tribals = tribe.get_total_tribals
     household = Household.objects.all()
-    districts = District.objects.all()
     
     contributions_to_dimension = tribe.indicator_contributions_to_dimension
 
@@ -58,14 +58,15 @@ def tribe_detail_view(request, slug1, slug2):
     tribal_dimensional_index = tribe.tribal_dimensional_index
     dimension_contribution_to_tdi = tribe.dimension_contribution_to_tdi
 
-    # print(tribe_of_slug.tribe_image.first.map_image.url)
+
     
     context = {
+        'tribes' : tribes,
+        'districts' :districts,
         'household': household,
         'total_tribals': total_tribals,
         'tribe_of_slug':tribe_of_slug,
         'tribe': tribe,
-        'tribes' : tribes,
         'health_contributions_to_dimension': health_contributions_to_dimension,
         'education_contributions_to_dimension': education_contributions_to_dimension,
         'sol_contributions_to_dimension': sol_contributions_to_dimension,
@@ -73,7 +74,6 @@ def tribe_detail_view(request, slug1, slug2):
         'governance_contributions_to_dimension': governance_contributions_to_dimension,
         'tribal_dimensional_index': tribal_dimensional_index,
         'dimension_contribution_to_tdi': dimension_contribution_to_tdi,
-        'districts' : districts,
     }
         
 
@@ -91,7 +91,7 @@ def tribe_form_view(request):
 
         year = request.POST.get('year')
         tribe_slug = request.POST.get('tribe_slug')
-        print(tribe_slug)
+   
         if request.user.is_authenticated:
             user_from_form = request.user  #user instance
         else:
@@ -101,14 +101,13 @@ def tribe_form_view(request):
         
         if 'households_excel_file' in request.FILES:
             new_households = request.FILES['households_excel_file']
-            household_resource = HouseholdResource()
             dataset = Dataset()
-            imported_households = dataset.load(new_households.read(), format = 'xlsx')
-            imported_households_dict = dataset.dict
+            imported_households_dict = dataset.load(new_households.read(), format='xlsx').dict
+
 
             
             for data in imported_households_dict:
-                slug = data.get('tribeID')
+                slug = data.get('tribeID').strip()
 
                 if not Tribe.objects.filter(user=user, slug=slug).exists():
                     return HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for valid tribe name.')
