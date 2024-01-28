@@ -15,6 +15,12 @@ class TribeResource(resources.ModelResource):
     user = Field(column_name='user', attribute='user', widget=ForeignKeyWidget(User, 'phone_number'))
     class Meta:
         model = Tribe
+        import_id_fields = ('id',)  # Assuming 'id' is the primary key  
+
+class TribeImageResource(resources.ModelResource):
+    tribe = Field(column_name='tribe_id', attribute='tribe', widget=ForeignKeyWidget(Tribe, 'id'))
+    class Meta:
+        model = Tribe_Image
         import_id_fields = ('id',)  # Assuming 'id' is the primary key
 
 class HouseholdAdmin(ImportExportModelAdmin):
@@ -23,9 +29,13 @@ class HouseholdAdmin(ImportExportModelAdmin):
 class TribeAdmin(ImportExportModelAdmin):
     resource_class = TribeResource
 
+class TribeImageAdmin(ImportExportModelAdmin):
+    resource_class = TribeImageResource
+
+
 admin.site.register(Household, HouseholdAdmin)
 admin.site.register(Tribe, TribeAdmin)
-admin.site.register(Tribe_Image)
+admin.site.register(Tribe_Image, TribeImageAdmin)
 
 
 

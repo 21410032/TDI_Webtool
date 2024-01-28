@@ -90,30 +90,30 @@ WSGI_APPLICATION = 'WebTDi.wsgi.application'
 
 
 # --->Deployment purpose
-DATABASES = {
-
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tditool',
-        'USER': 'admin',                     #-----> changed
-        'PASSWORD': 'Accpass1234',       #-----> changed
-        'HOST': 'webtdi.cfcpo5wgsodm.eu-north-1.rds.amazonaws.com',  # or the hostname where your MySQL server is running       #-----> changed
-        'PORT': '3306',      # or the port on which your MySQL server is listening
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
-}
-
-
-
-#--->Development purpose
 # DATABASES = {
+
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / "db.sqlite3",
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'tditool',
+#         'USER': 'admin',                     #-----> changed
+#         'PASSWORD': 'Accpass1234',       #-----> changed
+#         'HOST': 'webtdi.cfcpo5wgsodm.eu-north-1.rds.amazonaws.com',  # or the hostname where your MySQL server is running       #-----> changed
+#         'PORT': '3306',      # or the port on which your MySQL server is listening
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
 #     }
 # }
+
+
+
+# --->Development purpose
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
 
 
 
