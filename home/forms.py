@@ -62,3 +62,26 @@ class HouseholdForm(forms.ModelForm):
             'MEET_score'  
         ]
 
+
+        labels = {
+            'size': 'Household size score' ,
+            'CD_score': 'Chronic Diseases score' ,
+            'IM_score': 'Immunisation score' ,
+            'MC_score': 'Maternal Care score' ,
+            'CM_score': 'Child Mortality score' ,
+            'FS_score':  'Food Security score' ,
+            'LE_score':  'Level of Education score' ,
+            'DRO_score': 'Drop Out score' ,
+            'IC_score': 'Institutional Credit score' ,
+            'OW_score': 'Ownership score' ,
+            'SANI_score': 'Sanitation score' ,
+            'FUEL_score':  'Fuel score' ,
+            'DRWA_score': 'Drinkng Water score' ,
+            'ELECTR_score':'Electricity score' ,
+            'ASS_score':'Assets score' ,
+            'LAN_score': 'Language score' ,
+            'ARTS_score':'Arts score',
+            'EV_score': 'Execution Of Voting Rights score' ,
+            'MEET_score': 'Participation in Government meetings score' ,
+        }
+

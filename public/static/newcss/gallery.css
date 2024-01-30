@@ -10,7 +10,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    font-size: 48px;
+    font-size: 35px;
     color: var(--purple-tdi);
 }
 
@@ -108,6 +108,7 @@
     padding: 0 0 100px;
     gap: 48px;
     font-size: 14px;
+    margin-top: 60px;
     color: var(--color-white);
 }
 
