@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 # Create your views here.
 from .forms import ProfileCreationForm
+from django.contrib.auth import get_user_model
+User = get_user_model()
+from django.conf import settings
+from home.models import Tribe
+from district_wise.models import District
 
 def register_view(request):
     if request.method == "POST":
@@ -55,10 +59,14 @@ def logout_view(request):
 
 
 def profile_view(request):
-
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    tribes = Tribe.objects.filter(user = user, year='2022')
+    districts=District.objects.filter(user = user, year='2022')
     profile = request.user
     context = {
-        'profile' :profile
+        'profile' :profile,
+        'tribes' : tribes,
+        'districts' :districts,
     }
     return render (request, 'accounts/profile.html',context)
 

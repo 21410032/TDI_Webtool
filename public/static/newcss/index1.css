@@ -100,8 +100,8 @@ a {
 .discover-uttarakhands-tribal {
   align-self: stretch;
   position: relative;
-  font-size: var(--font-size-base-2);
-  letter-spacing: 0.07em;
+  font-size: var(--font-size-mini-2);
+  letter-spacing: 0.12em;
   line-height: 246%;
   color: var(--color-black);
 }
@@ -164,7 +164,7 @@ a {
 .frame-child {
   position: absolute;
   top: 1px;
-  right: 341px;
+  right: 331px;
   border-radius: 5px;
   background-color: var(--purple-tdi);
   width: 160px;
@@ -226,7 +226,6 @@ a {
 
 .frame-item:hover{
   transform: scale(1.1);
-  color: red;
 }
 .tribe-wise-tdi {
   position: relative;
@@ -1358,9 +1357,12 @@ a {
   color: var(--yellow-tdi);
 }
 
+.dropdown-menu{
+  z-index: 10;
+}
+
 #tribeDropdown:hover, #districtDropdown:hover{
   color: var(--yellow-tdi);
-  z-index: 10;
   transform: none;
 }
 
@@ -1570,4 +1572,137 @@ svg{
   .custom-dropdown {
     max-height: 200px; /* Set your desired fixed height */
     overflow-y: auto;
+}
+
+
+.team-bg-rect {
+  width: 142px;
+  position: absolute;
+  margin: 0 !important;
+  top: 50.7px;
+  left: calc(50% - 71px);
+  border-radius: 56.73px 56.73px 14.18px 14.18px;
+  background-color: var(--blue-green-tdi);
+  height: 124px;
+  mix-blend-mode: normal;
+  z-index: 0;
+}
+.team-mem-icon {
+  width: 120px;
+  position: relative;
+  border-radius: var(--br-41xl) var(--br-41xl) var(--br-41xl) 0;
+  height: 120px;
+  object-fit: cover;
+}
+.team-mem-name,
+.team-mem-pos {
+  position: relative;
+  text-transform: capitalize;
+}
+.team-mem-name {
+  line-height: 20.99px;
+}
+.team-mem-pos {
+  font-size: var(--font-size-5xs-4);
+  font-weight: 600;
+}
+.team-mem-desc,
+.team-mem-inner,
+.team-member-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.team-mem-inner {
+  margin: 0 !important;
+  position: absolute;
+  top: -0.3px;
+  left: calc(50% - 64px);
+  gap: var(--gap-xs);
+  z-index: 1;
+}
+.team-member-wrapper {
+  height: 174px;
+  position: relative;
+  gap: var(--gap-3xs);
+}
+.team-bg-rect1 {
+  width: 142px;
+  position: absolute;
+  margin: 0 !important;
+  top: 51px;
+  left: calc(50% - 71.4px);
+  border-radius: 56.73px 56.73px 14.18px 14.18px;
+  background-color: var(--blue-green-tdi);
+  height: 124px;
+  mix-blend-mode: normal;
+  z-index: 0;
+}
+.team-mem-inner1,
+.team-member-wrapper1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.team-mem-inner1 {
+  margin: 0 !important;
+  position: absolute;
+  top: -0.1px;
+  left: calc(50% - 59.9px);
+  gap: var(--gap-xs);
+  z-index: 1;
+}
+.team-member-wrapper1 {
+  height: 175px;
+  position: relative;
+  gap: var(--gap-3xs);
+}
+.team-bg-rect2 {
+  width: 142px;
+  position: absolute;
+  margin: 0 !important;
+  top: 50.5px;
+  left: calc(50% - 71.4px);
+  border-radius: 56.73px 56.73px 14.18px 14.18px;
+  background-color: var(--blue-green-tdi);
+  height: 124px;
+  mix-blend-mode: normal;
+  z-index: 0;
+}
+.team-mem-name2 {
+  position: relative;
+  line-height: 20.99px;
+  text-transform: capitalize;
+  white-space: pre-wrap;
+}
+.team-mem-inner2,
+.team-member-wrapper2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.team-mem-inner2 {
+  margin: 0 !important;
+  position: absolute;
+  top: -0.6px;
+  left: calc(50% - 59.9px);
+  gap: var(--gap-xs);
+  z-index: 1;
+}
+.team-member-wrapper2 {
+  height: 174px;
+  position: relative;
+}
+.research-scholars-frame {
+  width: 150.9px;
+  display: flex;
+  flex-direction: column;
+
+  height: 539px;
+  justify-content: space-between;
+  font-size: var(--font-size-xs-3);
+  color: var(--color-white);
 }

@@ -61,7 +61,7 @@
         </div>
         <div class="nav-items">
 
-
+            <div class="home"><a href="{% url 'home' %}">HOME</a></div>
             <div class="home" id="tribeDropdown">
 
                 <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -82,7 +82,7 @@
 
             <div class="home" id="districtDropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    District
+                    DISTRICT
                 </a>
 
                 <ul class="dropdown-menu custom-dropdown">
@@ -95,9 +95,9 @@
                 </ul>
             </div>
 
-            <div class="home"><a href="/gallery">GALLERY</a></div>
+
             <div class="home"><a href="#about-us-section">ABOUT US</a></div>
-            <div class="home"><a href="#">CONTACT US</a></div>
+            <div class="home"><a href="{% url 'gallery' %}">GALLERY</a></div>
         </div>
         <div style="display: flex;gap: 10px;justify-content: center;align-items: center;">
             {% if not request.user.is_authenticated %}
@@ -392,7 +392,7 @@
                         const colorIndex = context.datasetIndex; // Get the color index
 
                         // Create a legend string
-                        const legend = dataset.label + ',' + value;
+                        const legend = dataset.label + ' ' + value + '%';
 
                         return legend;
                     },
@@ -1155,7 +1155,7 @@
                         const colorIndex = context.datasetIndex; // Get the color index
 
                         // Create a legend string
-                        const legend = dataset.label + ',' + value;
+                        const legend = dataset.label + ' Score,' + value + '%';
 
                         return legend;
                     },
