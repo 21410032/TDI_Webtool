@@ -19,11 +19,11 @@ from django.forms import formset_factory
 
 
 
-def tribe_detail_view(request, slug1, slug2):
+def tribe_detail_view(request, name, year):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user = user, year='2022')
     districts=District.objects.filter(user = user, year='2022')
-    tribe_of_slug = Tribe.objects.get(user=user, year = '2022', slug = slug1)
+    tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = 'asur')
    
     user_phone_number = request.GET.get('user')
 
@@ -35,10 +35,10 @@ def tribe_detail_view(request, slug1, slug2):
 
     
 
-    if slug1 and slug2 is not None:
+    if name and year is not None:
         try:
             
-            tribe = Tribe.objects.get(user=user, year=slug2, slug = slug1)
+            tribe = Tribe.objects.get(user=user, year=year, name = name)
             
         except Exception as e:
             return e 
@@ -80,6 +80,9 @@ def tribe_detail_view(request, slug1, slug2):
 
     return render(request, 'pvtg/asur.html', context=context)
 
+import pandas as pd
+from .test2 import perform_calculations
+
 @login_required(login_url='/accounts/login/')
 def tribe_form_view(request):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
@@ -90,8 +93,7 @@ def tribe_form_view(request):
 
 
         year = request.POST.get('year')
-        tribe_slug = request.POST.get('tribe_slug')
-   
+       
         if request.user.is_authenticated:
             user_from_form = request.user  #user instance
         else:
@@ -100,56 +102,15 @@ def tribe_form_view(request):
           #tribe instance
         
         if 'households_excel_file' in request.FILES:
-            new_households = request.FILES['households_excel_file']
-            dataset = Dataset()
-            imported_households_dict = dataset.load(new_households.read(), format='xlsx').dict
-
-
+            uploaded_file  = request.FILES['households_excel_file']
             
-            for data in imported_households_dict:
-                slug = data.get('tribeID').strip()
+            #create dataframe of base_data
+            base_data_df = pd.read_excel(uploaded_file)
 
-                if not Tribe.objects.filter(user=user, slug=slug).exists():
-                    return HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for valid tribe name.')
-                
-                tribe, created = Tribe.objects.get_or_create(user = request.user,year = year, name = slug, slug=slug)
-
-                household_data = {
-                    'tribe_slug':slug,
-                    'size': data.get('size'),
-                    'CD_score':bool(data.get('CD_score')),
-                    'IM_score':bool(data.get('IM_score')),
-                    'MC_score':bool(data.get('MC_score')),
-                    'CM_score':bool(data.get('CM_score')),
-                    'FS_score':bool(data.get('FS_score')),
-                    'LE_score':bool(data.get('LE_score')),
-                    'DRO_score':bool(data.get('DRO_score')),
-                    'IC_score':bool(data.get('IC_score')),
-                    'OW_score':bool(data.get('OW_score')),
-                    'SANI_score':bool(data.get('SANI_score')),
-                    'FUEL_score':bool(data.get('FUEL_score')),
-                    'DRWA_score':bool(data.get('DRWA_score')),
-                    'ELECTR_score':bool(data.get('ELECTR_score')),
-                    'ASS_score':bool(data.get('ASS_score')),
-                    'LAN_score':bool(data.get('LAN_score')),
-                    'ARTS_score':bool(data.get('ARTS_score')),
-                    'EV_score':bool(data.get('EV_score')),
-                    'MEET_score':bool(data.get('MEET_score'))
-                }
-                household_form = HouseholdForm(household_data)
-                if household_form.is_valid():
-                    household = household_form.save(commit=False)
-                    household.tribeID = tribe
-                    household.save()
-
-                else:
-                    print(household_form.errors)
+            perform_calculations(base_data_df, user_from_form, year)
             
-            if tribe_slug is not None:
-                redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
-            else:
-                tribe_slug = 'asur'
-                redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
+            
+            redirect_url = f'/tribe/असुर/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
 
 
@@ -157,13 +118,14 @@ def tribe_form_view(request):
 
             
         else:
+            tribe_slug = request.POST.get('tribe_slug')
             cleaned_data_list = []
             formset = YourModelFormSet(request.POST, prefix='form')
         
             if formset.is_valid():
                 for form in formset:
                     
-                    tribe, created = Tribe.objects.get_or_create(user=request.user, year=year, name=tribe_slug, slug=tribe_slug)
+                    tribe, created = Tribe.objects.get_or_create(user=request.user, year=year, name=tribe_slug)
                     household = form.save(commit=False)
                     household.tribeID = tribe
                     household.save()
