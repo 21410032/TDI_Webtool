@@ -23,7 +23,7 @@ def tribe_detail_view(request, name, year):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     tribes = Tribe.objects.filter(user = user, year='2022')
     districts=District.objects.filter(user = user, year='2022')
-    tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = 'asur')
+    tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = name)
    
     user_phone_number = request.GET.get('user')
 

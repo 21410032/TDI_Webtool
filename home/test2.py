@@ -432,9 +432,9 @@ def perform_calculations(base_data_df, user, year):
         if not slug in unique_tribes:
             print( HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for valid tribe name.'))
         
-        print(slug)
-        # print(user)
-        print(year)
+        # print(slug)
+        # # print(user)
+        # print(year)
         try:
             tribe, created = Tribe.objects.get_or_create(user=user, year=year, name=slug)
         except IntegrityError:
