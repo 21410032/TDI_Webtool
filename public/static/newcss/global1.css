@@ -1,6 +1,7 @@
 body {
   margin: 0;
   line-height: normal;
+  font-family: var(--font-poppins);
 }
 
 
@@ -15,6 +16,7 @@ body {
   --font-inter: Inter;
 
   /* font sizes */
+
   --font-size-smi: 13px;
   --font-size-xl: 20px;
   --font-size-4xs-3: 8.3px;
@@ -119,6 +121,7 @@ body {
   --br-3xl-4: 22.4px;
   --br-6xs: 7px;
   --br-9xs: 4px;
+  --br-41xl: 60px;
 
 
 

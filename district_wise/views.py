@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 User = get_user_model()
-
+from tablib import Dataset
 
 # Create your views here.
 def district_view(request,slug1,slug2):
@@ -72,16 +72,6 @@ def district_view(request,slug1,slug2):
 
     return render(request, 'district/bokaro.html', context=context)
 
-def test2_view(request):
-    districts=District.objects.all()
-    max_min_arr = districts.first().get_max_min_ind_scores()
-
-    
-    context={
-        'districts':districts,
-        'max_min_arr' : max_min_arr 
-    }
-    return render(request, 'district/test2.html', context=context)
 
 
 @login_required
@@ -93,40 +83,102 @@ def form_view(request):
 
 
     if request.method == 'POST':
-        formset = YourModelFormSet(request.POST, prefix='form')
-        print(request.POST)
-        cleaned_data_list = [] 
 
         year = request.POST.get('year')
-        user_from_form = request.user if request.user.is_authenticated else user  # Use the user from the form if authenticated, otherwise use the default user
+   
+        if request.user.is_authenticated:
+            user_from_form = request.user  
+        else:
+            return HttpResponse('Login required')
+        
+        
+        if 'district_excel_file' in request.FILES:
+            new_districts = request.FILES['district_excel_file']
+            dataset = Dataset()
+            imported_districts_dict = dataset.load(new_districts.read(), format='xlsx').dict
+            print(imported_districts_dict)
 
-        # ...
 
-        for form in formset:
-            if form.is_valid():
-                print(form.cleaned_data)
-                # Check if the form's cleaned data includes the DELETE field
-                if form.cleaned_data.get('DELETE', False):
-                    district_instance = form.instance
-                    district_instance.delete()
+            
+            for data in imported_districts_dict:
+                district_name = data.get('name').strip()
+
+                if not District.objects.filter(user=user, name=district_name).exists():
+                    return HttpResponse(f'District with name "{district_name}" not found. Check your Excel for valid district name.')
+
+                district_data = {
+                    'name': data.get('name'),   
+                    'year': data.get('year'),    
+                    'st_population': data.get('st_population'),    
+                    'total_population': data.get('total_population'),    
+                    'W_BMI': data.get('W_BMI'),    
+                    'C_UW' : data.get('C_UW'),   
+                    'AN_W': data.get('AN_W'),    
+                    'AN_C' : data.get('AN_C'),   
+                    'AHC_ANC'  : data.get('AHC_ANC'),  
+                    'AHC_Full_ANC' : data.get('AHC_Full_ANC'),   
+                    'AHC_PNC': data.get('AHC_PNC'),    
+                    'AHC_HI': data.get('AHC_HI'),    
+                    'Enrollment': data.get('Enrollment'),    
+                    'Equity': data.get('Equity'),    
+                    'E_DropRate': data.get('E_DropRate'),    
+                    'S_Sani': data.get('S_Sani'),    
+                    'S_CoFu': data.get('S_CoFu'),    
+                    'S_DrWa': data.get('S_DrWa'),    
+                    'S_Elec': data.get('S_Elec')
+                }
+
+                district_form = DistrictModelForm(district_data)
+                if district_form.is_valid():
+                    district = district_form.save(commit=False)
+                    district.user = user_from_form
+                    district.save()
+
                 else:
-                    district_instance = form.save(commit=False)
-                    district_instance.user = user_from_form
-                    district_instance.year = year
-                    district_instance.save()
-                    cleaned_data_list.append(form.cleaned_data)
+                    print(district_form.errors)
+            
+            redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
+            return redirect(redirect_url)
+
+
+
+        else:
+            formset = YourModelFormSet(request.POST, prefix='form')
+            cleaned_data_list = [] 
+
+        
+            for form in formset:
+                if form.is_valid():
+                    # Check if the form's cleaned data includes the DELETE field
+                    if form.cleaned_data.get('DELETE', False):
+                        district_instance = form.instance
+                        district_instance.delete()
+                    else:
+                        district_instance = form.save(commit=False)
+                        district_instance.user = user_from_form
+                        district_instance.year = year
+                        district_instance.save()
+                        cleaned_data_list.append(form.cleaned_data)
 
 # ...
 
 
 
-        if cleaned_data_list:
-            redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
-            return redirect(redirect_url)
+            if cleaned_data_list:
+                redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
+                return redirect(redirect_url)
 
 
     else:
         formset = YourModelFormSet(prefix='form')
 
-    return render(request, 'form/district_form.html', {'formset': formset, 'districts': districts})
+
+    context = {
+      'tribes' : tribes,
+      'districts' :districts,
+    }
+    if formset:
+        context['formset'] = formset
+
+    return render(request, 'form/district_form.html', context)
 

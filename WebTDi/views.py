@@ -53,7 +53,15 @@ def home_view(request):
 
 
 
-def wallpaper_view(request):
-    return render(request,'gallery.html')
+def gallery_view(request):
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    tribes = Tribe.objects.filter(user = user, year='2022')
+    districts=District.objects.filter(user = user, year='2022')
+
+    context={
+        'tribes' : tribes,
+        'districts' :districts,
+    }
+    return render(request,'gallery.html', context)
 
 
