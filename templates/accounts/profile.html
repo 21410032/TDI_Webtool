@@ -1,113 +1,134 @@
-{% extends 'base.html' %}
-
-{% block content %}
-{% load static %}
+{% extends 'base.html' %} {% block content %} {% load static %}
 <style>
-    .main-logo-parent,
-    .nav-items {
-        color: white;
-    }
+  .main-logo-parent,
+  .nav-items {
+    color: white;
+  }
 
-    .login-btn {
-        background-color: var(--color-white);
-        color: var(--bs-dark);
-    }
+  .login-btn {
+    background-color: var(--color-white);
+    color: var(--bs-dark);
+  }
 
-    .home:hover {
-        color: var(--bs-dark);
-    }
+  .home:hover {
+    color: var(--bs-dark);
+  }
 
-    #tribeDropdown:hover,
-    #districtDropdown:hover {
-        font-weight: bold;
-    }
+  #tribeDropdown:hover,
+  #districtDropdown:hover {
+    font-weight: bold;
+  }
 </style>
 
 <div class="profile-child"></div>
 
 <div class="frame-parent22-profile">
-    <div class="profile-image-frame">
-        <a href="">
-            <img class="frame-child26-profile" alt=""
-                src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}" /></a>
-    </div>
+  <div class="profile-image-frame">
+    {% csrf_token %}
+    <label for="id_profile_pic">
+      <img
+        class="frame-child26-profile"
+        alt=""
+        src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
+      />
+    </label>
+    <input
+      type="file"
+      name="profile_pic"
+      id="id_profile_pic"
+      style="display: none"
+    />
+  </div>
 
-    <b class="profile-name-head">{{profile.first_name}}</b>
-    <div class="frame-parent23-profile">
-        <div class="my-account-profile-parent-profile">
-            <div class="my-account-profile">My Account</div>
-            <div class="login-btn3">
-                <div class="logout">SETTINGS</div>
-            </div>
-        </div>
-        <div class="frame-parent24-profile">
-            <div class="user-information-parent">
-                <b class="user-information">User Information</b>
-                <div class="frame-parent25-profile">
-                    <div class="frame-parent26-profile">
-                        <div class="full-name-parent-profile">
-                            <div class="profile-credential-head">FULL NAME</div>
-                            <div class="profile-credential-box">
-                                <div class="profile-credential">{{profile.first_name}} {{profile.last_name}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="full-name-parent-profile">
-                            <div class="profile-credential-head">EMAIl</div>
-                            <div class="profile-credential-box">
-                                <div class="profile-credential">{{profile.email}}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="frame-parent26-profile">
-                        <div class="full-name-parent-profile">
-                            <div class="profile-credential-head">PHONE NUMBER</div>
-                            <div class="profile-credential-box">
-                                <div class="profile-credential">{{profile.phone_number}}</div>
-                            </div>
-                        </div>
-                        <div class="full-name-parent-profile">
-                            <div class="profile-credential-head">AGE</div>
-                            <div class="profile-credential-box">
-                                <div class="profile-credential">20</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="user-information-parent">
-                <b class="user-information">MY DATA</b>
-                <div class="frame-parent28-profile">
-                    <div class="frame-parent29-profile">
-                        <div class="tribe-wise-data-profile-wrapper-profile">
-                            <div class="tribe-wise-data-profile">TRIBE-WISE DATA</div>
-                        </div>
-                        <div class="frame-wrapper3-profile">
-                            <div class="add-parent-profile">
-                                <div class="tribe-wise-data-profile">ADD</div>
-                                <div class="lets-iconsadd-duotone">
-                                    <img class="group-icon-profile" alt="" src="./public/group.svg" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="frame-parent30-profile">
-                        <div class="district-wise-data-wrapper-profile">
-                            <div class="tribe-wise-data-profile">DISTRICT-WISE DATA</div>
-                        </div>
-                        <div class="frame-wrapper3-profile">
-                            <div class="add-parent-profile">
-                                <div class="tribe-wise-data-profile">ADD</div>
-                                <div class="lets-iconsadd-duotone">
-                                    <img class="group-icon-profile" alt="" src="./public/group.svg" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <b class="profile-name-head">{{profile.first_name}}</b>
+  <div class="frame-parent23-profile">
+    <div class="my-account-profile-parent-profile">
+      <div class="my-account-profile">My Account</div>
+      <div class="login-btn3">
+        <div class="logout">SETTINGS</div>
+      </div>
+
+      <div class="login-btn3">
+        <div class="edit"><a href="/accounts/profile/edit">Edit</a></div>
+      </div>
     </div>
+    <div class="frame-parent24-profile">
+      <div class="user-information-parent">
+        <b class="user-information">User Information</b>
+        <div class="frame-parent25-profile">
+          <div class="frame-parent26-profile">
+            <div class="full-name-parent-profile">
+              <div class="profile-credential-head">FULL NAME</div>
+              <div class="profile-credential-box">
+                <div class="profile-credential">
+                  {{profile.first_name}} {{profile.last_name}}
+                </div>
+              </div>
+            </div>
+            <div class="full-name-parent-profile">
+              <div class="profile-credential-head">EMAIl</div>
+              <div class="profile-credential-box">
+                <div class="profile-credential">{{profile.email}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="frame-parent26-profile">
+            <div class="full-name-parent-profile">
+              <div class="profile-credential-head">PHONE NUMBER</div>
+              <div class="profile-credential-box">
+                <div class="profile-credential">{{profile.phone_number}}</div>
+              </div>
+            </div>
+            <div class="full-name-parent-profile">
+              <div class="profile-credential-head">AGE</div>
+              <div class="profile-credential-box">
+                <div class="profile-credential">20</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="user-information-parent">
+        <b class="user-information">MY DATA</b>
+        <div class="frame-parent28-profile">
+          <div class="frame-parent29-profile">
+            <div class="tribe-wise-data-profile-wrapper-profile">
+              <div class="tribe-wise-data-profile">TRIBE-WISE DATA</div>
+            </div>
+            <div class="frame-wrapper3-profile">
+              <div class="add-parent-profile">
+                <div class="tribe-wise-data-profile">ADD</div>
+                <div class="lets-iconsadd-duotone">
+                  <img
+                    class="group-icon-profile"
+                    alt=""
+                    src="./public/group.svg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="frame-parent30-profile">
+            <div class="district-wise-data-wrapper-profile">
+              <div class="tribe-wise-data-profile">DISTRICT-WISE DATA</div>
+            </div>
+            <div class="frame-wrapper3-profile">
+              <div class="add-parent-profile">
+                <div class="tribe-wise-data-profile">ADD</div>
+                <div class="lets-iconsadd-duotone">
+                  <img
+                    class="group-icon-profile"
+                    alt=""
+                    src="./public/group.svg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

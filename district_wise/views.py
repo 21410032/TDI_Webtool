@@ -15,22 +15,28 @@ User = get_user_model()
 
 # Create your views here.
 def district_view(request,slug1,slug2):
-    
-    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    tribes = Tribe.objects.filter(user = user, year='2022')
-    districts=District.objects.filter(user = user, year='2022')
 
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    districts=District.objects.filter(user = user,year='2022')
+    tribes = Tribe.objects.filter(user = user,year='2022').distinct()
     user_phone_number = request.GET.get('user')
+    District.objects.filter(W_BMI__isnull=True).delete()
+    print(user_phone_number)
     if user_phone_number:
         user = User.objects.get(phone_number=user_phone_number)
 
 
-    else:    
-        user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    
+        
+    print(user)
+    print(districts)
+
+
+    
 
     if slug1 is not None and slug2 is not None:
         district = District.objects.get(user = user, slug=slug1, year=slug2)
-
+    print(district)
 
     district_dimensional_index=district.get_dimension_scores()
     tdi=district.get_tdi_score()
@@ -45,8 +51,8 @@ def district_view(request,slug1,slug2):
     get_score=district.get_score()
     
     context={
-      'tribes' : tribes,
-      'districts' :districts,
+      'districts':districts,
+      'district':district,
       'district_dimensional_index':district_dimensional_index,
       'tdi':tdi,
       'health_ind_contri_to_dim':health_ind_contri_to_dim,
@@ -57,8 +63,7 @@ def district_view(request,slug1,slug2):
       'education_contri_to_tdi':education_contri_to_tdi,
       'sol_contri_to_tdi':sol_contri_to_tdi,
       'get_normalized_ind_scores':get_normalized_ind_scores,
-      'name' : slug1,
-      'district' : district,
+      'tribes' : tribes,
       'get_score':get_score,
 
        
@@ -84,12 +89,12 @@ def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
    
-    tribes = Tribe.objects.filter(user = user, year='2022')
-    districts=District.objects.filter(user = user, year='2022')
+    districts = District.objects.all().filter(user=user)
 
 
     if request.method == 'POST':
         formset = YourModelFormSet(request.POST, prefix='form')
+        print(request.POST)
         cleaned_data_list = [] 
 
         year = request.POST.get('year')
@@ -99,6 +104,7 @@ def form_view(request):
 
         for form in formset:
             if form.is_valid():
+                print(form.cleaned_data)
                 # Check if the form's cleaned data includes the DELETE field
                 if form.cleaned_data.get('DELETE', False):
                     district_instance = form.instance
@@ -122,11 +128,5 @@ def form_view(request):
     else:
         formset = YourModelFormSet(prefix='form')
 
-
-    context = {
-        'tribes' : tribes,
-      'districts' :districts,
-      'formset': formset,
-    }
-    return render(request, 'form/district_form.html', context)
+    return render(request, 'form/district_form.html', {'formset': formset, 'districts': districts})
 

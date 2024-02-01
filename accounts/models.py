@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import UserManager
+from django import forms
 
 class Profile(AbstractUser):
 
@@ -18,5 +19,4 @@ class Profile(AbstractUser):
     def __str__(self):
         return self.email
     
-
 

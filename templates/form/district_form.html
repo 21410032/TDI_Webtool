@@ -25,10 +25,17 @@
       <label for="id_form-0-name">Name:</label>
       <select name="form-0-name" id="id_form-0-name" fdprocessedid="isxhvk">
         {% for district in districts %}
-
+        <option value="{{district.slug}}">{{district.slug}}</option>
         {% endfor %}
       </select>
-
+      {% comment %} <select id="tribename" name="tribe_slug" onchange="toggleForms()">
+        <option value="" disabled selected hidden>tribe</option>
+  
+        {% for tribe in tribes %}
+        <option value="{{tribe.slug}}">{{tribe.slug}}</option>
+        {% endfor %}
+  
+      </select> {% endcomment %}
 
 
 
@@ -192,16 +199,16 @@
   <input type="submit" value="Submit">
 </form>
 <script>
-  // When the "Add Form" button is clicked
   document.getElementById('add-form').addEventListener('click', function () {
     // Get the div containing the form elements
     var formsetDiv = document.getElementById('formset');
 
-    // Get the last form in the formset
-    var lastForm = formsetDiv.lastElementChild;
+    // Get the template form HTML from the first form in the formset
+    var templateHTML = formsetDiv.firstElementChild.outerHTML;
 
-    // Clone the last form
-    var newForm = lastForm.cloneNode(true);
+    // Create a new form using the template HTML
+    var newForm = document.createElement('div');
+    newForm.innerHTML = templateHTML;
 
     // Clear values in the cloned form
     newForm.querySelectorAll('input, select, textarea').forEach(function (element) {
@@ -223,39 +230,49 @@
     newForm.querySelectorAll('[name]').forEach(function (element) {
       element.name = element.name.replace(/-\d+/, '-' + (newFormIndex - 1));
     });
+
+    // Update the 'for' attribute of labels in the cloned form
     newForm.querySelectorAll('label').forEach(function (label) {
       var labelFor = label.getAttribute('for');
       if (labelFor) {
         label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex - 1)));
       }
     });
+
     // Append the new form to the formset
     formsetDiv.appendChild(newForm);
   });
 
+
   document.getElementById('remove-form').addEventListener('click', function () {
+    // Get the div containing the form elements
     var formsetDiv = document.getElementById('formset');
 
+    // If there is more than one form, remove the last one
     if (formsetDiv.childElementCount > 1) {
       var lastForm = formsetDiv.lastElementChild;
-      var deleteCheckbox = lastForm.querySelector('[id$="-DELETE"]');
-
-      if (deleteCheckbox) {
-        if (deleteCheckbox.checked) {
-          // Hide the form and disable its inputs
-          lastForm.style.display = 'none';
-          lastForm.querySelectorAll('input, select, textarea').forEach(function (element) {
-            element.disabled = true;
-          });
-        } else {
-          // If not marked for deletion, set the DELETE field to true
-          deleteCheckbox.checked = true;
-        }
-      }
+      formsetDiv.removeChild(lastForm);
     }
   });
 
 
+  function toggleForms() {
+    var entryType = document.getElementById("entryType").value;
+    var manualForm = document.getElementById("HH_manual_data_form");
+    var fileUploadForm = document.getElementById("HH_fileUpload_form");
+    // var slugSelect = document.getElementById("id_form-0-tribeID");
+
+
+    if (entryType === "manual") {
+      manualForm.style.display = "block";
+      fileUploadForm.style.display = "none";
+      // slugSelect.setAttribute("required", "required");
+    } else if (entryType === "file") {
+      manualForm.style.display = "none";
+      fileUploadForm.style.display = "block";
+      // slugSelect.removeAttribute("required");
+    }
+  }
 
 
 
