@@ -18,23 +18,23 @@ class Tribe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tribe',default=settings.ADMIN_USER_PHONE_NUMBER)
     year = models.IntegerField()
     name = models.CharField(max_length=50)
-    slug = models.SlugField(null=True, blank=True)
     incidence = models.FloatField(null=True, blank=True)
     intensity = models.FloatField(null=True, blank=True)
     tdi = models.FloatField(null=True, blank=True)
 
     class Meta:
-        unique_together = ('user', 'year', 'slug')
+        unique_together = ('user', 'year', 'name')
 
-    def __str__(self):
-        return f"{self.slug}-{self.year}"
+    
     
 
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        # self.slug = slugify(self.name)
         super(Tribe, self).save(*args, **kwargs)
     
+    def __str__(self):
+        return f"{self.name}-{self.year}"
     
 
     @property
