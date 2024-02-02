@@ -3,18 +3,24 @@ import numpy as np
 
 
 def perform_calculations(base_data_df, user, year):
+<<<<<<< HEAD
     base_data_df = pd.read_excel('C:/Users/tinky/OneDrive/Documents/ho.xlsx')
+=======
+   
+
+    # base_data_df = pd.read_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/TRI_base_data.xlsx')
+>>>>>>> 066e98d31d4e8b113abbf9b26864c97901de737a
 
     # print(base_data_df)
 
     # print(base_data_df.columns)
 
 
-    base_data_df['Eligibility_CD'] = np.where(base_data_df['chronic_disease'] == 'लागू नहीं', 0, 1)
+    base_data_df['Eligibility_CD'] = np.where(base_data_df['chronic_disease'].str.strip() == 'लागू नहीं', 0, 1)
 
-        
-                
-    base_data_df['CD_Cum_Score'] = np.where(base_data_df['chronic_disease'] == "हां", 0, 1)
+    
+            
+    base_data_df['CD_Cum_Score'] = np.where(base_data_df['chronic_disease'].str.strip() == "हां", 0, 1)
 
     base_data_df['Age'] = pd.to_numeric(base_data_df['Age'], errors='coerce')
 
@@ -25,18 +31,18 @@ def perform_calculations(base_data_df, user, year):
 
     conditions_IMM_Cum_Score = [
         (base_data_df['Age'] < 16),
-        (base_data_df['basic_vaccination'] == 'पूरी तरह ')
+        (base_data_df['basic_vaccination'].str.strip() == 'पूरी तरह')
     ]
     values_IMM_Cum_Score = ['NA', 1]
     base_data_df['IMM_Cum_Score'] = np.select(conditions_IMM_Cum_Score, values_IMM_Cum_Score, default=0)
 
 
-    base_data_df['Eligibility_IND'] = np.where(base_data_df['Institutional_delivery'] == 'लागू नहीं', 0, 1)
+    base_data_df['Eligibility_IND'] = np.where(base_data_df['Institutional_delivery'].str.strip() == 'लागू नहीं', 0, 1)
 
 
 
     conditions_IND_Cum_Score = [
-        (base_data_df['Institutional_delivery'] == 'स्वास्थ्य केंद्र '),
+        (base_data_df['Institutional_delivery'].str.strip() == 'स्वास्थ्य केंद्र'),
         (base_data_df['Eligibility_IND'] == 0)
     ]
     values_IND_Cum_Score = [1, 'NA']
@@ -45,28 +51,28 @@ def perform_calculations(base_data_df, user, year):
 
 
     conditions_Eligibility_ANC = [
-        (base_data_df['ANC'] == 'लागू नहीं') | (16 > base_data_df['Age']) | (base_data_df['Age'] > 45) | (base_data_df['Gender'] != 'महिला')
+        (base_data_df['ANC'].str.strip() == 'लागू नहीं') | (16 > base_data_df['Age']) | (base_data_df['Age'] > 45) | (base_data_df['Gender'].str.strip() != 'महिला')
     ]
     values_Eligibility_ANC = [0]
     base_data_df['Eligibility_ANC'] = np.select(conditions_Eligibility_ANC, values_Eligibility_ANC, default=1)
 
 
     conditions_ANC_Cum_Score = [
-        (base_data_df['ANC'].isin(['हाँ, सभी तिमाही ', 'हाँ, 1 तिमाही ', 'हाँ, 2 तिमाही '])),
+        (base_data_df['ANC'].str.strip().isin(['हाँ, सभी तिमाही', 'हाँ, 1 तिमाही', 'हाँ, 2 तिमाही'])),
         (base_data_df['Eligibility_ANC'] == 0)
     ]
     values_ANC_Cum_Score = [1, 'NA']
     base_data_df['ANC_Cum_Score'] = np.select(conditions_ANC_Cum_Score, values_ANC_Cum_Score, default=0)
 
 
-    condition_U5CM_Cum_Score = (base_data_df['Infant_mortality'] == 'हां')
+    condition_U5CM_Cum_Score = (base_data_df['Infant_mortality'].str.strip() == 'हां')
     base_data_df['U5CM_Cum_Score'] = np.where(condition_U5CM_Cum_Score, 0, 1)
 
-    condition_2sq_Cum_Score = (base_data_df['2sqmeals'] == 'हाँ, पर्याप्त')
+    condition_2sq_Cum_Score = (base_data_df['2sqmeals'].str.strip() == 'हाँ, पर्याप्त')
     base_data_df['2sq_Cum_Score'] = np.where(condition_2sq_Cum_Score, 1, 0)
 
     keywords_Energy = ['चावल', 'रोटी', 'ज्वार', 'आलू', 'बाजरा', 'लिट्टी']
-    condition_Energy = base_data_df['food_diversity'].apply(lambda x: any(keyword in x for keyword in keywords_Energy))
+    condition_Energy = base_data_df['food_diversity'].str.strip().apply(lambda x: any(keyword in x for keyword in keywords_Energy))
     base_data_df['Energy'] = np.where(condition_Energy, 1, 0)
 
     proteins_condition = (
@@ -83,7 +89,7 @@ def perform_calculations(base_data_df, user, year):
     condition_eligibility_LE = (base_data_df['Age'] >= 10)
     base_data_df['Eligibility LE'] = np.where(condition_eligibility_LE, 1, 0)
 
-    condition_cum_score_LE = base_data_df['Ed'].isin([
+    condition_cum_score_LE = base_data_df['Ed'].str.strip().isin([
         '6th कक्षा पूरा किया हुआ', '7th कक्षा पूरा किया हुआ', '8th कक्षा पूरा किया हुआ',
         '9th कक्षा पूरा किया हुआ', '10th कक्षा पूरा किया हुआ', '11th कक्षा पूरा किया हुआ',
         '12th कक्षा पूरा किया हुआ', 'डिप्लोमा पूरा किया हुआ', 'डिग्री पूरा किया हुआ',
@@ -95,8 +101,15 @@ def perform_calculations(base_data_df, user, year):
     base_data_df['Eligibility DRO'] = np.where(condition_Eligibility_DRO, 0, 1)
 
 
-    condition_cum_score_DRO = base_data_df['Ed'].isin(['10th कक्षा पूरा किया हुआ', '11th कक्षा पूरा किया हुआ', '12th कक्षा पूरा किया हुआ','डिप्लोमा पूरा किया हुआ', 'डिग्री पूरा किया हुआ', 'पोस्ट ग्रेजुएशन पूरा किया हुआ'])
-    base_data_df['cum_score_DRO'] = np.where(condition_cum_score_DRO | (base_data_df['Eligibility DRO'] == 0), 0, 'NA')
+
+    conditions_cum_score_DRO = [
+        (base_data_df['Ed'].str.strip().isin(['10th कक्षा पूरा किया हुआ', '11th कक्षा पूरा किया हुआ', '12th कक्षा पूरा किया हुआ', 'डिप्लोमा पूरा किया हुआ', 'डिग्री पूरा किया हुआ', 'पोस्ट ग्रेजुएशन पूरा किया हुआ'])),
+        (base_data_df['Eligibility DRO'] == 0)
+    ]
+
+    values_cum_score_DRO = [1, 'NA']
+    base_data_df['cum_score_DRO'] = np.select(conditions_cum_score_DRO, values_cum_score_DRO, default=0)
+
 
 
     condition_Aadhaar_bank_account_MCP_Aayushman = (
@@ -109,7 +122,7 @@ def perform_calculations(base_data_df, user, year):
         condition_Aadhaar_bank_account_MCP_Aayushman, 1, 0
     )
 
-    condition_Ration = (base_data_df['ration_c_color'] == 'लागू नहीं')
+    condition_Ration = (base_data_df['ration_c_color'].str.strip() == 'लागू नहीं')
     base_data_df['Ration'] = np.where(condition_Ration, 0, 1)
 
 
@@ -122,7 +135,7 @@ def perform_calculations(base_data_df, user, year):
     base_data_df['CUM_SCORE_IC'] = np.where(condition_CUM_SCORE_IC, 1, 0)
 
 
-    condition_CUM_SCORE_OWN = (base_data_df['agricultureland'] == 'हां') | (base_data_df['home_ownership'] == 'हां')
+    condition_CUM_SCORE_OWN = (base_data_df['agricultureland'].str.strip() == 'हां') | (base_data_df['home_ownership'].str.strip() == 'हां')
     base_data_df['CUM_SCORE_OWN'] = np.where(condition_CUM_SCORE_OWN, 1, 0)
 
 
@@ -137,9 +150,9 @@ def perform_calculations(base_data_df, user, year):
     condition_cum_score_SoDrWa = base_data_df['source_drinking_water'].str.contains("घर का नल")
     base_data_df['cum_score_SoDrWa'] = np.where(condition_cum_score_SoDrWa, 1, 0)
 
-    base_data_df['cum_score_ELECTR'] = np.where(base_data_df['electricity'] == 'हां', 1, 0)
+    base_data_df['cum_score_ELECTR'] = np.where(base_data_df['electricity'].str.strip() == 'हां', 1, 0)
 
-    condition_Aadhaar_bank_account_MCP_Aayushman = (
+    condition_ASS_INFO = (
         (base_data_df['assets'].str.contains('इंटरनेट का उपयोग')) |
         (base_data_df['assets'].str.contains('सामान्य फोन')) |
         (base_data_df['assets'].str.contains('टेलीविजन')) |
@@ -147,11 +160,11 @@ def perform_calculations(base_data_df, user, year):
         (base_data_df['smart_phone'].str.contains('हां'))
     )
     base_data_df['ASS_INFO'] = np.where(
-        condition_Aadhaar_bank_account_MCP_Aayushman, 1, 0
+        condition_ASS_INFO, 1, 0
     )
 
 
-    condition_Aadhaar_bank_account_MCP_Aayushman = (
+    condition_ASS_LIVE = (
         (base_data_df['assets'].str.contains('बिजली का पंखा')) |
         (base_data_df['assets'].str.contains('गैस - चूल्हा')) |
         (base_data_df['assets'].str.contains('हल')) |
@@ -161,11 +174,11 @@ def perform_calculations(base_data_df, user, year):
         (base_data_df['assets'].str.contains('तालाब'))
     )
     base_data_df['ASS_LIVE'] = np.where(
-        condition_Aadhaar_bank_account_MCP_Aayushman, 1, 0
+        condition_ASS_LIVE, 1, 0
     )
 
 
-    condition_Aadhaar_bank_account_MCP_Aayushman = (
+    condition_ASS_TRANS = (
         (base_data_df['assets'].str.contains('गाड़ी')) |
         (base_data_df['assets'].str.contains('साइकिल')) |
         (base_data_df['assets'].str.contains('दो पहिया')) |
@@ -173,12 +186,12 @@ def perform_calculations(base_data_df, user, year):
         (base_data_df['assets'].str.contains('ट्रैक्टर'))
     )
     base_data_df['ASS_TRANS'] = np.where(
-        condition_Aadhaar_bank_account_MCP_Aayushman, 1, 0
+        condition_ASS_TRANS, 1, 0
     )
 
 
-    condition_cum_score_Fuel = ((base_data_df['ASS_TRANS'] + base_data_df['ASS_LIVE'] + base_data_df['ASS_INFO'])) == 3
-    base_data_df['ASS'] = np.where(condition_cum_score_Fuel, 1, 0)
+    condition_ASS = ((base_data_df['ASS_TRANS'] + base_data_df['ASS_LIVE'] + base_data_df['ASS_INFO'])) == 3
+    base_data_df['ASS'] = np.where(condition_ASS, 1, 0)
 
 
     columns_to_handle = ['no_hen_cock', 'no_goats', 'no_cows', 'no_buffaloes', 'no_oxan', 'no_pigs', 'no_ducks', 'no_swan']
@@ -187,20 +200,20 @@ def perform_calculations(base_data_df, user, year):
             base_data_df[column] = pd.to_numeric(base_data_df[column], errors='coerce').fillna(0).astype(int)
 
 
-    condition_cum_score_Fuel = (
+    condition_ANI = (
     (base_data_df['no_hen_cock'] + base_data_df['no_goats'] + base_data_df['no_cows'] + base_data_df['no_buffaloes'] + base_data_df['no_oxan'] + base_data_df['no_pigs'] + base_data_df['no_ducks'] + base_data_df['no_swan']) > 0 | (base_data_df['Pond_Fish'] == 'हां'))
 
 
-    base_data_df['ANI'] = np.where(condition_cum_score_Fuel, 1, 0)
+    base_data_df['ANI'] = np.where(condition_ANI, 1, 0)
 
 
 
 
-    condition_cum_score_Fuel = (base_data_df['ASS'] + base_data_df['ASS']== 2)
-    base_data_df['CUM_SCORE_ASS'] = np.where(condition_cum_score_Fuel, 1, 0)
+    condition_CUM_SCORE_ASS = (base_data_df['ASS'] + base_data_df['ASS']== 2)
+    base_data_df['CUM_SCORE_ASS'] = np.where(condition_CUM_SCORE_ASS, 1, 0)
 
 
-    condition_Aadhaar_bank_account_MCP_Aayushman = (
+    condition_cum_score_L = (
         (base_data_df['Language'].str.contains('कोरथा')) |
         (base_data_df['Language'].str.contains('मुंडारी')) |
         (base_data_df['Language'].str.contains('बिरहोर')) |
@@ -218,51 +231,49 @@ def perform_calculations(base_data_df, user, year):
         
     )
     base_data_df['cum_score_L'] = np.where(
-        condition_Aadhaar_bank_account_MCP_Aayushman, 1, 0
+        condition_cum_score_L, 1, 0
     )
 
-
-    condition_Ration = (base_data_df['traditional_song'] == "हां")
-    base_data_df['cum_score_So'] = np.where(condition_Ration, 1, 0)
+    base_data_df['cum_score_So'] = np.where(base_data_df['traditional_song'].str.strip() == "हां", 1, 0)
 
 
-    condition_Ration = (
-        (base_data_df['traditional_instrument'] == "हां") |
-        (base_data_df['Traditional_Instrument'] != "कुछ नहीं")
+
+    condition_cum_score_MuI = (
+        (base_data_df['traditional_instrument'].str.strip() == "हां") |
+        (base_data_df['Traditional_Instrument'].str.strip() != "कुछ नहीं")
     )
 
-    base_data_df['cum_score_MuI'] = np.where(condition_Ration, 1, 0)
+    base_data_df['cum_score_MuI'] = np.where(condition_cum_score_MuI, 1, 0)
 
 
 
-    condition_Ration = (base_data_df['traditional_dance'] == "हां")
-    base_data_df['cum_score_Da'] = np.where(condition_Ration, 1, 0)
+    condition_cum_score_Da = (base_data_df['traditional_dance'].str.strip() == "हां")
+    base_data_df['cum_score_Da'] = np.where(condition_cum_score_Da, 1, 0)
 
 
-    condition_cum_score_Fuel = ((base_data_df['cum_score_Da'] + base_data_df['cum_score_MuI'] + base_data_df['cum_score_So'])) > 0
-    base_data_df['cum_score_Arts'] = np.where(condition_cum_score_Fuel, 1, 0)
+    condition_cum_score_Arts = ((base_data_df['cum_score_Da'] + base_data_df['cum_score_MuI'] + base_data_df['cum_score_So'])) > 0
+    base_data_df['cum_score_Arts'] = np.where(condition_cum_score_Arts, 1, 0)
 
 
-    condition_Ration = (base_data_df['Age'] >= 18)
-    base_data_df['Eligibility_voter'] = np.where(condition_Ration, 1, 0)
+    condition_Eligibility_voter = (base_data_df['Age'] >= 18)
+    base_data_df['Eligibility_voter'] = np.where(condition_Eligibility_voter, 1, 0)
 
 
     base_data_df['voter'] = pd.to_numeric(base_data_df['voter'], errors='coerce').fillna(0)
 
-    condition_Ration = (base_data_df['Eligibility_voter'] == 0)
-    condition_voter = (base_data_df['voter'] > 0)
+
+
+    conditions_cum_score_EV = [
+        (base_data_df['Eligibility_voter'] == 0),
+        (base_data_df['voter'] > 0)
+    ]
+
+    values_cum_score_EV = ['NA', 1]
+    base_data_df['cum_score_EV'] = np.select(conditions_cum_score_EV, values_cum_score_EV, default=0)
 
 
 
-    base_data_df['cum_score_EV'] = 0  # Initialize the column with 0
-    base_data_df.loc[condition_Ration, 'cum_score_EV'] = 'NA'
-    base_data_df.loc[condition_voter & ~condition_Ration, 'cum_score_EV'] = 1
-
-
-
-
-
-    condition_Aadhaar_bank_account_MCP_Aayushman = (
+    condition_Cum_s_core_meetings = (
         (base_data_df['SHG'].str.contains("हां")) |
         (base_data_df['traditional_meeting'].str.contains("हां")) |
         (base_data_df['gram_sabha_meeting'].str.contains("हां")) |
@@ -270,9 +281,12 @@ def perform_calculations(base_data_df, user, year):
         
     )
     base_data_df['Cum_s core_meetings'] = np.where(
-        condition_Aadhaar_bank_account_MCP_Aayushman, 1, 0
+        condition_Cum_s_core_meetings, 1, 0
     )
 
+
+    # base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
+    # print("Result Excel file saved successfully.")
 
     total_fid = base_data_df[['__fid__']].values.tolist()
     tribes = np.array(base_data_df['Tribe_N']).flatten().tolist()
@@ -330,7 +344,7 @@ def perform_calculations(base_data_df, user, year):
 
     score_columns = {}
 
-    for column in ['Eligibility_CD', 'CD_Cum_Score', 'Eligibility_IMM','IMM_Cum_Score','Eligibility_IND', 'IND_Cum_Score', 'Eligibility_ANC', 'ANC_Cum_Score', 'U5CM_Cum_Score', '2sq_Cum_Score', 'FD_Cum_Score', 'cum_score_LE', 'Eligibility DRO', 'cum_score_DRO', 'CUM_SCORE_IC', 'CUM_SCORE_OWN', 'CUM_SCORE_SANI', 'cum_score_Fuel', 'cum_score_SoDrWa', 'cum_score_ELECTR', 'ASS', 'ANI','CUM_SCORE_ASS', 'Cum_s core_meetings', 'cum_score_L', 'cum_score_So', 'cum_score_MuI', 'cum_score_Da', 'cum_score_Arts', 'Eligibility_voter', 'cum_score_EV']:
+    for column in ['Eligibility_CD', 'CD_Cum_Score', 'Eligibility_IMM','IMM_Cum_Score','Eligibility_IND', 'IND_Cum_Score', 'Eligibility_ANC', 'ANC_Cum_Score', 'U5CM_Cum_Score', '2sq_Cum_Score', 'FD_Cum_Score', 'Eligibility LE', 'cum_score_LE', 'Eligibility DRO', 'cum_score_DRO', 'CUM_SCORE_IC', 'CUM_SCORE_OWN', 'CUM_SCORE_SANI', 'cum_score_Fuel', 'cum_score_SoDrWa', 'cum_score_ELECTR','CUM_SCORE_ASS', 'Cum_s core_meetings', 'cum_score_L', 'cum_score_Arts', 'Eligibility_voter', 'cum_score_EV']:
         # Initialize a list to store cumulative scores
         score_column = [0] * len(unique_fid)
 
@@ -345,8 +359,15 @@ def perform_calculations(base_data_df, user, year):
         '_fid_': unique_fid,
         **score_columns
     })
+<<<<<<< HEAD
     cum_score_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel.xlsx', index=False)
     print("Result Excel file saved successfully.")
+=======
+
+    cum_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/cum_data_df.xlsx', index=False)
+    print("Result Excel file saved successfully.")
+
+>>>>>>> 066e98d31d4e8b113abbf9b26864c97901de737a
     HH_score_df = pd.DataFrame({
         '_fid_': unique_fid,
         'Tribe_N' : HH_tribe_list,
@@ -420,6 +441,8 @@ def perform_calculations(base_data_df, user, year):
 
     # print(HH_score_df)
 
+    HH_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/HH_scores.xlsx', index=False)
+    print("Result Excel file saved successfully.")
 
     from .models import Tribe
     from django.http import HttpResponse
@@ -479,5 +502,4 @@ def perform_calculations(base_data_df, user, year):
             print(household_form.errors)
 
         
-# HH_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/HH_scores.xlsx', index=False)
-# print("Result Excel file saved successfully.")
+

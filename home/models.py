@@ -34,7 +34,7 @@ class Tribe(models.Model):
         super(Tribe, self).save(*args, **kwargs)
     
     def __str__(self):
-        return f"{self.name}-{self.year}"
+        return f"{self.name}-{self.year}-{self.id}"
     
 
     @property
