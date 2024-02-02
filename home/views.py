@@ -25,6 +25,9 @@ def tribe_detail_view(request, name, year):
     Household.objects.filter(size__isnull=True).delete()
     tribes = Tribe.objects.filter(user = user, year='2022')
     districts=District.objects.filter(user = user, year='2022')
+    print(user)
+    print(name)
+    print(year)
     tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = name)
    
     user_phone_number = request.GET.get('user')

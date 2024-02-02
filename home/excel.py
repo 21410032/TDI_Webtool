@@ -2,15 +2,16 @@ import pandas as pd
 import numpy as np
 
 #create dataframe of base_data
-base_data_df = pd.read_excel('C:/Users/tinky/OneDrive/Documents/ho.xlsx')
+base_data_df = pd.read_excel('C:/Users/tinky/OneDrive/Documents/Book1.xlsx')
 
 print(base_data_df)
 
 print(base_data_df.columns)
 
 
-base_data_df['Eligibility_CD'] = np.where(base_data_df['chronic_disease'] == 'लागू नहीं', 0, 1)
-
+base_data_df['Eligibility_CD'] = np.where(base_data_df['chronic_disease'] == 'लागू नहीं', 1, 0)
+print(base_data_df['chronic_disease'],base_data_df['Eligibility_CD'])
+print(base_data_df['Eligibility_CD'].unique())
             ##print('Eligibility_CD')
             
 base_data_df['CD_Cum_Score'] = np.where(base_data_df['chronic_disease'] == "हां", 0, 1)
@@ -293,7 +294,8 @@ base_data_df['Cum_s core_meetings'] = np.where(
     condition_Aadhaar_bank_account_MCP_Aayushman, 1, 0
 )
 #print("core_meetings")
-
+base_data_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel.xlsx', index=False)
+print("Result Excel file saved successfully.")
 df2 = base_data_df[['__fid__']].values.tolist()
 #print(df2)
 
@@ -344,10 +346,10 @@ for column in ['Eligibility_CD', 'CD_Cum_Score', 'Eligibility_IMM','IMM_Cum_Scor
     score_columns[f'Cum_Score_{column}'] = score_column
 
 # Combine the cumulative scores into a DataFrame
-result_df = pd.DataFrame({
-    '__fid__': unique_list,
-    **score_columns
-})
+# result_df = pd.DataFrame({
+#     '__fid__': unique_list,
+#     **score_columns
+# })
 
     # Add the cumulative score to the DataFrame
     # base_data_df[f'Cum_Score_{column}'] = score_column
@@ -356,8 +358,8 @@ result_df = pd.DataFrame({
 
 
 # Save the DataFrame to a new Excel file
-result_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel.xlsx', index=False)
-print("Result Excel file saved successfully.")
+# result_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel.xlsx', index=False)
+# print("Result Excel file saved successfully.")
 
 
 

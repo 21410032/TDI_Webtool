@@ -345,7 +345,8 @@ def perform_calculations(base_data_df, user, year):
         '_fid_': unique_fid,
         **score_columns
     })
-
+    cum_score_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel.xlsx', index=False)
+    print("Result Excel file saved successfully.")
     HH_score_df = pd.DataFrame({
         '_fid_': unique_fid,
         'Tribe_N' : HH_tribe_list,
@@ -426,7 +427,9 @@ def perform_calculations(base_data_df, user, year):
     from django.db import IntegrityError
 
     for index, row in HH_score_df.iterrows():
-        slug = row.at['Tribe_N'].strip()
+        slug = row['Tribe_N'].strip()
+    # Use the 'slug' variable as needed
+
 
         
         if not slug in unique_tribes:
