@@ -49,14 +49,14 @@
     </h3>
     <ul>
         {% for i in tribe.tribal_dimensional_incidence %}
-        {% for j in tribe.tribal_dimensional_intensity %}
-        <li>
-            Incidence = {{i}}
-            <br>
-            Intensity = {{j}}
-        </li><br>
 
+        <li>Incidence = {{i}}</li>
         {% endfor %}
+
+        <br><br>
+        {% for j in tribe.tribal_dimensional_intensity %}
+        <li>Intensity = {{j}}</li>
+
         {% endfor %}
     </ul>
 
