@@ -3,13 +3,9 @@ import numpy as np
 
 
 def perform_calculations(base_data_df, user, year):
-<<<<<<< HEAD
-    base_data_df = pd.read_excel('C:/Users/tinky/OneDrive/Documents/ho.xlsx')
-=======
    
 
     # base_data_df = pd.read_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/TRI_base_data.xlsx')
->>>>>>> 066e98d31d4e8b113abbf9b26864c97901de737a
 
     # print(base_data_df)
 
@@ -288,7 +284,7 @@ def perform_calculations(base_data_df, user, year):
     # base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
     # print("Result Excel file saved successfully.")
 
-    total_fid = base_data_df[['__fid__']].values.tolist()
+    total_fid = base_data_df['_fid_'].values.tolist()
     tribes = np.array(base_data_df['Tribe_N']).flatten().tolist()
 
     unique_fid = []
@@ -356,20 +352,15 @@ def perform_calculations(base_data_df, user, year):
 
     # Combine the cumulative scores into a DataFrame
     cum_score_df = pd.DataFrame({
-        '_fid_': unique_fid,
+        'fid': unique_fid,
         **score_columns
     })
-<<<<<<< HEAD
+
     cum_score_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel.xlsx', index=False)
     print("Result Excel file saved successfully.")
-=======
 
-    cum_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/cum_data_df.xlsx', index=False)
-    print("Result Excel file saved successfully.")
-
->>>>>>> 066e98d31d4e8b113abbf9b26864c97901de737a
     HH_score_df = pd.DataFrame({
-        '_fid_': unique_fid,
+        'fid': unique_fid,
         'Tribe_N' : HH_tribe_list,
         'Sum of HH_S' : HH_size_list,
 
@@ -450,9 +441,7 @@ def perform_calculations(base_data_df, user, year):
     from django.db import IntegrityError
 
     for index, row in HH_score_df.iterrows():
-        slug = row['Tribe_N'].strip()
-    # Use the 'slug' variable as needed
-
+        slug = row.at['Tribe_N'].strip()
 
         
         if not slug in unique_tribes:
@@ -500,6 +489,3 @@ def perform_calculations(base_data_df, user, year):
 
         else:
             print(household_form.errors)
-
-        
-

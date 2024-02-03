@@ -117,13 +117,6 @@ def tribe_form_view(request):
             
             redirect_url = f'/tribe/असुर/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
-
-
-
-            
-                
-
-            
         else:
             tribe_slug = request.POST.get('tribe_slug')
             cleaned_data_list = []
@@ -137,8 +130,6 @@ def tribe_form_view(request):
                     household.tribeID = tribe
                     household.save()
                     cleaned_data_list.append(household)
-            
-            
             else:
                 # Print form errors to understand why validation failed
                 ##print(formset.errors)
