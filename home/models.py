@@ -455,7 +455,7 @@ class Household(models.Model):
  
     
     def __str__(self):
-        return f"HH ({self.tribeID.name})-{self.tribeID.year}"
+        return f"HH ({self.tribeID.name})-{self.tribeID.year}-{self.size}"
 
 
 
