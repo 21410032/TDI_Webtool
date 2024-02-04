@@ -191,7 +191,9 @@ class District(models.Model):
             prod = prod*i
 
         arithmetic_tdi = round(total/length,2)
-        geometric_tdi = round(prod,2)
+        geometric_tdi = round(pow(prod,1/3),2)
+        print(arithmetic_tdi)
+        print(geometric_tdi)
 
         return [geometric_tdi, arithmetic_tdi]
     

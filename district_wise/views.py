@@ -26,7 +26,48 @@ def district_view(request,slug1,slug2):
         user = User.objects.get(phone_number=user_phone_number)
 
 
-    
+    district = District.objects.get(name='Bokaro')
+
+    # Get the score
+    print("Multiplier:", district.get_multiplier())
+
+    # Method: get_indicator_st_scores
+    print("Indicator ST Scores:", district.get_indicator_st_scores())
+
+    # Method: get_max_min_ind_scores
+    max_arr, min_arr = district.get_max_min_ind_scores()
+    print("Max Scores:", max_arr)
+    print("Min Scores:", min_arr)
+
+    # Method: get_normalized_ind_scores
+    print("Normalized Indicator Scores:", district.get_normalized_ind_scores())
+
+    # Method: get_normalized_final_ind_scores
+    print("Normalized Final Indicator Scores:", district.get_normalized_final_ind_scores())
+
+    # Method: get_avg_ind_scores
+    print("Average Indicator Scores:", district.get_avg_ind_scores())
+
+    # Method: get_dimension_scores
+    print("Dimension Scores:", district.get_dimension_scores())
+
+    # Method: get_tdi_score
+    geometric_tdi, arithmetic_tdi = district.get_tdi_score()
+    print("Geometric TDI:", geometric_tdi)
+    print("Arithmetic TDI:", arithmetic_tdi)
+
+    # Method: get_indicator_contri_to_dimension
+    indicator_contri_to_dimension = district.get_indicator_contri_to_dimension()
+    print("Indicator Contribution to Dimension:", indicator_contri_to_dimension)
+
+    # Method: get_dimension_contribution_tdi
+    print("Dimension Contribution to TDI:", district.get_dimension_contribution_tdi())
+
+    # Method: get_score
+    print("Overall Score:", district.get_score())
+
+    # Print the data in the terminal
+
         
     print(user)
     print(districts)
@@ -63,7 +104,7 @@ def district_view(request,slug1,slug2):
       'education_contri_to_tdi':education_contri_to_tdi,
       'sol_contri_to_tdi':sol_contri_to_tdi,
       'get_normalized_ind_scores':get_normalized_ind_scores,
-      'tribes' : tribes,
+    #   'tribes' : tribes,
       'get_score':get_score,
 
        
@@ -174,7 +215,7 @@ def form_view(request):
 
 
     context = {
-      'tribes' : tribes,
+    #   'tribes' : tribes,
       'districts' :districts,
     }
     if formset:

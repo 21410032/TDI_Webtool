@@ -280,6 +280,8 @@ def perform_calculations(base_data_df, user, year):
         condition_Cum_s_core_meetings, 1, 0
     )
 
+    base_data_df.to_excel(settings.EXCEL_FILE_PATH1, index=False)
+    print("Result Excel file saved successfully.")
     # base_data_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
     # print("Result Excel file saved successfully.")
 
@@ -288,9 +290,17 @@ def perform_calculations(base_data_df, user, year):
 
     total_fid = base_data_df[['__fid__']].values.tolist()
     tribes = np.array(base_data_df['Tribe_N']).flatten().tolist()
+    Block_name = np.array(base_data_df['Block_name']).flatten().tolist()
+    village_name = np.array(base_data_df['village_name']).flatten().tolist()
+    District_name = np.array(base_data_df['District_name']).flatten().tolist()
+    
+
 
     unique_fid = []
     unique_tribes = []
+    unique_Block_name = []
+    unique_village_name = []
+    unique_District_name = []
 
     for x in total_fid:
         if x not in unique_fid:
@@ -299,11 +309,23 @@ def perform_calculations(base_data_df, user, year):
     for x in tribes:
         if x not in unique_tribes:
             unique_tribes.append(x)
+    for x in Block_name:
+        if x not in unique_Block_name:
+            unique_Block_name.append(x)
+    for x in village_name:
+        if x not in unique_village_name:
+            unique_village_name.append(x)
+    for x in District_name:
+        if x not in unique_District_name:
+            unique_District_name.append(x)
 
 
     score = [0] * len(unique_fid)
     HH_size_list = [0] * len(unique_fid)
     HH_tribe_list = [""] * len(unique_fid)
+    HH_village_name_list = [""] * len(unique_fid)
+    HH_District_name_list = [""] * len(unique_fid)
+    HH_Block_name_list = [""] * len(unique_fid)
 
 
     for i in range(len(unique_fid)):
@@ -313,6 +335,9 @@ def perform_calculations(base_data_df, user, year):
                     HH_size_list[i] += 1
                     if HH_tribe_list[i] == "":
                         HH_tribe_list[i] = tribes[j]
+                        HH_village_name_list[i]=village_name[j]
+                        HH_District_name_list[i]=District_name[j]
+                        HH_Block_name_list[i]=Block_name[j]
 
     # print(tribes)
     # print(HH_tribe_list)
@@ -358,10 +383,16 @@ def perform_calculations(base_data_df, user, year):
         **score_columns
     })
 
+    cum_score_df.to_excel(settings.EXCEL_FILE_PATH2, index=False)
+    print("Result Excel file saved successfully.")
+
 
     HH_score_df = pd.DataFrame({
         '_fid_': unique_fid,
         'Tribe_N' : HH_tribe_list,
+        'HH_village_name_list':HH_village_name_list,
+        'HH_Block_name_list':HH_Block_name_list,
+        'HH_District_name_list':HH_District_name_list,
         'Sum of HH_S' : HH_size_list,
 
     })
@@ -429,7 +460,7 @@ def perform_calculations(base_data_df, user, year):
 
     # print(HH_score_df)
 
-    HH_score_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
+    HH_score_df.to_excel(settings.EXCEL_FILE_PATH3, index=False)
     print("Result Excel file saved successfully.")
 
     from .models import Tribe
@@ -464,7 +495,7 @@ def perform_calculations(base_data_df, user, year):
         'CM_score': row['HH_Score_H_U5CM'],
         'FS_score': row['HH_Score_H_FS'],
         'LE_score': row['HH_Score_E_LE'],
-        'DRO_score': row['HH_Score_E_LE'],
+        'DRO_score': row['HH_Score_E_DRO'],
         'IC_score': row['HH_Score_S_IC'],
         'OW_score': row['HH_Score_S_OWN'],
         'SANI_score': row['HH_Score_S_SANI'],

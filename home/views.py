@@ -21,7 +21,7 @@ from django.forms import formset_factory
 
 
 def tribe_detail_view(request, name, year):
-    households_size_6 = Household.objects.filter(size=6)
+    households_size_6 = Household.objects.filter(DRO_score=1)
 
 # Print all fields for each object
     for household in households_size_6:
@@ -226,7 +226,7 @@ def tribe_pdf_view(request, slug):
 
 def test_view(request):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    tribe = Tribe.objects.get(id = 306)
+    tribe = Tribe.objects.get(id = 1155)
     total_tribals = tribe.get_total_tribals
     household = Household.objects.filter(tribeID = tribe)
     
