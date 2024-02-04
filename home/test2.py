@@ -7,15 +7,11 @@ def perform_calculations(base_data_df, user, year):
 
     # base_data_df = pd.read_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/TRI_base_data.xlsx')
 
-    # print(base_data_df)
-
-    # print(base_data_df.columns)
-
 
     base_data_df['Eligibility_CD'] = np.where(base_data_df['chronic_disease'].str.strip() == 'लागू नहीं', 0, 1)
 
-    
-            
+        
+                
     base_data_df['CD_Cum_Score'] = np.where(base_data_df['chronic_disease'].str.strip() == "हां", 0, 1)
 
     base_data_df['Age'] = pd.to_numeric(base_data_df['Age'], errors='coerce')
@@ -85,13 +81,14 @@ def perform_calculations(base_data_df, user, year):
     condition_eligibility_LE = (base_data_df['Age'] >= 10)
     base_data_df['Eligibility LE'] = np.where(condition_eligibility_LE, 1, 0)
 
-    condition_cum_score_LE = base_data_df['Ed'].str.strip().isin([
-        '6th कक्षा पूरा किया हुआ', '7th कक्षा पूरा किया हुआ', '8th कक्षा पूरा किया हुआ',
-        '9th कक्षा पूरा किया हुआ', '10th कक्षा पूरा किया हुआ', '11th कक्षा पूरा किया हुआ',
-        '12th कक्षा पूरा किया हुआ', 'डिप्लोमा पूरा किया हुआ', 'डिग्री पूरा किया हुआ',
-        'पोस्ट ग्रेजुएशन पूरा किया हुआ'
-    ])
-    base_data_df['cum_score_LE'] = np.where(condition_cum_score_LE | (base_data_df['Eligibility LE'] == 0), 1, 0)
+    conditions = [
+        (base_data_df['Ed'].isin(["6th कक्षा पूरा किया हुआ", "7th कक्षा पूरा किया हुआ", "8th कक्षा पूरा किया हुआ", "9th कक्षा पूरा किया हुआ", "10th कक्षा पूरा किया हुआ", "11th कक्षा पूरा किया हुआ", "12th कक्षा पूरा किया हुआ", "डिप्लोमा पूरा किया हुआ", "डिग्री पूरा किया हुआ", "पोस्ट ग्रेजुएशन पूरा किया हुआ"])),
+        (base_data_df['Eligibility LE'] == 0)
+    ]
+
+    choices = [1, "NA"]
+
+    base_data_df['cum_score_LE'] = np.select(conditions, choices, default=0)
 
     condition_Eligibility_DRO = np.logical_or(base_data_df['Age'] < 15, base_data_df['Age'] > 64)
     base_data_df['Eligibility DRO'] = np.where(condition_Eligibility_DRO, 0, 1)
@@ -205,7 +202,7 @@ def perform_calculations(base_data_df, user, year):
 
 
 
-    condition_CUM_SCORE_ASS = (base_data_df['ASS'] + base_data_df['ASS']== 2)
+    condition_CUM_SCORE_ASS = (base_data_df['ASS'] + base_data_df['ANI']== 2)
     base_data_df['CUM_SCORE_ASS'] = np.where(condition_CUM_SCORE_ASS, 1, 0)
 
 
@@ -279,7 +276,6 @@ def perform_calculations(base_data_df, user, year):
     base_data_df['Cum_s core_meetings'] = np.where(
         condition_Cum_s_core_meetings, 1, 0
     )
-
     base_data_df.to_excel(settings.EXCEL_FILE_PATH1, index=False)
     print("Result Excel file saved successfully.")
     # base_data_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
@@ -341,24 +337,16 @@ def perform_calculations(base_data_df, user, year):
                         HH_Block_name_list[i]=Block_name[j]
 
    
-        
-        
-    # print(tribes)
-    # print(HH_tribe_list)
 
-
-
-    # print(len(HH_size_list))
-    # print(len(unique_fid))
 
     def calScore(list1,list2,score):
         for i in range(len(unique_fid)):
+            score[i] = 0
             for j in range(len(list1)):
 
                 if unique_fid[i] == list1[j]:
                     if pd.isna(list2[j]) or list2[j] == 'NA':
-                        score[i] = 0
-                        break  # Break out of the inner loop if NA is encountered
+                        continue  
                     score[i] += int(list2[j])
 
     # Rest of your code remains unchanged
@@ -394,10 +382,10 @@ def perform_calculations(base_data_df, user, year):
     HH_score_df = pd.DataFrame({
         '_fid_': unique_fid,
         'Tribe_N' : HH_tribe_list,
+        'Sum of HH_S' : HH_size_list,
         'HH_village_name_list':HH_village_name_list,
         'HH_Block_name_list':HH_Block_name_list,
         'HH_District_name_list':HH_District_name_list,
-        'Sum of HH_S' : HH_size_list,
 
     })
     
@@ -413,7 +401,6 @@ def perform_calculations(base_data_df, user, year):
             if tribes[j] == unique_tribes[i] and District_name_list[i].find(District_name[j]) == -1:
                 District_name_list[i] += District_name[j] + ', '
             
-    print('hello')
     from .models import Tribe
 
     
@@ -426,20 +413,35 @@ def perform_calculations(base_data_df, user, year):
     HH_score_df['HH_Score_H_CD'] = np.where(cum_score_df['Sum of Eligibility_CD'] == cum_score_df['Sum of CD_Cum_Score'], 1, 0)
     HH_score_df['HH_Score_H_IMM'] = np.where(cum_score_df['Sum of Eligibility_IMM'] == cum_score_df['Sum of IMM_Cum_Score'], 1, 0)
 
-    condition_HH_Score_H_IND = np.where((cum_score_df['Sum of IND_Cum_Score'] > 1), 1,0)
-    condition_HH_Score_H_IND_NA = np.where((cum_score_df['Sum of Eligibility_IND'] == HH_score_df['Sum of HH_S']),condition_HH_Score_H_IND,'NA')
+    conditions = [
+        (cum_score_df['Sum of Eligibility_IND'] == HH_score_df['Sum of HH_S']),
+        (cum_score_df['Sum of Eligibility_IND'] != HH_score_df['Sum of HH_S'])
+    ]
 
-    # Replace 0 with 'NA' in the condition_HH_Score_H_IND array
+    choices = [
+        np.where(cum_score_df['Sum of IND_Cum_Score'] > 1, 1, 0),
+        "NA"
+    ]
 
-    HH_score_df['HH_Score_H_IND'] = condition_HH_Score_H_IND_NA
+    HH_score_df['HH_Score_H_IND'] = np.select(conditions, choices, default=0).astype('object')
 
 
     condition_HH_Score_H_ANC = (cum_score_df['Sum of Eligibility_ANC'] > 0) & (cum_score_df['Sum of ANC_Cum_Score'] > 1)
-    HH_score_df['HH_Score_H_ANC'] = np.where(condition_HH_Score_H_ANC, 1, np.where(cum_score_df['Sum of Eligibility_ANC'] > 0, 0, 'NA'))
+    HH_score_df['HH_Score_H_ANC'] = np.where(condition_HH_Score_H_ANC, 1, np.where(cum_score_df['Sum of Eligibility_ANC'] > 0, 0, 'NA')).astype('object')
+
+
+
     HH_score_df['HH_Score_H_IND'] = pd.to_numeric(HH_score_df['HH_Score_H_IND'], errors='coerce')
     HH_score_df['HH_Score_H_ANC'] = pd.to_numeric(HH_score_df['HH_Score_H_ANC'], errors='coerce')
-    HH_score_df['HH_Score_H_MC'] = np.where((HH_score_df['HH_Score_H_IND'] + HH_score_df['HH_Score_H_ANC'] == 2), 1, 
-                                       np.where((HH_score_df['HH_Score_H_IND'] == 'NA') | (HH_score_df['HH_Score_H_ANC'] == 'NA'), 'NA', 0))
+
+    conditions_HH_Score_H_MC = [
+        (HH_score_df['HH_Score_H_IND'].notna() & HH_score_df['HH_Score_H_ANC'].notna() & (HH_score_df['HH_Score_H_IND'] + HH_score_df['HH_Score_H_ANC'] == 2)),
+        (HH_score_df['HH_Score_H_IND'].isna() | HH_score_df['HH_Score_H_ANC'].isna())
+    ]
+    choices_HH_Score_H_MC = [1, "NA"]
+    HH_score_df['HH_Score_H_MC'] = np.select(conditions_HH_Score_H_MC, choices_HH_Score_H_MC, default=0)
+    HH_score_df['HH_Score_H_MC'] = pd.to_numeric(HH_score_df['HH_Score_H_MC'], errors='coerce')
+
     HH_score_df['HH_Score_H_U5CM'] = np.where(cum_score_df['Sum of U5CM_Cum_Score'] < HH_score_df['Sum of HH_S'], 0, 1)
     HH_score_df['HH_Score_H_FS'] = np.where((cum_score_df['Sum of 2sq_Cum_Score'] == HH_score_df['Sum of HH_S']) & (cum_score_df['Sum of FD_Cum_Score'] == HH_score_df['Sum of HH_S']), 1, 0)
 
@@ -475,12 +477,18 @@ def perform_calculations(base_data_df, user, year):
 
 
 
-    condition_HH_Score_G_EV = np.logical_and(cum_score_df['Sum of cum_score_EV'] > 0, cum_score_df['Sum of cum_score_EV'] == cum_score_df['Sum of Eligibility_voter'])
-    HH_score_df['HH_Score_G_EV'] = np.where(condition_HH_Score_G_EV, 1, np.where(cum_score_df['Sum of Eligibility_voter'] == 0, "NA", 0))
+    conditions_HH_Score_G_EV = [
+        (np.logical_and(cum_score_df['Sum of cum_score_EV'] > 0, cum_score_df['Sum of cum_score_EV'] == cum_score_df['Sum of Eligibility_voter'])),
+        (cum_score_df['Sum of Eligibility_voter'] == 0)
+    ]
+
+    choices_HH_Score_G_EV = [1, "NA"]
+
+    HH_score_df['HH_Score_G_EV'] = np.select(conditions_HH_Score_G_EV, choices_HH_Score_G_EV, default=0)
+    HH_score_df['HH_Score_G_EV'] = pd.to_numeric(HH_score_df['HH_Score_G_EV'], errors='coerce')
 
     HH_score_df['HH_Score_G_meeting'] = np.where(cum_score_df['Sum of Cum_s core_meetings'] > 0, 1, 0)
 
-    # print(HH_score_df)
 
     HH_score_df.to_excel(settings.EXCEL_FILE_PATH3, index=False)
     print("Result Excel file saved successfully.")
@@ -503,9 +511,7 @@ def perform_calculations(base_data_df, user, year):
         if not slug in unique_tribes:
             print( HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for valid tribe name.'))
         
-        # print(slug)
-        # # print(user)
-        # print(year)
+       
         try:
             tribe, created = Tribe.objects.get_or_create(user=user, year=year, name=slug)
             
@@ -548,13 +554,10 @@ def perform_calculations(base_data_df, user, year):
             print(household_form.errors)
 
     for i in range(len(unique_tribes)):
-        print(unique_tribes[i])
         slug = unique_tribes[i].strip()
-        print(slug)
         
         try:
             tribe = Tribe.objects.get(name=slug)
-            print(village_name_list[i])
             details_list = [
             {"village_name": village_name_list[i], "block_name": Block_name_list[i], "district_name": District_name_list[i]}
         ]
@@ -562,8 +565,6 @@ def perform_calculations(base_data_df, user, year):
             tribe.village_details = details_list
             
             tribe.save()
-            # print
-            # print(tribe)
         except Tribe.DoesNotExist:
             print(HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for a valid tribe name.'))
 
