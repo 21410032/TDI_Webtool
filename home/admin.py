@@ -6,10 +6,21 @@ from import_export.fields import Field
 from import_export.widgets import ForeignKeyWidget
 from .models import Household, Tribe,Tribe_Image
 from accounts.models import Profile
+from django import forms
 from .resources import HouseholdResource
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+
+class TribeAdminForm(forms.ModelForm):
+    class Meta:
+        model = Tribe
+        fields = '__all__' 
+        widgets = {
+            'village_details': forms.Textarea(attrs={'cols': 80, 'rows': 10}),
+        }
+
 
 class TribeResource(resources.ModelResource):
     user = Field(column_name='user', attribute='user', widget=ForeignKeyWidget(User, 'phone_number'))
@@ -27,6 +38,7 @@ class HouseholdAdmin(ImportExportModelAdmin):
     resource_class = HouseholdResource
 
 class TribeAdmin(ImportExportModelAdmin):
+    form = TribeAdminForm
     resource_class = TribeResource
 
 class TribeImageAdmin(ImportExportModelAdmin):

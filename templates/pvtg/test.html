@@ -99,9 +99,9 @@
         <h2>Household {{forloop.counter}}</h2>
         <ul>
 
+            <li>HH_size = {{i.size}}</li>
             <li>HH_Score_H_CD : {{i.CD_score}}</li>
             <li>HH_Score_H_IMM : {{i.IM_score}}</li>
-            <li>HH_size = {{i.size}}</li>
             <li>household_tribal_incidence = {{i.household_tribal_incidence}}</li>
             <li>household_tribal_intensity = {{i.household_tribal_intensity}}</li>
             <h3>Health :</h3>
@@ -123,6 +123,8 @@
 
             <h3>Education :</h3>
             <li>Number of Indicators = {{i.no_of_indicators.1}}</li>
+            <li>LE_score : {{i.LE_score}}</li>
+            <li>DRO_score : {{i.DRO_score}}</li>
             <li>Developed Indicators = {{i.developed_indicators.1}}</li>
             <li>Weightage = {{i.calculate_weightage.1}}</li>
             <li>Education development score = {{i.D_DS.1}}</li>

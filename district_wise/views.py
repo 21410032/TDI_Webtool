@@ -92,9 +92,7 @@ def form_view(request):
             new_districts = request.FILES['district_excel_file']
             dataset = Dataset()
             imported_districts_dict = dataset.load(new_districts.read(), format='xlsx').dict
-            print(imported_districts_dict)
-
-
+    
             
             for data in imported_districts_dict:
                 district_name = data.get('name').strip()
@@ -104,7 +102,7 @@ def form_view(request):
 
                 district_data = {
                     'name': data.get('name'),   
-                    'year': data.get('year'),    
+                    'year': year,    
                     'st_population': data.get('st_population'),    
                     'total_population': data.get('total_population'),    
                     'W_BMI': data.get('W_BMI'),    
@@ -130,11 +128,14 @@ def form_view(request):
                     district.user = user_from_form
                     district.save()
 
+                    
+
                 else:
-                    print(district_form.errors)
-            
+                    return render(request, 'form/district_form.html', {'district_form': district_form})
+                    
             redirect_url = f'/district/bokaro/{year}?user={user_from_form.phone_number}'  # Include user information in the URL
             return redirect(redirect_url)
+            
 
 
 

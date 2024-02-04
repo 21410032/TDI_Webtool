@@ -487,7 +487,7 @@ def perform_calculations(base_data_df, user, year):
         'CM_score': row['HH_Score_H_U5CM'],
         'FS_score': row['HH_Score_H_FS'],
         'LE_score': row['HH_Score_E_LE'],
-        'DRO_score': row['HH_Score_E_LE'],
+        'DRO_score': row['HH_Score_E_DRO'],
         'IC_score': row['HH_Score_S_IC'],
         'OW_score': row['HH_Score_S_OWN'],
         'SANI_score': row['HH_Score_S_SANI'],

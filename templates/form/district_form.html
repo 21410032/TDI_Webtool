@@ -107,10 +107,15 @@
   {% csrf_token %}
   {{ formset.management_form }}
 
+  {% if district_form.errors %}
+  <p style="color: red;">There were errors in the form. Please correct them.</p>
+  {% endif %}
+
   <div>• Add the scores data of each District and find the Tribal Development Index of tribes in that particular
     District <br>• Note: All data for <b>all Districts</b> at <b>once</b></div><br>
   <hr><br>
-  <label for="id_year">Year:</label>
+  <label for="id_year">Year: </label>
+  <span>* Enter the year carefully</span>
   <input type="number" name="year" step="any" id="id_year" required>
 
   <select id="entryType_dis" onchange="toggleForms()" required>
