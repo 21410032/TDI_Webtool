@@ -280,6 +280,8 @@ def perform_calculations(base_data_df, user, year):
         condition_Cum_s_core_meetings, 1, 0
     )
 
+    # base_data_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
+    # print("Result Excel file saved successfully.")
 
     # base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
     # print("Result Excel file saved successfully.")
@@ -356,8 +358,6 @@ def perform_calculations(base_data_df, user, year):
         **score_columns
     })
 
-    cum_score_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
-    print("Result Excel file saved successfully.")
 
     HH_score_df = pd.DataFrame({
         '_fid_': unique_fid,
@@ -373,23 +373,20 @@ def perform_calculations(base_data_df, user, year):
     HH_score_df['HH_Score_H_CD'] = np.where(cum_score_df['Sum of Eligibility_CD'] == cum_score_df['Sum of CD_Cum_Score'], 1, 0)
     HH_score_df['HH_Score_H_IMM'] = np.where(cum_score_df['Sum of Eligibility_IMM'] == cum_score_df['Sum of IMM_Cum_Score'], 1, 0)
 
-    condition_HH_Score_H_IND = np.where((cum_score_df['Sum of Eligibility_IND'] == HH_score_df['Sum of HH_S']) & (cum_score_df['Sum of IND_Cum_Score'] > 1), 1, 0)
+    condition_HH_Score_H_IND = np.where((cum_score_df['Sum of IND_Cum_Score'] > 1), 1,0)
+    condition_HH_Score_H_IND_NA = np.where((cum_score_df['Sum of Eligibility_IND'] == HH_score_df['Sum of HH_S']),condition_HH_Score_H_IND,'NA')
 
     # Replace 0 with 'NA' in the condition_HH_Score_H_IND array
-    condition_HH_Score_H_IND = np.where(condition_HH_Score_H_IND == 0, 'NA', condition_HH_Score_H_IND)
 
-    HH_score_df['HH_Score_H_IND'] = condition_HH_Score_H_IND
+    HH_score_df['HH_Score_H_IND'] = condition_HH_Score_H_IND_NA
 
 
     condition_HH_Score_H_ANC = (cum_score_df['Sum of Eligibility_ANC'] > 0) & (cum_score_df['Sum of ANC_Cum_Score'] > 1)
     HH_score_df['HH_Score_H_ANC'] = np.where(condition_HH_Score_H_ANC, 1, np.where(cum_score_df['Sum of Eligibility_ANC'] > 0, 0, 'NA'))
-
-    condition_HH_Score_H_MC = (HH_score_df['HH_Score_H_IND'] + HH_score_df['HH_Score_H_ANC'] == 2)
-    condition_HH_Score_H_MC |= (HH_score_df['HH_Score_H_IND'] == 'NA') | (HH_score_df['HH_Score_H_ANC'] == 'NA')
-
-    # Applying the conditions using np.where for the new column 'HH_Score_H_MC'
-    HH_score_df['HH_Score_H_MC'] = np.where(condition_HH_Score_H_MC, 1, 0)
-
+    HH_score_df['HH_Score_H_IND'] = pd.to_numeric(HH_score_df['HH_Score_H_IND'], errors='coerce')
+    HH_score_df['HH_Score_H_ANC'] = pd.to_numeric(HH_score_df['HH_Score_H_ANC'], errors='coerce')
+    HH_score_df['HH_Score_H_MC'] = np.where((HH_score_df['HH_Score_H_IND'] + HH_score_df['HH_Score_H_ANC'] == 2), 1, 
+                                       np.where((HH_score_df['HH_Score_H_IND'] == 'NA') | (HH_score_df['HH_Score_H_ANC'] == 'NA'), 'NA', 0))
     HH_score_df['HH_Score_H_U5CM'] = np.where(cum_score_df['Sum of U5CM_Cum_Score'] < HH_score_df['Sum of HH_S'], 0, 1)
     HH_score_df['HH_Score_H_FS'] = np.where((cum_score_df['Sum of 2sq_Cum_Score'] == HH_score_df['Sum of HH_S']) & (cum_score_df['Sum of FD_Cum_Score'] == HH_score_df['Sum of HH_S']), 1, 0)
 
@@ -439,7 +436,8 @@ def perform_calculations(base_data_df, user, year):
     from django.http import HttpResponse
     from .forms import HouseholdForm
     from django.db import IntegrityError
-
+    HH_score_df['HH_Score_H_MC'] = pd.to_numeric(HH_score_df['HH_Score_H_MC'], errors='coerce')
+    HH_score_df['HH_Score_G_EV'] = pd.to_numeric(HH_score_df['HH_Score_G_EV'], errors='coerce')
     for index, row in HH_score_df.iterrows():
         slug = row.at['Tribe_N'].strip()
 
@@ -457,7 +455,7 @@ def perform_calculations(base_data_df, user, year):
             tribe = Tribe.objects.get(user=user, year=year, name=slug)
 
         
-
+        
         household_data = {
         'size': row['Sum of HH_S'],
         'CD_score': row['HH_Score_H_CD'],

@@ -21,6 +21,31 @@ from django.forms import formset_factory
 
 
 def tribe_detail_view(request, name, year):
+    households_size_6 = Household.objects.filter(size=6)
+
+# Print all fields for each object
+    for household in households_size_6:
+        print("Household ID:", household.id)
+        print("Tribe ID:", household.tribeID.id)  # Access the related Tribe ID
+        print("Size:", household.size)
+        print("CD_score:", household.CD_score)
+        print("IM_score:", household.IM_score)
+        print("MC_score:", household.MC_score)
+        print("CM_score:", household.CM_score)
+        print("FS_score:", household.FS_score)
+        print("LE_score:", household.LE_score)
+        print("DRO_score:", household.DRO_score)
+        print("IC_score:", household.IC_score)
+        print("OW_score:", household.OW_score)
+        print("SANI_score:", household.SANI_score)
+        print("FUEL_score:", household.FUEL_score)
+        print("DRWA_score:", household.DRWA_score)
+        print("ELECTR_score:", household.ELECTR_score)
+        print("ASS_score:", household.ASS_score)
+        print("LAN_score:", household.LAN_score)
+        print("ARTS_score:", household.ARTS_score)
+        print("EV_score:", household.EV_score)
+        print("MEET_score:", household.MEET_score)
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     Household.objects.filter(size__isnull=True).delete()
     tribes = Tribe.objects.filter(user = user, year='2022')
