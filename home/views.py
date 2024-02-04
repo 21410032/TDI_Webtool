@@ -21,38 +21,12 @@ from django.forms import formset_factory
 
 
 def tribe_detail_view(request, name, year):
-    households_size_6 = Household.objects.filter(DRO_score=1)
-
-# Print all fields for each object
-    for household in households_size_6:
-        print("Household ID:", household.id)
-        print("Tribe ID:", household.tribeID.id)  # Access the related Tribe ID
-        print("Size:", household.size)
-        print("CD_score:", household.CD_score)
-        print("IM_score:", household.IM_score)
-        print("MC_score:", household.MC_score)
-        print("CM_score:", household.CM_score)
-        print("FS_score:", household.FS_score)
-        print("LE_score:", household.LE_score)
-        print("DRO_score:", household.DRO_score)
-        print("IC_score:", household.IC_score)
-        print("OW_score:", household.OW_score)
-        print("SANI_score:", household.SANI_score)
-        print("FUEL_score:", household.FUEL_score)
-        print("DRWA_score:", household.DRWA_score)
-        print("ELECTR_score:", household.ELECTR_score)
-        print("ASS_score:", household.ASS_score)
-        print("LAN_score:", household.LAN_score)
-        print("ARTS_score:", household.ARTS_score)
-        print("EV_score:", household.EV_score)
-        print("MEET_score:", household.MEET_score)
+    
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
     Household.objects.filter(size__isnull=True).delete()
     tribes = Tribe.objects.filter(user = user, year='2022')
     districts=District.objects.filter(user = user, year='2022')
-    print(user)
-    print(name)
-    print(year)
+   
     tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = name)
    
     user_phone_number = request.GET.get('user')
@@ -140,7 +114,7 @@ def tribe_form_view(request):
             perform_calculations(base_data_df, user_from_form, year)
             
             
-            redirect_url = f'/tribe/असुर/{request.POST["year"]}?user={user_from_form.phone_number}'
+            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
         else:
             tribe_slug = request.POST.get('tribe_slug')
@@ -156,14 +130,14 @@ def tribe_form_view(request):
                     household.save()
                     cleaned_data_list.append(household)
             else:
-                # Print form errors to understand why validation failed
-                ##print(formset.errors)
+                print(formset.errors)
+            
     
                     
 
-             if cleaned_data_list:
-                redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
-                return redirect(redirect_url)
+            if cleaned_data_list:
+               redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
+               return redirect(redirect_url)
 
 
     else:
@@ -227,7 +201,7 @@ def tribe_pdf_view(request, slug):
 def test_view(request):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
 
-    tribe = Tribe.objects.get(id = 1155)
+    tribe = Tribe.objects.get(user = user, year = '2022', name = 'asur')
 
     total_tribals = tribe.get_total_tribals
     household = Household.objects.filter(tribeID = tribe)
