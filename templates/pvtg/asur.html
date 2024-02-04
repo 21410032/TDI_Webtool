@@ -202,7 +202,20 @@
           </div>
           <div class="village-name-block-name-ke-wrapper">
             <div class="village-name-container">
-              {% for tribal_set in tribe_of_slug.village_details %}
+              
+              {% for detail in tribe.village_details %}
+              <h1>{{ detail.district_name }}</h1>
+                <p>
+                  Village Name|Block Name
+                  <p> {{detail.village_name}}|</p>
+                  <p> {{detail.Block_name}}</p>
+                 
+                  {% comment %} {% for i in  detail.village_name and j in detail.village_name %}
+                  <p>{{i}}: {{j}}</p> 
+                  {%  endfor %} {% endcomment %}
+                </p>
+              {% endfor %}
+              {% comment %} {% for tribal_set in tribe_of_slug.village_details %}
               <p>{{ tribal_set.district }}</p>
               <p>Village Name : Block Name</p>
               <ul>
@@ -212,7 +225,7 @@
                 {%endif%}
               </ul>
               <hr>
-              {% endfor %}
+              {% endfor %} {% endcomment %}
               </p>
             </div>
           </div>
