@@ -309,6 +309,7 @@ def perform_calculations(base_data_df, user, year):
     for x in tribes:
         if x not in unique_tribes:
             unique_tribes.append(x)
+
     for x in Block_name:
         if x not in unique_Block_name:
             unique_Block_name.append(x)
@@ -339,6 +340,9 @@ def perform_calculations(base_data_df, user, year):
                         HH_District_name_list[i]=District_name[j]
                         HH_Block_name_list[i]=Block_name[j]
 
+   
+        
+        
     # print(tribes)
     # print(HH_tribe_list)
 
@@ -396,8 +400,26 @@ def perform_calculations(base_data_df, user, year):
         'Sum of HH_S' : HH_size_list,
 
     })
+    
+    village_name_list = [""] * len(unique_tribes)
+    Block_name_list = [""] * len(unique_tribes)
+    District_name_list = [""] * len(unique_tribes)
+    for i in range(len(unique_tribes)):
+        for j in range(len(tribes)):
+            if tribes[j] == unique_tribes[i] and village_name_list[i].find(village_name[j]) == -1:
+                village_name_list[i] += village_name[j] + ', '
+            if tribes[j] == unique_tribes[i] and Block_name_list[i].find(Block_name[j]) == -1:
+                Block_name_list[i] += Block_name[j] + ', '
+            if tribes[j] == unique_tribes[i] and District_name_list[i].find(District_name[j]) == -1:
+                District_name_list[i] += District_name[j] + ', '
+            
+    print('hello')
+    from .models import Tribe
 
+    
+# Assuming village_name_list has been created and populated
 
+    
 
 
     # # Conditions and value assigning for the new column 'HH_Score_H_CD'
@@ -469,9 +491,14 @@ def perform_calculations(base_data_df, user, year):
     from django.db import IntegrityError
     HH_score_df['HH_Score_H_MC'] = pd.to_numeric(HH_score_df['HH_Score_H_MC'], errors='coerce')
     HH_score_df['HH_Score_G_EV'] = pd.to_numeric(HH_score_df['HH_Score_G_EV'], errors='coerce')
+    
+     
+
     for index, row in HH_score_df.iterrows():
         slug = row.at['Tribe_N'].strip()
-
+        
+           
+        
         
         if not slug in unique_tribes:
             print( HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for valid tribe name.'))
@@ -481,11 +508,12 @@ def perform_calculations(base_data_df, user, year):
         # print(year)
         try:
             tribe, created = Tribe.objects.get_or_create(user=user, year=year, name=slug)
+            
         except IntegrityError:
             # Handle the case where the record already exists
             tribe = Tribe.objects.get(user=user, year=year, name=slug)
 
-        
+       
         
         household_data = {
         'size': row['Sum of HH_S'],
@@ -518,6 +546,26 @@ def perform_calculations(base_data_df, user, year):
 
         else:
             print(household_form.errors)
+
+    for i in range(len(unique_tribes)):
+        print(unique_tribes[i])
+        slug = unique_tribes[i].strip()
+        print(slug)
+        
+        try:
+            tribe = Tribe.objects.get(name=slug)
+            print(village_name_list[i])
+            details_list = [
+            {village_name_list[i], Block_name_list[i],District_name_list[i]}
+        ]
+
+            tribe.village_details = details_list
+            
+            tribe.save()
+            # print
+            # print(tribe)
+        except Tribe.DoesNotExist:
+            print(HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for a valid tribe name.'))
 
         
 
