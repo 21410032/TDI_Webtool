@@ -44,6 +44,8 @@
         Indicators Contribution To Dimensions :
     </h3>
     {{tribe.indicator_contributions_to_dimension}}
+    <h3>Tribal Incidence : {{tribe.tribal_incidence}}</h3>
+    <h3>Tribal Intensity : {{tribe.tribal_intensity}}</h3>
     <h3>
         Dimensional Incidence and Intensities
     </h3>
@@ -96,12 +98,20 @@
     <div>
         <h2>Household {{forloop.counter}}</h2>
         <ul>
+
+            <li>HH_Score_H_CD : {{i.CD_score}}</li>
+            <li>HH_Score_H_IMM : {{i.IM_score}}</li>
+            <li>HH_size = {{i.size}}</li>
+            <li>household_tribal_incidence = {{i.household_tribal_incidence}}</li>
+            <li>household_tribal_intensity = {{i.household_tribal_intensity}}</li>
             <h3>Health :</h3>
             <li>Number of Indicators = {{i.no_of_indicators.0}}</li>
             <li>Developed Indicators = {{i.developed_indicators.0}}</li>
             <li>Weightage = {{i.calculate_weightage.0}}</li>
             <li>Health development score = {{i.D_DS.0}}</li>
             <li>Is household developed in Health Dimension = {{i.is_developed.0}}</li>
+
+
             <li>dimensional_incidence = {{i.household_dimensional_incidence.0}}</li>
 
 
@@ -154,7 +164,7 @@
             <li>household_tribal_incedence = {{i.household_tribal_incidence}}</li>
             <li>household_tribal_development_score= {{i.tribal_development_score}}</li>
 
-            <li>household_tribal_intensity = {{i.household_tribal_intensity}}</li>
+
             <li>household_tribal_index = {{i.household_tribal_index}}</li>
 
         </ul>
