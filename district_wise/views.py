@@ -15,22 +15,69 @@ from tablib import Dataset
 
 # Create your views here.
 def district_view(request,slug1,slug2):
-    
-    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    tribes = Tribe.objects.filter(user = user, year='2022')
-    districts=District.objects.filter(user = user, year='2022')
 
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    districts=District.objects.filter(user = user,year='2022')
+    tribes = Tribe.objects.filter(user = user,year='2022').distinct()
     user_phone_number = request.GET.get('user')
+    District.objects.filter(W_BMI__isnull=True).delete()
+    print(user_phone_number)
     if user_phone_number:
         user = User.objects.get(phone_number=user_phone_number)
 
 
-    else:    
-        user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    district = District.objects.get(name='Bokaro')
+
+    # Get the score
+    print("Multiplier:", district.get_multiplier())
+
+    # Method: get_indicator_st_scores
+    print("Indicator ST Scores:", district.get_indicator_st_scores())
+
+    # Method: get_max_min_ind_scores
+    max_arr, min_arr = district.get_max_min_ind_scores()
+    print("Max Scores:", max_arr)
+    print("Min Scores:", min_arr)
+
+    # Method: get_normalized_ind_scores
+    print("Normalized Indicator Scores:", district.get_normalized_ind_scores())
+
+    # Method: get_normalized_final_ind_scores
+    print("Normalized Final Indicator Scores:", district.get_normalized_final_ind_scores())
+
+    # Method: get_avg_ind_scores
+    print("Average Indicator Scores:", district.get_avg_ind_scores())
+
+    # Method: get_dimension_scores
+    print("Dimension Scores:", district.get_dimension_scores())
+
+    # Method: get_tdi_score
+    geometric_tdi, arithmetic_tdi = district.get_tdi_score()
+    print("Geometric TDI:", geometric_tdi)
+    print("Arithmetic TDI:", arithmetic_tdi)
+
+    # Method: get_indicator_contri_to_dimension
+    indicator_contri_to_dimension = district.get_indicator_contri_to_dimension()
+    print("Indicator Contribution to Dimension:", indicator_contri_to_dimension)
+
+    # Method: get_dimension_contribution_tdi
+    print("Dimension Contribution to TDI:", district.get_dimension_contribution_tdi())
+
+    # Method: get_score
+    print("Overall Score:", district.get_score())
+
+    # Print the data in the terminal
+
+        
+    print(user)
+    print(districts)
+
+
+    
 
     if slug1 is not None and slug2 is not None:
         district = District.objects.get(user = user, slug=slug1, year=slug2)
-
+    print(district)
 
     district_dimensional_index=district.get_dimension_scores()
     tdi=district.get_tdi_score()
@@ -45,8 +92,8 @@ def district_view(request,slug1,slug2):
     get_score=district.get_score()
     
     context={
-      'tribes' : tribes,
-      'districts' :districts,
+      'districts':districts,
+      'district':district,
       'district_dimensional_index':district_dimensional_index,
       'tdi':tdi,
       'health_ind_contri_to_dim':health_ind_contri_to_dim,
@@ -57,8 +104,7 @@ def district_view(request,slug1,slug2):
       'education_contri_to_tdi':education_contri_to_tdi,
       'sol_contri_to_tdi':sol_contri_to_tdi,
       'get_normalized_ind_scores':get_normalized_ind_scores,
-      'name' : slug1,
-      'district' : district,
+    #   'tribes' : tribes,
       'get_score':get_score,
 
        
@@ -74,8 +120,7 @@ def form_view(request):
     YourModelFormSet = formset_factory(DistrictModelForm, extra=1, can_delete=True, validate_max=True)
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
    
-    tribes = Tribe.objects.filter(user = user, year='2022')
-    districts=District.objects.filter(user = user, year='2022')
+    districts = District.objects.all().filter(user=user)
 
 
     if request.method == 'POST':
@@ -171,7 +216,7 @@ def form_view(request):
 
 
     context = {
-      'tribes' : tribes,
+    #   'tribes' : tribes,
       'districts' :districts,
     }
     if formset:

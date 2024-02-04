@@ -12,6 +12,7 @@ from district_wise.models import District
 
 def register_view(request):
     if request.method == "POST":
+       
         form = ProfileCreationForm(request.POST, request.FILES)  # Include request.FILES here
         if form.is_valid():
             user = form.save()
@@ -63,6 +64,21 @@ def profile_view(request):
     tribes = Tribe.objects.filter(user = user, year='2022')
     districts=District.objects.filter(user = user, year='2022')
     profile = request.user
+    print(profile)
+
+    if request.method == 'POST':
+        print('Hello')
+        print(request.FILES)
+        print(request.POST)
+        form = ProfileCreationForm(request.POST, request.FILES, instance=profile)
+        print(form)
+        if form.is_valid():
+            form.save()
+            print('hello saved')
+            return redirect('accounts/profile.html')
+        else:
+            print(form.errors)
+        
     context = {
         'profile' :profile,
         'tribes' : tribes,
@@ -70,5 +86,23 @@ def profile_view(request):
     }
     return render (request, 'accounts/profile.html',context)
 
+def profile_edit_view(request):
+    if request.method == 'POST':
+        form = ProfilePictureUpdateForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            # Save only the profile picture field
+            request.user.profile_pic = form.cleaned_data['profile_pic']
+            request.user.save()
 
+            # Redirect to the profile page or any other page you want
+            return redirect('profile')  # Change 'profile' to the actual name of your profile page
+
+    else:
+        # If it's a GET request, initialize the form with the current user's data
+        form = ProfilePictureUpdateForm(instance=request.user)
+    context = {
+        
+        'form': form,
+    }
+    return render(request, 'accounts/editprofile.html', context)
     
