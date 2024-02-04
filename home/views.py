@@ -26,9 +26,7 @@ def tribe_detail_view(request, name, year):
     Household.objects.filter(size__isnull=True).delete()
     tribes = Tribe.objects.filter(user = user, year='2022')
     districts=District.objects.filter(user = user, year='2022')
-    print(user)
-    print(name)
-    print(year)
+   
     tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = name)
    
     user_phone_number = request.GET.get('user')
@@ -116,7 +114,7 @@ def tribe_form_view(request):
             perform_calculations(base_data_df, user_from_form, year)
             
             
-            redirect_url = f'/tribe/असुर/{request.POST["year"]}?user={user_from_form.phone_number}'
+            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
             return redirect(redirect_url)
         else:
             tribe_slug = request.POST.get('tribe_slug')
@@ -132,14 +130,14 @@ def tribe_form_view(request):
                     household.save()
                     cleaned_data_list.append(household)
             else:
-                # Print form errors to understand why validation failed
-                ##print(formset.errors)
+                print(formset.errors)
+            
     
                     
 
-             if cleaned_data_list:
-                redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
-                return redirect(redirect_url)
+            if cleaned_data_list:
+               redirect_url = f'/tribe/{tribe_slug}/{request.POST["year"]}?user={user_from_form.phone_number}'
+               return redirect(redirect_url)
 
 
     else:
@@ -203,7 +201,7 @@ def tribe_pdf_view(request, slug):
 def test_view(request):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
 
-    tribe = Tribe.objects.get(id = 1155)
+    tribe = Tribe.objects.get(user = user, year = '2022', name = 'asur')
 
     total_tribals = tribe.get_total_tribals
     household = Household.objects.filter(tribeID = tribe)

@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 # Create your views here.
-from .forms import ProfileCreationForm
+from .forms import *
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.conf import settings
@@ -64,17 +64,14 @@ def profile_view(request):
     tribes = Tribe.objects.filter(user = user, year='2022')
     districts=District.objects.filter(user = user, year='2022')
     profile = request.user
-    print(profile)
+    
 
     if request.method == 'POST':
-        print('Hello')
-        print(request.FILES)
-        print(request.POST)
+      
         form = ProfileCreationForm(request.POST, request.FILES, instance=profile)
-        print(form)
         if form.is_valid():
             form.save()
-            print('hello saved')
+            
             return redirect('accounts/profile.html')
         else:
             print(form.errors)
