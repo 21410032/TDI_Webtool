@@ -203,7 +203,7 @@ def tribe_pdf_view(request, slug):
 
 def test_view(request):
     user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    tribe = Tribe.objects.get(id = 306)
+    tribe = Tribe.objects.get(id = 335)
     total_tribals = tribe.get_total_tribals
     household = Household.objects.filter(tribeID = tribe)
     

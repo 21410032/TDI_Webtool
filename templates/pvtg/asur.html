@@ -202,9 +202,17 @@
           </div>
           <div class="village-name-block-name-ke-wrapper">
             <div class="village-name-container">
-              <p class="pie-item">Village Name : Block Name</p>
-              <p class="kerwa-poopam-gamharia">
-                • Kerwa, Poopam, Gamharia, Dovgoda : Taljhari
+              {% for tribal_set in tribe_of_slug.village_details %}
+              <p>{{ tribal_set.district }}</p>
+              <p>Village Name : Block Name</p>
+              <ul>
+                <li>{{ tribal_set.village }} : {{ tribal_set.block }}</li>
+                {%if tribal_set.village2 and tribal_set.block2 %}
+                <li>{{ tribal_set.village2 }} : {{ tribal_set.block2 }}</li>
+                {%endif%}
+              </ul>
+              <hr>
+              {% endfor %}
               </p>
             </div>
           </div>

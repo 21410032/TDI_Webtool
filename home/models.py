@@ -21,6 +21,7 @@ class Tribe(models.Model):
     incidence = models.FloatField(null=True, blank=True)
     intensity = models.FloatField(null=True, blank=True)
     tdi = models.FloatField(null=True, blank=True)
+    village_details = models.JSONField(null=True, blank=True)
 
     class Meta:
         unique_together = ('user', 'year', 'name')
@@ -406,7 +407,7 @@ class Tribe(models.Model):
 
 
 class Tribe_Image(models.Model):
-    tribe = models.ForeignKey(Tribe, on_delete=models.CASCADE, related_name='tribe_image', null=True, blank=True)
+    tribe = models.ForeignKey(Tribe, on_delete=models.SET_NULL, related_name='tribe_image', null=True, blank=True)
     logo_image=models.ImageField(upload_to='images/logo_images')
     main_image=models.ImageField(upload_to='images/main_images')
     main_desc = models.CharField(max_length=100,null=True, blank=True)
