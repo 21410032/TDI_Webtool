@@ -221,3 +221,22 @@ def tribe_pdf_view(request, slug):
 
     }
     return render(request, 'pdfs/tribe_pdf.html', context)
+
+
+
+def test_view(request):
+    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    tribe = Tribe.objects.get(id = 306)
+    total_tribals = tribe.get_total_tribals
+    household = Household.objects.filter(tribeID = tribe)
+    
+    
+    
+    context = {
+        'household' : household,
+        'total_tribals' : total_tribals,
+        'tribe' : tribe,
+        
+
+    }
+    return render(request, 'pvtg/test.html', context)

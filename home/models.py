@@ -455,7 +455,7 @@ class Household(models.Model):
  
     
     def __str__(self):
-        return f"HH ({self.tribeID.name})-{self.tribeID.year}"
+        return f"HH ({self.tribeID.name})-{self.tribeID.year}-{self.size}"
 
 
 
@@ -604,6 +604,7 @@ class Household(models.Model):
                 incidence_value = members_of_developed_households[i] / total_tribals
             else:
                 incidence_value = 0.0  # Handle the case where there are no households to avoid division by zero
+            round(incidence_value,2)
             incidence.append(incidence_value)
 
         self._cached_household_dimensional_incidence = incidence
@@ -623,7 +624,7 @@ class Household(models.Model):
         else:
             ans = 0.0  # Handle the case where there are no tribals to avoid division by zero
         self._cached_household_tribal_incidence = ans
-        return ans
+        return round(ans,2)
 
     @property
     def household_dimensional_intensity(self):
@@ -646,7 +647,7 @@ class Household(models.Model):
                 ans = (score * members_in_households * 5) / total_members
             else:
                 ans = 0.0  # Handle the case where total_members is zero
-
+            round(ans)
             intensity.append(ans)
 
         self._cached_household_dimensional_intensity = intensity
@@ -668,7 +669,7 @@ class Household(models.Model):
             ans = 0.0  # Handle the case where total_members_multi_dimensionally_developed_households is zero
 
         self._cached_household_tribal_intensity = ans
-        return ans
+        return round(ans,2)
 
     @property
     def household_tribal_index(self):
