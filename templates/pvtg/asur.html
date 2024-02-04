@@ -202,17 +202,13 @@
           </div>
           <div class="village-name-block-name-ke-wrapper">
             <div class="village-name-container">
+             
               
               {% for detail in tribe.village_details %}
               <h1>{{ detail.district_name }}</h1>
                 <p>
-                  Village Name|Block Name
-                  <p> {{detail.village_name}}|</p>
-                  <p> {{detail.Block_name}}</p>
-                 
-                  {% comment %} {% for i in  detail.village_name and j in detail.village_name %}
-                  <p>{{i}}: {{j}}</p> 
-                  {%  endfor %} {% endcomment %}
+                  Village Name: {{ detail.village_name }} </p>
+                  <p>Block Name: {{ detail.block_name }} 
                 </p>
               {% endfor %}
               {% comment %} {% for tribal_set in tribe_of_slug.village_details %}

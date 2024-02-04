@@ -556,7 +556,7 @@ def perform_calculations(base_data_df, user, year):
             tribe = Tribe.objects.get(name=slug)
             print(village_name_list[i])
             details_list = [
-            {village_name_list[i], Block_name_list[i],District_name_list[i]}
+            {"village_name": village_name_list[i], "block_name": Block_name_list[i], "district_name": District_name_list[i]}
         ]
 
             tribe.village_details = details_list
