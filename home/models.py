@@ -125,7 +125,7 @@ class Tribe(models.Model):
         
         return rounded_dimensional_contribution
 
-    def _calculate_tribal_dimensional_incidence(self):
+    def _calculate_tribal_dimensional_incidence(self):    #--> V:Z bottom
         ans = [0] * 5
         households = self.household.all()
 
@@ -133,11 +133,11 @@ class Tribe(models.Model):
             for household in households:
                 ans[i] += household.household_dimensional_incidence[i]
 
-        ans = [round(val, 4) for val in ans]
+        ans = [round(val, 2) for val in ans]
 
         return ans
 
-    def _calculate_tribal_incidence(self):
+    def _calculate_tribal_incidence(self):  #--> AA bottom
         ans = 0
         tribe_households = self.household.all()
 
@@ -145,9 +145,9 @@ class Tribe(models.Model):
             household_tribal_incidence = household.household_tribal_incidence
             ans += household_tribal_incidence
 
-        return int(round(ans * 100, 3))
+        return round(ans, 2)
 
-    def _calculate_tribal_dimensional_intensity(self):
+    def _calculate_tribal_dimensional_intensity(self):   #--> AB:AF bottom
         ans = [0] * 5
         households = self.household.all()
 
@@ -155,7 +155,7 @@ class Tribe(models.Model):
             for household in households:
                 ans[i] += household.household_dimensional_intensity[i]
 
-        ans = [round(val, 3) for val in ans]
+        ans = [round(val, 2) for val in ans]
 
         return ans
     
@@ -210,25 +210,25 @@ class Tribe(models.Model):
     
 
 
-    def _calculate_tribal_intensity(self):
+    def _calculate_tribal_intensity(self):   #--> AG bottom
         households = self.household.all()
         cnt = 0
         for household in households:
             household_tribal_intensity = household.household_tribal_intensity
             cnt += household_tribal_intensity
-        return int(round(cnt * 100, 2))
+        return round(cnt, 2)
 
-    def _calculate_tribal_dimensional_index(self):
+    def _calculate_tribal_dimensional_index(self):   #--> AH:AL bottom
         incidence_values = self.tribal_dimensional_incidence
         intensity_values = self.tribal_dimensional_intensity
 
-        ans = [round(incidence_values[i] * intensity_values[i], 3) for i in range(5)]
+        ans = [round(incidence_values[i] * intensity_values[i], 2) for i in range(5)]
 
         return ans
 
-    def _calculate_tribal_index(self):
-        tribal_incidence = self.tribal_incidence / 100
-        tribal_intensity = self.tribal_intensity / 100
+    def _calculate_tribal_index(self):   #--> AM bottom
+        tribal_incidence = self.tribal_incidence 
+        tribal_intensity = self.tribal_intensity 
         tribal_index = tribal_incidence * tribal_intensity
         return round(tribal_index, 2)
 
@@ -474,7 +474,13 @@ class Household(models.Model):
 
         scores = [scores_H, scores_E, scores_S, scores_C, scores_G]
 
-        ans = [sum(1 for score in sublist if score is not None) for sublist in scores]
+        ans = []
+        for sublist in scores:
+            cnt = 0
+            for score in sublist:
+                if score is not None:
+                    cnt += 1
+            ans.append(cnt)
 
         self._cached_no_of_indicators = ans
         return ans
@@ -538,19 +544,19 @@ class Household(models.Model):
 
 
     @property
-    def D_DS(self):
+    def D_DS(self):    #-->D:H
         if hasattr(self, '_cached_D_DS'):
             return self._cached_D_DS
 
         weightage = self.calculate_weightage
         developed_indicators = self.developed_indicators
-        ans = [w * d for w, d in zip(weightage, developed_indicators)]
+        ans = [round(w * d, 2) for w, d in zip(weightage, developed_indicators)]
 
         self._cached_D_DS = ans
         return ans
 
     @property
-    def is_developed(self):
+    def is_developed(self):     #--> J:N
         if hasattr(self, '_cached_is_developed'):
             return self._cached_is_developed
 
@@ -562,7 +568,7 @@ class Household(models.Model):
 
     
     @property
-    def tribal_development_score(self):
+    def tribal_development_score(self):     #-->I
         if hasattr(self, '_cached_tribal_development_score'):
             return self._cached_tribal_development_score
 
@@ -571,17 +577,17 @@ class Household(models.Model):
         return score
 
     @property
-    def is_multidimensionally_developed(self):
+    def is_multidimensionally_developed(self):   #--> O
         if hasattr(self, '_cached_is_multidimensionally_developed'):
             return self._cached_is_multidimensionally_developed
 
         is_dev = self.is_developed
-        score = 1 if self.tribal_development_score > 0.33 else 0
+        score = 1 if self.tribal_development_score >= 0.33 else 0
         self._cached_is_multidimensionally_developed = score
         return score
 
     @property
-    def members_of_developed_households(self):
+    def members_of_developed_households(self):   #--> P:T
         if hasattr(self, '_cached_members_of_developed_households'):
             return self._cached_members_of_developed_households
 
@@ -590,8 +596,12 @@ class Household(models.Model):
         self._cached_members_of_developed_households = members
         return members
 
+
+    # HH members of developed Households = O*size = is_multidimensionally_developed*size  (U)
+
+
     @property
-    def household_dimensional_incidence(self):
+    def household_dimensional_incidence(self):     #--> V:Z
         if hasattr(self, '_cached_household_dimensional_incidence'):
             return self._cached_household_dimensional_incidence
 
@@ -605,15 +615,15 @@ class Household(models.Model):
                 incidence_value = members_of_developed_households[i] / total_tribals
             else:
                 incidence_value = 0.0  # Handle the case where there are no households to avoid division by zero
-            round(incidence_value,2)
-            incidence.append(incidence_value)
+            
+            incidence.append(round(incidence_value,2))
 
         self._cached_household_dimensional_incidence = incidence
         return incidence
 
     
     @property
-    def household_tribal_incidence(self):
+    def household_tribal_incidence(self):    #--> AA
         if hasattr(self, '_cached_household_tribal_incidence'):
             return self._cached_household_tribal_incidence
 
@@ -628,7 +638,7 @@ class Household(models.Model):
         return round(ans,2)
 
     @property
-    def household_dimensional_intensity(self):
+    def household_dimensional_intensity(self):   #--> AB:AF
         if hasattr(self, '_cached_household_dimensional_intensity'):
             return self._cached_household_dimensional_intensity
 
@@ -648,24 +658,24 @@ class Household(models.Model):
                 ans = (score * members_in_households * 5) / total_members
             else:
                 ans = 0.0  # Handle the case where total_members is zero
-            round(ans)
-            intensity.append(ans)
+            
+            intensity.append(round(ans, 2))
 
         self._cached_household_dimensional_intensity = intensity
         return intensity
 
     @property
-    def household_tribal_intensity(self):
+    def household_tribal_intensity(self):   #--> AG
         if hasattr(self, '_cached_household_tribal_intensity'):
             return self._cached_household_tribal_intensity
 
         # Calculate the shared values once before the loop
         total_members_multi_dimensionally_developed_households = self.tribeID.total_members_multi_dimensionally_developed_households
-        members_in_developed_households = self.size if self.is_multidimensionally_developed else 0
+        
         score = self.tribal_development_score
 
         if total_members_multi_dimensionally_developed_households > 0:
-            ans = (score * members_in_developed_households) / total_members_multi_dimensionally_developed_households
+            ans = (score * self.is_multidimensionally_developed * self.size ) / total_members_multi_dimensionally_developed_households
         else:
             ans = 0.0  # Handle the case where total_members_multi_dimensionally_developed_households is zero
 
