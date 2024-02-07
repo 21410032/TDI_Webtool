@@ -258,8 +258,9 @@ def perform_calculations(base_data_df, user, year):
 
     conditions_cum_score_EV = [
         (base_data_df['Eligibility_voter'] == 0),
-        (base_data_df['voter'] > 0)
+        ((base_data_df['voter'] > 0) | (base_data_df['voter'] == "NA"))
     ]
+
 
     values_cum_score_EV = ['NA', 1]
     base_data_df['cum_score_EV'] = np.select(conditions_cum_score_EV, values_cum_score_EV, default=0)
@@ -445,8 +446,20 @@ def perform_calculations(base_data_df, user, year):
     HH_score_df['HH_Score_H_U5CM'] = np.where(cum_score_df['Sum of U5CM_Cum_Score'] < HH_score_df['Sum of HH_S'], 0, 1)
     HH_score_df['HH_Score_H_FS'] = np.where((cum_score_df['Sum of 2sq_Cum_Score'] == HH_score_df['Sum of HH_S']) & (cum_score_df['Sum of FD_Cum_Score'] == HH_score_df['Sum of HH_S']), 1, 0)
 
+    HH_score_df['H_TOT_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
+    HH_score_df['H_DEV_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].eq(1).sum(axis=1)
+    HH_score_df['H_weightage'] = 0.2 / HH_score_df['H_TOT_IND']
+    HH_score_df['H_DS'] = HH_score_df['H_weightage'] * HH_score_df.apply(lambda row: sum(1 for val in row[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']] if val not in (None, '')), axis=1)
+
+
     HH_score_df['HH_Score_E_LE'] = np.where(cum_score_df['Sum of cum_score_LE'] >= 1, 1, 0)
     HH_score_df['HH_Score_E_DRO'] = np.where(cum_score_df['Sum of cum_score_DRO'] == cum_score_df['Sum of Eligibility DRO'], 1, 0)
+
+    HH_score_df['E_TOT_IND'] = HH_score_df[['HH_Score_E_LE', 'HH_Score_E_DRO']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
+    HH_score_df['E_DEV_IND'] = HH_score_df[['HH_Score_E_LE', 'HH_Score_E_DRO']].eq(1).sum(axis=1)
+    HH_score_df['E_weightage'] = 0.2 / HH_score_df['E_TOT_IND']
+    HH_score_df['E_DS'] = HH_score_df['E_weightage'] * HH_score_df.apply(lambda row: sum(1 for val in row[['HH_Score_E_LE', 'HH_Score_E_DRO']] if val not in (None, '')), axis=1)   
+
 
     HH_score_df['HH_Score_S_IC'] = np.where(cum_score_df['Sum of CUM_SCORE_IC'] >= 1, 1, 0)
 
@@ -471,8 +484,19 @@ def perform_calculations(base_data_df, user, year):
     # Assigning values for the column "HH_Score_S_ASS"
     HH_score_df['HH_Score_S_ASS'] = np.where(cum_score_df['Sum of CUM_SCORE_ASS'] >= 1, 1, 0)
 
+    HH_score_df['S_TOT_IND'] = HH_score_df[['HH_Score_S_IC', 'HH_Score_S_OWN', 'HH_Score_S_SANI', 'HH_Score_S_Fuel', 'HH_Score_S_SoDrWa', 'HH_Score_S_ELECTR', 'HH_Score_S_ASS']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
+    HH_score_df['S_DEV_IND'] = HH_score_df[['HH_Score_S_IC', 'HH_Score_S_OWN', 'HH_Score_S_SANI', 'HH_Score_S_Fuel', 'HH_Score_S_SoDrWa', 'HH_Score_S_ELECTR', 'HH_Score_S_ASS']].eq(1).sum(axis=1)
+    HH_score_df['S_weightage'] = 0.2 / HH_score_df['S_TOT_IND']
+    HH_score_df['S_DS'] = HH_score_df['S_weightage'] * HH_score_df.apply(lambda row: sum(1 for val in row[['HH_Score_S_IC', 'HH_Score_S_OWN', 'HH_Score_S_SANI', 'HH_Score_S_Fuel', 'HH_Score_S_SoDrWa', 'HH_Score_S_ELECTR', 'HH_Score_S_ASS']] if val not in (None, '')), axis=1)
+
+
     HH_score_df['HH_Score_C_L'] = np.where(cum_score_df['Sum of cum_score_L'] >= 1, 1, 0)
     HH_score_df['HH_Score_C_Arts'] = np.where(cum_score_df['Sum of cum_score_Arts'] >= 1, 1, 0)
+
+    HH_score_df['C_TOT_IND'] = HH_score_df[['HH_Score_C_L', 'HH_Score_C_Arts']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
+    HH_score_df['C_DEV_IND'] = HH_score_df[['HH_Score_C_L', 'HH_Score_C_Arts']].eq(1).sum(axis=1)
+    HH_score_df['C_weightage'] = 0.2 / HH_score_df['C_TOT_IND']
+    HH_score_df['C_DS'] = HH_score_df['C_weightage'] * HH_score_df.apply(lambda row: sum(1 for val in row[['HH_Score_C_L', 'HH_Score_C_Arts']] if val not in (None, '')), axis=1)
 
 
 
@@ -489,7 +513,24 @@ def perform_calculations(base_data_df, user, year):
 
     HH_score_df['HH_Score_G_meeting'] = np.where(cum_score_df['Sum of Cum_s core_meetings'] > 0, 1, 0)
 
+    HH_score_df['G_TOT_IND'] = HH_score_df[['HH_Score_G_EV', 'HH_Score_G_meeting']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
+    HH_score_df['G_DEV_IND'] = HH_score_df[['HH_Score_G_EV', 'HH_Score_G_meeting']].eq(1).sum(axis=1)
+    HH_score_df['G_weightage'] = 0.2 / HH_score_df['G_TOT_IND']
+    HH_score_df['G_DS'] = HH_score_df['G_weightage'] * HH_score_df.apply(lambda row: sum(1 for val in row[['HH_Score_G_EV', 'HH_Score_G_meeting']] if val not in (None, '')), axis=1)
 
+
+    
+
+     
+
+
+    
+
+
+
+    
+    
+    
     HH_score_df.to_excel(settings.EXCEL_FILE_PATH3, index=False)
     print("Result Excel file saved successfully.")
 
@@ -497,8 +538,13 @@ def perform_calculations(base_data_df, user, year):
     from django.http import HttpResponse
     from .forms import HouseholdForm
     from django.db import IntegrityError
-    HH_score_df['HH_Score_H_MC'] = pd.to_numeric(HH_score_df['HH_Score_H_MC'], errors='coerce')
-    HH_score_df['HH_Score_G_EV'] = pd.to_numeric(HH_score_df['HH_Score_G_EV'], errors='coerce')
+
+
+    HH_score_df['H_TOT_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
+    HH_score_df['H_DEV_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].eq(1).sum(axis=1)
+
+
+  
     
      
 

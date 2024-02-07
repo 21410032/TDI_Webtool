@@ -79,7 +79,8 @@ def tribe_detail_view(request, name, year):
         'tribal_dimensional_index': tribal_dimensional_index,
         'dimension_contribution_to_tdi': dimension_contribution_to_tdi,
     }
-        
+
+
 
 
     return render(request, 'pvtg/asur.html', context=context)
@@ -206,8 +207,19 @@ def test_view(request):
     total_tribals = tribe.get_total_tribals
     household = Household.objects.filter(tribeID = tribe)
     
-    
-    
+    cnt = 0
+    tribal_intensity = 0
+    for i in household:
+        print('**')
+        print(i.no_of_indicators, i.developed_indicators, i.calculate_weightage)
+        print(i.D_DS)
+        cnt+=i.D_DS[4]
+        # cnt+=i.D_DS[2]
+        # cnt+=i.D_DS[3]
+        # cnt+=i.D_DS[4
+
+    print(cnt)
+
     context = {
         'household' : household,
         'total_tribals' : total_tribals,
