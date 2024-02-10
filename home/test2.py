@@ -520,17 +520,6 @@ def perform_calculations(base_data_df, user, year):
 
 
     
-
-     
-
-
-    
-
-
-
-    
-    
-    
     HH_score_df.to_excel(settings.EXCEL_FILE_PATH3, index=False)
     print("Result Excel file saved successfully.")
 
@@ -539,13 +528,6 @@ def perform_calculations(base_data_df, user, year):
     from .forms import HouseholdForm
     from django.db import IntegrityError
 
-
-    HH_score_df['H_TOT_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
-    HH_score_df['H_DEV_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].eq(1).sum(axis=1)
-
-
-  
-    
      
 
     for index, row in HH_score_df.iterrows():
