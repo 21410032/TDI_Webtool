@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 from django.conf import settings
 
+# def perform_calculations(base_data_df, user, year):
+
+
 base_data_df = pd.read_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/TRI_base_data.xlsx")
 
 base_data_df['Eligibility_CD'] = np.where(base_data_df['chronic_disease'].str.strip() == 'लागू नहीं', 0, 1)
@@ -21,7 +24,7 @@ conditions_IMM_Cum_Score = [
     (base_data_df['Age'] < 16),
     (base_data_df['basic_vaccination'].str.strip() == 'पूरी तरह')
 ]
-values_IMM_Cum_Score = ['NA', 1]
+values_IMM_Cum_Score = [np.nan, 1]
 base_data_df['IMM_Cum_Score'] = np.select(conditions_IMM_Cum_Score, values_IMM_Cum_Score, default=0)
 
 
@@ -33,7 +36,7 @@ conditions_IND_Cum_Score = [
     (base_data_df['Institutional_delivery'].str.strip() == 'स्वास्थ्य केंद्र'),
     (base_data_df['Eligibility_IND'] == 0)
 ]
-values_IND_Cum_Score = [1, 'NA']
+values_IND_Cum_Score = [1, np.nan]
 base_data_df['IND_Cum_Score'] = np.select(conditions_IND_Cum_Score, values_IND_Cum_Score, default=0)
 
 
@@ -49,7 +52,7 @@ conditions_ANC_Cum_Score = [
     (base_data_df['ANC'].str.strip().isin(['हाँ, सभी तिमाही', 'हाँ, 1 तिमाही', 'हाँ, 2 तिमाही'])),
     (base_data_df['Eligibility_ANC'] == 0)
 ]
-values_ANC_Cum_Score = [1, 'NA']
+values_ANC_Cum_Score = [1, np.nan]
 base_data_df['ANC_Cum_Score'] = np.select(conditions_ANC_Cum_Score, values_ANC_Cum_Score, default=0)
 
 
@@ -82,7 +85,7 @@ conditions = [
     (base_data_df['Eligibility LE'] == 0)
 ]
 
-choices = [1, "NA"]
+choices = [1, np.nan]
 
 base_data_df['cum_score_LE'] = np.select(conditions, choices, default=0)
 
@@ -96,8 +99,9 @@ conditions_cum_score_DRO = [
     (base_data_df['Eligibility DRO'] == 0)
 ]
 
-values_cum_score_DRO = [1, 'NA']
+values_cum_score_DRO = [1, np.nan]
 base_data_df['cum_score_DRO'] = np.select(conditions_cum_score_DRO, values_cum_score_DRO, default=0)
+
 
 
 
@@ -254,11 +258,11 @@ base_data_df['Eligibility_voter'] = np.where(condition_Eligibility_voter, 1, 0)
 
 conditions_cum_score_EV = [
     (base_data_df['Eligibility_voter'] == 0),
-    ((base_data_df['voter'] > 0) | (base_data_df['voter'] == "NA") | (base_data_df['voter'] == "") | base_data_df['voter'].isnull())
+    ((base_data_df['voter'] > 0) | (base_data_df['voter'] == np.nan) | (base_data_df['voter'] == "") | base_data_df['voter'].isnull())
 ]
 
 
-values_cum_score_EV = ['NA', 1]
+values_cum_score_EV = [np.nan, 1]
 base_data_df['cum_score_EV'] = np.select(conditions_cum_score_EV, values_cum_score_EV, default=0)
 
 
@@ -273,7 +277,11 @@ condition_Cum_s_core_meetings = (
 base_data_df['Cum_s core_meetings'] = np.where(
     condition_Cum_s_core_meetings, 1, 0
 )
-base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data.xlsx', index=False)
+
+
+excel_writer = pd.ExcelWriter('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data.xlsx', engine='xlsxwriter')
+base_data_df.to_excel(excel_writer, sheet_name='Sheet1', na_rep='NA', index=False)
+excel_writer._save()
 print("Result Excel file saved successfully.")
 # base_data_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
 # print("Result Excel file saved successfully.")
@@ -342,7 +350,7 @@ def calScore(list1,list2,score):
         for j in range(len(list1)):
 
             if unique_fid[i] == list1[j]:
-                if pd.isna(list2[j]) or list2[j] == 'NA':
+                if pd.isna(list2[j]) or list2[j] == np.nan:
                     continue  
                 score[i] += int(list2[j])
 
@@ -417,14 +425,14 @@ conditions = [
 
 choices = [
     np.where(cum_score_df['Sum of IND_Cum_Score'] > 1, 1, 0),
-    "NA"
+    np.nan
 ]
 
 HH_score_df['HH_Score_H_IND'] = np.select(conditions, choices, default=0).astype('object')
 
 
 condition_HH_Score_H_ANC = (cum_score_df['Sum of Eligibility_ANC'] > 0) & (cum_score_df['Sum of ANC_Cum_Score'] > 1)
-HH_score_df['HH_Score_H_ANC'] = np.where(condition_HH_Score_H_ANC, 1, np.where(cum_score_df['Sum of Eligibility_ANC'] > 0, 0, 'NA')).astype('object')
+HH_score_df['HH_Score_H_ANC'] = np.where(condition_HH_Score_H_ANC, 1, np.where(cum_score_df['Sum of Eligibility_ANC'] > 0, 0, np.nan)).astype('object')
 
 
 
@@ -435,7 +443,7 @@ conditions_HH_Score_H_MC = [
     (HH_score_df['HH_Score_H_IND'].notna() & HH_score_df['HH_Score_H_ANC'].notna() & (HH_score_df['HH_Score_H_IND'] + HH_score_df['HH_Score_H_ANC'] == 2)),
     (HH_score_df['HH_Score_H_IND'].isna() | HH_score_df['HH_Score_H_ANC'].isna())
 ]
-choices_HH_Score_H_MC = [1, "NA"]
+choices_HH_Score_H_MC = [1, np.nan]
 HH_score_df['HH_Score_H_MC'] = np.select(conditions_HH_Score_H_MC, choices_HH_Score_H_MC, default=0)
 HH_score_df['HH_Score_H_MC'] = pd.to_numeric(HH_score_df['HH_Score_H_MC'], errors='coerce')
 
@@ -444,8 +452,8 @@ HH_score_df['HH_Score_H_FS'] = np.where((cum_score_df['Sum of 2sq_Cum_Score'] ==
 
 HH_score_df['H_TOT_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
 HH_score_df['H_DEV_IND'] = HH_score_df[['HH_Score_H_CD', 'HH_Score_H_IMM', 'HH_Score_H_MC', 'HH_Score_H_U5CM', 'HH_Score_H_FS']].eq(1).sum(axis=1)
-HH_score_df['H_weightage'] = round((0.2 / HH_score_df['H_TOT_IND']),2)
-HH_score_df['H_DS'] = round((HH_score_df['H_weightage'] * HH_score_df['H_DEV_IND']),2)
+HH_score_df['H_weightage'] = round((0.2 / HH_score_df['H_TOT_IND']),4)
+HH_score_df['H_DS'] = round((HH_score_df['H_weightage'] * HH_score_df['H_DEV_IND']),3)
 
 
 HH_score_df['HH_Score_E_LE'] = np.where(cum_score_df['Sum of cum_score_LE'] >= 1, 1, 0)
@@ -453,8 +461,8 @@ HH_score_df['HH_Score_E_DRO'] = np.where(cum_score_df['Sum of cum_score_DRO'] ==
 
 HH_score_df['E_TOT_IND'] = HH_score_df[['HH_Score_E_LE', 'HH_Score_E_DRO']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
 HH_score_df['E_DEV_IND'] = HH_score_df[['HH_Score_E_LE', 'HH_Score_E_DRO']].eq(1).sum(axis=1)
-HH_score_df['E_weightage'] = round((0.2 / HH_score_df['E_TOT_IND']),2)
-HH_score_df['E_DS'] = round((HH_score_df['E_weightage'] * HH_score_df['E_DEV_IND']),2)
+HH_score_df['E_weightage'] = round((0.2 / HH_score_df['E_TOT_IND']),4)
+HH_score_df['E_DS'] = round((HH_score_df['E_weightage'] * HH_score_df['E_DEV_IND']),3)
 
 
 HH_score_df['HH_Score_S_IC'] = np.where(cum_score_df['Sum of CUM_SCORE_IC'] >= 1, 1, 0)
@@ -482,8 +490,8 @@ HH_score_df['HH_Score_S_ASS'] = np.where(cum_score_df['Sum of CUM_SCORE_ASS'] >=
 
 HH_score_df['S_TOT_IND'] = HH_score_df[['HH_Score_S_IC', 'HH_Score_S_OWN', 'HH_Score_S_SANI', 'HH_Score_S_Fuel', 'HH_Score_S_SoDrWa', 'HH_Score_S_ELECTR', 'HH_Score_S_ASS']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
 HH_score_df['S_DEV_IND'] = HH_score_df[['HH_Score_S_IC', 'HH_Score_S_OWN', 'HH_Score_S_SANI', 'HH_Score_S_Fuel', 'HH_Score_S_SoDrWa', 'HH_Score_S_ELECTR', 'HH_Score_S_ASS']].eq(1).sum(axis=1)
-HH_score_df['S_weightage'] = round((0.2 / HH_score_df['S_TOT_IND']),2)
-HH_score_df['S_DS'] = round((HH_score_df['S_weightage'] * HH_score_df['S_DEV_IND']),2)
+HH_score_df['S_weightage'] = round((0.2 / HH_score_df['S_TOT_IND']),4)
+HH_score_df['S_DS'] = round((HH_score_df['S_weightage'] * HH_score_df['S_DEV_IND']),3)
 
 
 HH_score_df['HH_Score_C_L'] = np.where(cum_score_df['Sum of cum_score_L'] >= 1, 1, 0)
@@ -491,8 +499,8 @@ HH_score_df['HH_Score_C_Arts'] = np.where(cum_score_df['Sum of cum_score_Arts'] 
 
 HH_score_df['C_TOT_IND'] = HH_score_df[['HH_Score_C_L', 'HH_Score_C_Arts']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
 HH_score_df['C_DEV_IND'] = HH_score_df[['HH_Score_C_L', 'HH_Score_C_Arts']].eq(1).sum(axis=1)
-HH_score_df['C_weightage'] = round((0.2 / HH_score_df['C_TOT_IND']),2)
-HH_score_df['C_DS'] = round((HH_score_df['C_weightage'] * HH_score_df['C_DEV_IND']),2)
+HH_score_df['C_weightage'] = round((0.2 / HH_score_df['C_TOT_IND']),4)
+HH_score_df['C_DS'] = round((HH_score_df['C_weightage'] * HH_score_df['C_DEV_IND']),3)
 
 
 
@@ -502,7 +510,7 @@ conditions_HH_Score_G_EV = [
     (cum_score_df['Sum of Eligibility_voter'] == 0)
 ]
 
-choices_HH_Score_G_EV = [1, "NA"]
+choices_HH_Score_G_EV = [1, np.nan]
 
 HH_score_df['HH_Score_G_EV'] = np.select(conditions_HH_Score_G_EV, choices_HH_Score_G_EV, default=0)
 HH_score_df['HH_Score_G_EV'] = pd.to_numeric(HH_score_df['HH_Score_G_EV'], errors='coerce')
@@ -511,8 +519,8 @@ HH_score_df['HH_Score_G_meeting'] = np.where(cum_score_df['Sum of Cum_s core_mee
 
 HH_score_df['G_TOT_IND'] = HH_score_df[['HH_Score_G_EV', 'HH_Score_G_meeting']].apply(lambda row: row.value_counts().get(1, 0) + row.value_counts().get(0, 0), axis=1)
 HH_score_df['G_DEV_IND'] = HH_score_df[['HH_Score_G_EV', 'HH_Score_G_meeting']].eq(1).sum(axis=1)
-HH_score_df['G_weightage'] = round((0.2 / HH_score_df['G_TOT_IND']),2)
-HH_score_df['G_DS'] = round((HH_score_df['G_weightage'] * HH_score_df['G_DEV_IND'] ),2)
+HH_score_df['G_weightage'] = round((0.2 / HH_score_df['G_TOT_IND']),4)
+HH_score_df['G_DS'] = round((HH_score_df['G_weightage'] * HH_score_df['G_DEV_IND'] ),3)
 
 HH_score_df['HH_DS'] = np.sum(HH_score_df[['H_DS', 'E_DS', 'S_DS', 'C_DS', 'G_DS']].values, axis=1)
 
@@ -532,7 +540,6 @@ HH_score_df['C_HH_members_of_developed_HHs'] = np.where(HH_score_df['C_Is_the_HH
 HH_score_df['G_HH_members_of_developed_HHs'] = np.where(HH_score_df['G_Is_the_HH_developed'] == 1, HH_score_df['Sum of HH_S'], 0)
 
 HH_score_df['HH_members_of_developed_HHs'] = np.where(HH_score_df['Is_the_HH_multidimensionally_developed'] == 1, HH_score_df['Sum of HH_S'], 0)
-
 
 
     
@@ -590,10 +597,113 @@ Tribe_cum_score_df['Total_HH_members_of_developed_HHs'] = Total_HH_members_of_de
 
 
 
-HH_score_df['H_Incidence_of_Tribal_development'] = np.divide(
-    HH_score_df['H_HH_members_of_developed_HHs'],
-    Tribe_cum_score_df[Tribe_cum_score_df['Tribe_N'] == HH_score_df['Tribe_N']]['Total_Sum_of_HH_S'].values
-)
+
+HH_score_df['H_Incidence_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['E_Incidence_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['S_Incidence_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['C_Incidence_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['G_Incidence_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['Incidence_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['H_Intensity_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['E_Intensity_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['S_Intensity_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['C_Intensity_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['G_Intensity_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+HH_score_df['Intensity_of_Tribal_development'] = [0.00] * len(HH_tribe_list)
+
+
+
+for i in range(len(unique_tribes)):
+    total_sum_of_hh_s = Tribe_cum_score_df['Total_Sum_of_HH_S'][i]
+    total_h_hh_members = Tribe_cum_score_df['Total_H_HH_members_of_developed_HHs'][i]
+    total_e_hh_members = Tribe_cum_score_df['Total_E_HH_members_of_developed_HHs'][i]
+    total_s_hh_members = Tribe_cum_score_df['Total_S_HH_members_of_developed_HHs'][i]
+    total_c_hh_members = Tribe_cum_score_df['Total_C_HH_members_of_developed_HHs'][i]
+    total_g_hh_members = Tribe_cum_score_df['Total_G_HH_members_of_developed_HHs'][i]
+    total_hh_members = Tribe_cum_score_df['Total_HH_members_of_developed_HHs'][i]
+
+    for j in range(len(HH_tribe_list)):
+        if HH_tribe_list[j] == unique_tribes[i]:
+            HH_score_df.loc[j,'H_Incidence_of_Tribal_development'] = round(float(HH_score_df['H_HH_members_of_developed_HHs'][j] / total_sum_of_hh_s) if total_sum_of_hh_s != 0 else 0, 5)
+            HH_score_df.loc[j,'E_Incidence_of_Tribal_development'] = round(float(HH_score_df['E_HH_members_of_developed_HHs'][j] / total_sum_of_hh_s) if total_sum_of_hh_s != 0 else 0, 5)
+            HH_score_df.loc[j,'S_Incidence_of_Tribal_development'] = round(float(HH_score_df['S_HH_members_of_developed_HHs'][j] / total_sum_of_hh_s) if total_sum_of_hh_s != 0 else 0, 5)
+            HH_score_df.loc[j,'C_Incidence_of_Tribal_development'] = round(float(HH_score_df['C_HH_members_of_developed_HHs'][j] / total_sum_of_hh_s) if total_sum_of_hh_s != 0 else 0, 5)
+            HH_score_df.loc[j,'G_Incidence_of_Tribal_development'] = round(float(HH_score_df['G_HH_members_of_developed_HHs'][j] / total_sum_of_hh_s) if total_sum_of_hh_s != 0 else 0, 5)
+            HH_score_df.loc[j,'Incidence_of_Tribal_development'] = round(float(HH_score_df['HH_members_of_developed_HHs'][j] / total_sum_of_hh_s) if total_sum_of_hh_s != 0 else 0, 5)
+            
+            HH_score_df.loc[j,'H_Intensity_of_Tribal_development'] = round(float((HH_score_df['H_DS'][j] * HH_score_df['H_HH_members_of_developed_HHs'][j] * 5) / total_h_hh_members) if total_h_hh_members != 0 else 0, 5)
+            HH_score_df.loc[j,'E_Intensity_of_Tribal_development'] = round(float((HH_score_df['E_DS'][j] * HH_score_df['E_HH_members_of_developed_HHs'][j] * 5) / total_e_hh_members) if total_e_hh_members != 0 else 0, 5)
+            HH_score_df.loc[j,'S_Intensity_of_Tribal_development'] = round(float((HH_score_df['S_DS'][j] * HH_score_df['S_HH_members_of_developed_HHs'][j] * 5) / total_s_hh_members) if total_s_hh_members != 0 else 0, 5)
+            HH_score_df.loc[j,'C_Intensity_of_Tribal_development'] = round(float((HH_score_df['C_DS'][j] * HH_score_df['C_HH_members_of_developed_HHs'][j] * 5) / total_c_hh_members) if total_c_hh_members != 0 else 0, 5)
+            HH_score_df.loc[j,'G_Intensity_of_Tribal_development'] = round(float((HH_score_df['G_DS'][j] * HH_score_df['G_HH_members_of_developed_HHs'][j] * 5) / total_g_hh_members) if total_g_hh_members != 0 else 0, 5)
+            HH_score_df.loc[j,'Intensity_of_Tribal_development'] = round(float((HH_score_df['HH_DS'][j] * HH_score_df['HH_members_of_developed_HHs'][j]) / total_hh_members) if total_hh_members != 0 else 0, 5)
+
+
+Total_H_Incidence_of_Tribal_development=[0]*len(unique_tribes)
+Total_E_Incidence_of_Tribal_development=[0]*len(unique_tribes)
+Total_S_Incidence_of_Tribal_development=[0]*len(unique_tribes)
+Total_C_Incidence_of_Tribal_development=[0]*len(unique_tribes)
+Total_G_Incidence_of_Tribal_development=[0]*len(unique_tribes)
+Total_Incidence_of_Tribal_development=[0]*len(unique_tribes)
+
+Total_H_Intensity_of_Tribal_development=[0]*len(unique_tribes)
+Total_E_Intensity_of_Tribal_development=[0]*len(unique_tribes)
+Total_S_Intensity_of_Tribal_development=[0]*len(unique_tribes)
+Total_C_Intensity_of_Tribal_development=[0]*len(unique_tribes)
+Total_G_Intensity_of_Tribal_development=[0]*len(unique_tribes)
+Total_Intensity_of_Tribal_development=[0]*len(unique_tribes)
+
+
+
+for i in range(len(unique_tribes)):
+    for j in range(len(HH_tribe_list)):
+        if HH_tribe_list[j] == unique_tribes[i]:
+            Total_H_Incidence_of_Tribal_development[i] += HH_score_df['H_Incidence_of_Tribal_development'][j]
+            Total_E_Incidence_of_Tribal_development[i] += HH_score_df['E_Incidence_of_Tribal_development'][j]
+            Total_S_Incidence_of_Tribal_development[i] += HH_score_df['S_Incidence_of_Tribal_development'][j]
+            Total_C_Incidence_of_Tribal_development[i] += HH_score_df['C_Incidence_of_Tribal_development'][j]
+            Total_G_Incidence_of_Tribal_development[i] += HH_score_df['G_Incidence_of_Tribal_development'][j]
+            Total_Incidence_of_Tribal_development[i] += HH_score_df['Incidence_of_Tribal_development'][j]
+
+            Total_H_Intensity_of_Tribal_development[i] += HH_score_df['H_Intensity_of_Tribal_development'][j]
+            Total_E_Intensity_of_Tribal_development[i] += HH_score_df['E_Intensity_of_Tribal_development'][j]
+            Total_S_Intensity_of_Tribal_development[i] += HH_score_df['S_Intensity_of_Tribal_development'][j]
+            Total_C_Intensity_of_Tribal_development[i] += HH_score_df['C_Intensity_of_Tribal_development'][j]
+            Total_G_Intensity_of_Tribal_development[i] += HH_score_df['G_Intensity_of_Tribal_development'][j]
+            Total_Intensity_of_Tribal_development[i] += HH_score_df['Intensity_of_Tribal_development'][j]
+
+    Total_H_Incidence_of_Tribal_development[i] = round(Total_H_Incidence_of_Tribal_development[i],3)
+    Total_E_Incidence_of_Tribal_development[i] = round(Total_E_Incidence_of_Tribal_development[i],3)
+    Total_S_Incidence_of_Tribal_development[i] = round(Total_S_Incidence_of_Tribal_development[i],3)
+    Total_C_Incidence_of_Tribal_development[i] = round(Total_C_Incidence_of_Tribal_development[i],3)
+    Total_G_Incidence_of_Tribal_development[i] = round(Total_G_Incidence_of_Tribal_development[i],3)
+    Total_Incidence_of_Tribal_development[i] = round(Total_Incidence_of_Tribal_development[i],3)
+    Total_H_Intensity_of_Tribal_development[i] = round(Total_H_Intensity_of_Tribal_development[i],3)
+    Total_E_Intensity_of_Tribal_development[i] = round(Total_E_Intensity_of_Tribal_development[i],3)
+    Total_S_Intensity_of_Tribal_development[i] = round(Total_S_Intensity_of_Tribal_development[i],3)
+    Total_C_Intensity_of_Tribal_development[i] = round(Total_C_Intensity_of_Tribal_development[i],3)
+    Total_G_Intensity_of_Tribal_development[i] = round(Total_G_Intensity_of_Tribal_development[i],3)
+    Total_Intensity_of_Tribal_development[i] = round(Total_Intensity_of_Tribal_development[i],3)
+
+Tribe_cum_score_df['Total_H_Incidence_of_Tribal_development'] = Total_H_Incidence_of_Tribal_development
+Tribe_cum_score_df['Total_E_Incidence_of_Tribal_development'] = Total_E_Incidence_of_Tribal_development
+Tribe_cum_score_df['Total_S_Incidence_of_Tribal_development'] = Total_S_Incidence_of_Tribal_development
+Tribe_cum_score_df['Total_C_Incidence_of_Tribal_development'] = Total_C_Incidence_of_Tribal_development
+Tribe_cum_score_df['Total_G_Incidence_of_Tribal_development'] = Total_G_Incidence_of_Tribal_development
+Tribe_cum_score_df['Total_Incidence_of_Tribal_development'] = Total_Incidence_of_Tribal_development
+Tribe_cum_score_df['Total_H_Intensity_of_Tribal_development'] = Total_H_Intensity_of_Tribal_development
+Tribe_cum_score_df['Total_E_Intensity_of_Tribal_development'] = Total_E_Intensity_of_Tribal_development
+Tribe_cum_score_df['Total_S_Intensity_of_Tribal_development'] = Total_S_Intensity_of_Tribal_development
+Tribe_cum_score_df['Total_C_Intensity_of_Tribal_development'] = Total_C_Intensity_of_Tribal_development
+Tribe_cum_score_df['Total_G_Intensity_of_Tribal_development'] = Total_G_Intensity_of_Tribal_development
+Tribe_cum_score_df['Total_Intensity_of_Tribal_development'] = Total_Intensity_of_Tribal_development
+
+Tribe_cum_score_df['H_DI'] = round((Tribe_cum_score_df['Total_H_Incidence_of_Tribal_development'] * Tribe_cum_score_df['Total_H_Intensity_of_Tribal_development']),2)
+Tribe_cum_score_df['E_DI'] = round((Tribe_cum_score_df['Total_E_Incidence_of_Tribal_development'] * Tribe_cum_score_df['Total_E_Intensity_of_Tribal_development']),2)
+Tribe_cum_score_df['S_DI'] = round((Tribe_cum_score_df['Total_S_Incidence_of_Tribal_development'] * Tribe_cum_score_df['Total_S_Intensity_of_Tribal_development']),2)
+Tribe_cum_score_df['C_DI'] = round((Tribe_cum_score_df['Total_C_Incidence_of_Tribal_development'] * Tribe_cum_score_df['Total_C_Intensity_of_Tribal_development']),2)
+Tribe_cum_score_df['G_DI'] = round((Tribe_cum_score_df['Total_G_Incidence_of_Tribal_development'] * Tribe_cum_score_df['Total_G_Intensity_of_Tribal_development']),2)
+Tribe_cum_score_df['TDI'] = round((Tribe_cum_score_df['Total_Incidence_of_Tribal_development'] * Tribe_cum_score_df['Total_Intensity_of_Tribal_development']),2)
 
 
 
@@ -604,3 +714,206 @@ print("Result Excel file saved successfully.")
 Tribe_cum_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/Tribe_cum_score_df.xlsx', index=False)
 print("Result Excel file saved successfully.")
 
+import math
+
+censored_uncensored_df = pd.DataFrame({
+    'Tribe_N' : unique_tribes,
+    'Sum_of_HH_S' : Total_Sum_of_HH_S,
+})
+
+
+UNC_CD_score=[0]*len(unique_tribes)
+UNC_IM_score=[0]*len(unique_tribes)
+UNC_MC_score=[0]*len(unique_tribes)
+UNC_CM_score=[0]*len(unique_tribes)
+UNC_FS_score=[0]*len(unique_tribes)
+UNC_LE_score=[0]*len(unique_tribes)
+UNC_DRO_score=[0]*len(unique_tribes)
+UNC_IC_score=[0]*len(unique_tribes)
+UNC_OW_score=[0]*len(unique_tribes)
+UNC_SANI_score=[0]*len(unique_tribes)
+UNC_FUEL_score=[0]*len(unique_tribes)
+UNC_DRWA_score=[0]*len(unique_tribes)
+UNC_ELECTR_score=[0]*len(unique_tribes)
+UNC_ASS_score=[0]*len(unique_tribes)
+UNC_LAN_score=[0]*len(unique_tribes)
+UNC_ARTS_score=[0]*len(unique_tribes)
+UNC_EV_score=[0]*len(unique_tribes)
+UNC_MEET_score=[0]*len(unique_tribes)
+
+CEN_CD_score=[0]*len(unique_tribes)
+CEN_IM_score=[0]*len(unique_tribes)
+CEN_MC_score=[0]*len(unique_tribes)
+CEN_CM_score=[0]*len(unique_tribes)
+CEN_FS_score=[0]*len(unique_tribes)
+CEN_LE_score=[0]*len(unique_tribes)
+CEN_DRO_score=[0]*len(unique_tribes)
+CEN_IC_score=[0]*len(unique_tribes)
+CEN_OW_score=[0]*len(unique_tribes)
+CEN_SANI_score=[0]*len(unique_tribes)
+CEN_FUEL_score=[0]*len(unique_tribes)
+CEN_DRWA_score=[0]*len(unique_tribes)
+CEN_ELECTR_score=[0]*len(unique_tribes)
+CEN_ASS_score=[0]*len(unique_tribes)
+CEN_LAN_score=[0]*len(unique_tribes)
+CEN_ARTS_score=[0]*len(unique_tribes)
+CEN_EV_score=[0]*len(unique_tribes)
+CEN_MEET_score=[0]*len(unique_tribes)
+
+HH_DS = HH_score_df['HH_DS']
+
+for i in range(len(unique_tribes)):
+
+    Sum_of_HH_S = censored_uncensored_df['Sum_of_HH_S'][i]
+
+    if Sum_of_HH_S > 0 :
+        for j in range(len(HH_tribe_list)):
+            if HH_tribe_list[j] == unique_tribes[i]:
+            
+                    
+                HH_size = HH_score_df['Sum of HH_S'][j]
+
+
+                CD_score_value = (HH_score_df['HH_Score_H_CD'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_H_CD'][j]) or HH_score_df['HH_Score_H_CD'][j] is None) else 0
+                IM_score_value = (HH_score_df['HH_Score_H_IMM'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_H_IMM'][j]) or HH_score_df['HH_Score_H_IMM'][j] is None) else 0
+                MC_score_value = (HH_score_df['HH_Score_H_MC'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_H_MC'][j]) or HH_score_df['HH_Score_H_MC'][j] is None) else 0
+                CM_score_value = (HH_score_df['HH_Score_H_U5CM'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_H_U5CM'][j]) or HH_score_df['HH_Score_H_U5CM'][j] is None) else 0
+                FS_score_value = (HH_score_df['HH_Score_H_FS'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_H_FS'][j]) or HH_score_df['HH_Score_H_FS'][j] is None) else 0
+                LE_score_value = (HH_score_df['HH_Score_E_LE'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_E_LE'][j]) or HH_score_df['HH_Score_E_LE'][j] is None) else 0
+                DRO_score_value = (HH_score_df['HH_Score_E_DRO'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_E_DRO'][j]) or HH_score_df['HH_Score_E_DRO'][j] is None) else 0
+                IC_score_value = (HH_score_df['HH_Score_S_IC'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_S_IC'][j]) or HH_score_df['HH_Score_S_IC'][j] is None) else 0
+                OW_score_value = (HH_score_df['HH_Score_S_OWN'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_S_OWN'][j]) or HH_score_df['HH_Score_S_OWN'][j] is None) else 0
+                SANI_score_value = (HH_score_df['HH_Score_S_SANI'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_S_SANI'][j]) or HH_score_df['HH_Score_S_SANI'][j] is None) else 0
+                FUEL_score_value = (HH_score_df['HH_Score_S_Fuel'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_S_Fuel'][j]) or HH_score_df['HH_Score_S_Fuel'][j] is None) else 0
+                DRWA_score_value = (HH_score_df['HH_Score_S_SoDrWa'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_S_SoDrWa'][j]) or HH_score_df['HH_Score_S_SoDrWa'][j] is None) else 0
+                ELECTR_score_value = (HH_score_df['HH_Score_S_ELECTR'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_S_ELECTR'][j]) or HH_score_df['HH_Score_S_ELECTR'][j] is None) else 0
+                ASS_score_value = (HH_score_df['HH_Score_S_ASS'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_S_ASS'][j]) or HH_score_df['HH_Score_S_ASS'][j] is None) else 0
+                LAN_score_value = (HH_score_df['HH_Score_C_L'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_C_L'][j]) or HH_score_df['HH_Score_C_L'][j] is None) else 0
+                ARTS_score_value = (HH_score_df['HH_Score_C_Arts'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_C_Arts'][j]) or HH_score_df['HH_Score_C_Arts'][j] is None) else 0
+                EV_score_value = (HH_score_df['HH_Score_G_EV'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_G_EV'][j]) or HH_score_df['HH_Score_G_EV'][j] is None) else 0
+                MEET_score_value = (HH_score_df['HH_Score_G_meeting'][j] * HH_size / Sum_of_HH_S) if not (math.isnan(HH_score_df['HH_Score_G_meeting'][j]) or HH_score_df['HH_Score_G_meeting'][j] is None) else 0
+
+                UNC_CD_score[i] += CD_score_value
+                UNC_IM_score[i] += IM_score_value
+                UNC_MC_score[i] += MC_score_value
+                UNC_CM_score[i] += CM_score_value
+                UNC_FS_score[i] += FS_score_value
+                UNC_LE_score[i] += LE_score_value
+                UNC_DRO_score[i] += DRO_score_value
+                UNC_IC_score[i] += IC_score_value
+                UNC_OW_score[i] += OW_score_value
+                UNC_SANI_score[i] += SANI_score_value
+                UNC_FUEL_score[i] += FUEL_score_value
+                UNC_DRWA_score[i] += DRWA_score_value
+                UNC_ELECTR_score[i] += ELECTR_score_value
+                UNC_ASS_score[i] += ASS_score_value
+                UNC_LAN_score[i] += LAN_score_value
+                UNC_ARTS_score[i] += ARTS_score_value
+                UNC_EV_score[i] += EV_score_value
+                UNC_MEET_score[i] += MEET_score_value
+
+
+
+
+                if HH_DS[j] > 0.33:
+                    CEN_CD_score[i] +=     CD_score_value
+                    CEN_IM_score[i] +=     IM_score_value
+                    CEN_MC_score[i] +=     MC_score_value
+                    CEN_CM_score[i] +=     CM_score_value
+                    CEN_FS_score[i] +=     FS_score_value
+                    CEN_LE_score[i] +=     LE_score_value
+                    CEN_DRO_score[i] +=    DRO_score_value
+                    CEN_IC_score[i] +=     IC_score_value
+                    CEN_OW_score[i] +=     OW_score_value
+                    CEN_SANI_score[i] +=   SANI_score_value
+                    CEN_FUEL_score[i] +=   FUEL_score_value
+                    CEN_DRWA_score[i] +=   DRWA_score_value
+                    CEN_ELECTR_score[i] += ELECTR_score_value
+                    CEN_ASS_score[i] +=    ASS_score_value
+                    CEN_LAN_score[i] +=    LAN_score_value
+                    CEN_ARTS_score[i] +=   ARTS_score_value 
+                    CEN_EV_score[i] +=     EV_score_value
+                    CEN_MEET_score[i] +=   MEET_score_value
+
+
+        UNC_CD_score[i]= round(UNC_CD_score[i],2)*100
+        UNC_IM_score[i]= round(UNC_IM_score[i],2)*100
+        UNC_MC_score[i]= round(UNC_MC_score[i],2)*100
+        UNC_CM_score[i]= round(UNC_CM_score[i],2)*100
+        UNC_FS_score[i]= round(UNC_FS_score[i],2)*100
+        UNC_LE_score[i]= round(UNC_LE_score[i],2)*100
+        UNC_DRO_score[i]= round(UNC_DRO_score[i],2)*100
+        UNC_IC_score[i]= round(UNC_IC_score[i],2)*100
+        UNC_OW_score[i]= round(UNC_OW_score[i],2)*100
+        UNC_SANI_score[i]= round(UNC_SANI_score[i],2)*100
+        UNC_FUEL_score[i]= round(UNC_FUEL_score[i],2)*100
+        UNC_DRWA_score[i]= round(UNC_DRWA_score[i],2)*100
+        UNC_ELECTR_score[i]= round(UNC_ELECTR_score[i],2)*100
+        UNC_ASS_score[i]= round(UNC_ASS_score[i],2)*100
+        UNC_LAN_score[i]= round(UNC_LAN_score[i],2)*100
+        UNC_ARTS_score[i]= round(UNC_ARTS_score[i],2)*100
+        UNC_EV_score[i]= round(UNC_EV_score[i],2)*100
+        UNC_MEET_score[i]= round(UNC_MEET_score[i],2)*100
+        CEN_CD_score[i]= round(CEN_CD_score[i],2)*100
+        CEN_IM_score[i]= round(CEN_IM_score[i],2)*100
+        CEN_MC_score[i]= round(CEN_MC_score[i],2)*100
+        CEN_CM_score[i]= round(CEN_CM_score[i],2)*100
+        CEN_FS_score[i]= round(CEN_FS_score[i],2)*100
+        CEN_LE_score[i]= round(CEN_LE_score[i],2)*100
+        CEN_DRO_score[i]= round(CEN_DRO_score[i],2)*100
+        CEN_IC_score[i]= round(CEN_IC_score[i],2)*100
+        CEN_OW_score[i]= round(CEN_OW_score[i],2)*100
+        CEN_SANI_score[i]= round(CEN_SANI_score[i],2)*100
+        CEN_FUEL_score[i]= round(CEN_FUEL_score[i],2)*100
+        CEN_DRWA_score[i]= round(CEN_DRWA_score[i],2)*100
+        CEN_ELECTR_score[i]= round(CEN_ELECTR_score[i],2)*100
+        CEN_ASS_score[i]= round(CEN_ASS_score[i],2)*100
+        CEN_LAN_score[i]= round(CEN_LAN_score[i],2)*100
+        CEN_ARTS_score[i]= round(CEN_ARTS_score[i],2)*100
+        CEN_EV_score[i]= round(CEN_EV_score[i],2)*100
+        CEN_MEET_score[i]= round(CEN_MEET_score[i],2)*100
+        
+
+        
+    censored_uncensored_df['UNC_CD_score'] = UNC_CD_score
+    censored_uncensored_df['UNC_IM_score'] = UNC_IM_score
+    censored_uncensored_df['UNC_MC_score'] = UNC_MC_score
+    censored_uncensored_df['UNC_CM_score'] = UNC_CM_score
+    censored_uncensored_df['UNC_FS_score'] = UNC_FS_score
+    censored_uncensored_df['UNC_LE_score'] = UNC_LE_score
+    censored_uncensored_df['UNC_DRO_score'] = UNC_DRO_score
+    censored_uncensored_df['UNC_IC_score'] = UNC_IC_score
+    censored_uncensored_df['UNC_OW_score'] = UNC_OW_score
+    censored_uncensored_df['UNC_SANI_score'] = UNC_SANI_score
+    censored_uncensored_df['UNC_FUEL_score'] = UNC_FUEL_score
+    censored_uncensored_df['UNC_DRWA_score'] = UNC_DRWA_score
+    censored_uncensored_df['UNC_ELECTR_score'] = UNC_ELECTR_score
+    censored_uncensored_df['UNC_ASS_score'] = UNC_ASS_score
+    censored_uncensored_df['UNC_LAN_score'] = UNC_LAN_score
+    censored_uncensored_df['UNC_ARTS_score'] = UNC_ARTS_score
+    censored_uncensored_df['UNC_EV_score'] = UNC_EV_score
+    censored_uncensored_df['UNC_MEET_score'] = UNC_MEET_score
+    censored_uncensored_df['CEN_CD_score'] = CEN_CD_score
+    censored_uncensored_df['CEN_IM_score'] = CEN_IM_score
+    censored_uncensored_df['CEN_MC_score'] = CEN_MC_score
+    censored_uncensored_df['CEN_CM_score'] = CEN_CM_score
+    censored_uncensored_df['CEN_FS_score'] = CEN_FS_score
+    censored_uncensored_df['CEN_LE_score'] = CEN_LE_score
+    censored_uncensored_df['CEN_DRO_score'] = CEN_DRO_score
+    censored_uncensored_df['CEN_IC_score'] = CEN_IC_score
+    censored_uncensored_df['CEN_OW_score'] = CEN_OW_score
+    censored_uncensored_df['CEN_SANI_score'] = CEN_SANI_score
+    censored_uncensored_df['CEN_FUEL_score'] = CEN_FUEL_score
+    censored_uncensored_df['CEN_DRWA_score'] = CEN_DRWA_score
+    censored_uncensored_df['CEN_ELECTR_score'] = CEN_ELECTR_score
+    censored_uncensored_df['CEN_ASS_score'] = CEN_ASS_score
+    censored_uncensored_df['CEN_LAN_score'] = CEN_LAN_score
+    censored_uncensored_df['CEN_ARTS_score'] = CEN_ARTS_score
+    censored_uncensored_df['CEN_EV_score'] = CEN_EV_score
+    censored_uncensored_df['CEN_MEET_score'] = CEN_MEET_score
+        
+                
+censored_uncensored_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/censored_uncensored_df.xlsx', index=False)
+print("Result Excel file saved successfully.")
+
+        
