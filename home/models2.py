@@ -18,7 +18,7 @@ class Tribe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tribe',default=settings.ADMIN_USER_PHONE_NUMBER)
     year = models.IntegerField()
     name = models.CharField(max_length=50)
-    Total_Sum_of_HH_S = models.IntegerField(null=True, blank=True)
+    total_tribals = models.IntegerField(null=True, blank=True)
     H_DI = models.FloatField(null=True, blank=True)
     E_DI = models.FloatField(null=True, blank=True)
     S_DI = models.FloatField(null=True, blank=True)
@@ -76,4 +76,41 @@ class Tribe(models.Model):
     
     def __str__(self):
         return f"{self.name}-{self.year}-{self.id}"
+    
+
+
+class Tribe_Image(models.Model):
+    tribe = models.ForeignKey(Tribe, on_delete=models.SET_NULL, related_name='tribe_image', null=True, blank=True)
+    logo_image=models.ImageField(upload_to='images/logo_images')
+    main_image=models.ImageField(upload_to='images/main_images')
+    main_desc = models.CharField(max_length=100,null=True, blank=True)
+    village_image=models.ImageField(upload_to='images/village_images')
+    village_desc = models.CharField(max_length=100,null=True, blank=True)
+    location=models.CharField(max_length=50, null=True, blank=True)
+    map_image = models.ImageField(upload_to='images/map_images')
+    date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.tribe.name} images"
+
+
+class User_Hitcounts(models.Model):
+    site_views = models.IntegerField(default=0)
+    last_refresh_time = models.DateTimeField(null=True, blank=True)
+
+    @classmethod
+    def get_site_views(cls):
+        # This method returns the total site views
+        instance, created = cls.objects.get_or_create(pk=1)
+        return instance.site_views
+
+    @classmethod
+    def increment_site_views(cls):
+        # This method increments the total site views
+        instance, created = cls.objects.get_or_create(pk=1)
+        if instance.last_refresh_time is None or (timezone.now() - instance.last_refresh_time).total_seconds() > 600:  # 300 seconds = 10 minutes
+            instance.site_views += 1
+            instance.last_refresh_time = timezone.now()
+            instance.save()
+        return instance.site_views
     
