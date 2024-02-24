@@ -972,6 +972,23 @@
 
 
 
+.tribe-path{
+  opacity: 10% !important;
+  fill: #ccc !important;
+  stroke:#333;
+  stroke-width: 1;
+}
+.active{
+  opacity: 100% !important;
+  fill: var(--yellow-tdi) !important;
+
+}
+
+.maplabels1-tribe{
+  display: none !important;
+}
+
+
 /*Form css */
   /* Container for the entire form */
   form {

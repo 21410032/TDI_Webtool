@@ -55,7 +55,7 @@ def district_view(request,slug1,slug2):
       'get_normalized_ind_scores':get_normalized_ind_scores,
       'tribes' : tribes,
       'get_score':get_score,
-
+      'name' : slug1
        
 
     }

@@ -4,9 +4,9 @@ from district_wise.models import District
 def navbar_data(request):
     tribes = Tribe.objects.all()
     districts = District.objects.all()
-    tribe_wise_tdi = []
-    for tribe in tribes:
-        tribe_wise_tdi.append(tribe.tribal_index)
+    # tribe_wise_tdi = []
+    # for tribe in tribes:
+    #     tribe_wise_tdi.append(tribe.tribal_index)
     districts_name = []
     for district in districts:
         districts_name.append(district.name)
@@ -16,7 +16,7 @@ def navbar_data(request):
     context = {
         'tribes' : tribes,
         'districts' :districts,
-        'tribe_wise_tdi' : tribe_wise_tdi,
+        # 'tribe_wise_tdi' : tribe_wise_tdi,
         'districts_name' : districts_name,
         'district_wise_tdi' : district_wise_tdi,
     }

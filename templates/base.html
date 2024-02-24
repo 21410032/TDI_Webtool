@@ -146,10 +146,11 @@
 
 
 <!-- JAVASCRIPT -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <!-- ****** -->
 
 <!-- CHART JS -->
@@ -410,14 +411,7 @@
     const vertical_bar_graph = new Chart(vertical_graph_element, config_vertical_bar);
 
     //UNSENSORED-GRAPH
-    var myDataArray = []; // Create an array to store the data
-
-    for (var i = 1; i <= 18; i++) {
-        var myDattaElement = document.getElementById(`my-data_uncensored${i}`);
-        var myDatta = myDattaElement.getAttribute("data-my-data");
-        myDataArray.push(myDatta); // Store the data in the array
-    }
-
+    var uncensored_tribe_arr = {{ uncensored_tribe_arr| safe}}; // Create an array to store the data
 
 
     const uncensored_data = {
@@ -425,7 +419,7 @@
         datasets: [
             {
                 label: 'Uncensored',
-                data: myDataArray,
+                data: uncensored_tribe_arr,
                 fill: false,
                 backgroundColor: [
                     '#BDD7EE',
@@ -510,21 +504,14 @@
 
 
     //CENSORED-GRAPH
-    var myDataArray = []; // Create an array to store the data
-
-    for (var i = 1; i <= 18; i++) {
-        var myDattaElement = document.getElementById(`my-data_censored${i}`);
-        var myDatta = myDattaElement.getAttribute("data-my-data");
-        myDataArray.push(myDatta); // Store the data in the array
-    }
-
+    var censored_tribe_arr = {{ censored_tribe_arr| safe }}; // Create an array to store the data
 
     const censored_data = {
         labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
         datasets: [
             {
                 label: 'Censored',
-                data: myDataArray,
+                data: censored_tribe_arr,
                 fill: false,
                 backgroundColor: [
                     '#BDD7EE',
@@ -605,13 +592,6 @@
 
     const censored_graph = new Chart(document.getElementById('censored-graph'), config_censored);
     //********************************
-
-
-
-
-
-
-
 
 
     //Pie chart health
@@ -767,7 +747,7 @@
     var graph2_data = {{ tribal_dimensional_index| safe }};
     const ctx = document.getElementById('graph2');
 
-    var tdi = {{ tribe.tribal_index }};
+    var tdi = {{ tdi| safe  }};
 
     const data = {
         labels: ['Health Development Index', 'Education Development Index', 'Sol Development Index', 'Culture Development Index', 'Governance Development Index', 'Tribal Development Index'],
@@ -1190,7 +1170,6 @@
 
 </script>
 <!-- ****** -->
-
 
 <!-- PDF SCRIPTS -->
 

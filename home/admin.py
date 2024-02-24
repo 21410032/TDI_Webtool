@@ -4,15 +4,12 @@ from import_export.admin import ImportExportModelAdmin
 from import_export import resources, fields
 from import_export.fields import Field
 from import_export.widgets import ForeignKeyWidget
-from .models import Household, Tribe,Tribe_Image
+from .models import  Tribe,Tribe_Image
 from accounts.models import Profile
 from django import forms
-from .resources import HouseholdResource
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-
-
 class TribeAdminForm(forms.ModelForm):
     class Meta:
         model = Tribe
@@ -34,9 +31,6 @@ class TribeImageResource(resources.ModelResource):
         model = Tribe_Image
         import_id_fields = ('id',)  # Assuming 'id' is the primary key
 
-class HouseholdAdmin(ImportExportModelAdmin):
-    resource_class = HouseholdResource
-
 class TribeAdmin(ImportExportModelAdmin):
     form = TribeAdminForm
     resource_class = TribeResource
@@ -45,7 +39,6 @@ class TribeImageAdmin(ImportExportModelAdmin):
     resource_class = TribeImageResource
 
 
-admin.site.register(Household, HouseholdAdmin)
 admin.site.register(Tribe, TribeAdmin)
 admin.site.register(Tribe_Image, TribeImageAdmin)
 
