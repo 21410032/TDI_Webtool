@@ -188,6 +188,7 @@
       </div>
     </div>
   </div>
+  
   <div class="frame-parent33">
     <div class="frame-parent34">
       <div class="frame-parent35">
@@ -205,12 +206,11 @@
 
 
               {% for detail in tribe.village_details %}
-              <h1>{{ detail.district_name }}</h1>
+              <h1>{{ detail.District_name_list }}</h1>
               <p>
-                Village Name: {{ detail.village_name }} </p>
-              <p>Block Name: {{ detail.block_name }}
-              </p>
-              {% endfor %}
+                Village Name: {{ detail.Block_name_list }} </p>
+             
+              {% endfor %} 
               {% comment %} {% for tribal_set in tribe_of_slug.village_details %}
               <p>{{ tribal_set.district }}</p>
               <p>Village Name : Block Name</p>

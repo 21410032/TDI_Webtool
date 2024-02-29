@@ -4,6 +4,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>TDI WebTool</title>
@@ -1250,6 +1251,35 @@
         containerElement.style.height = '';
     }
 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.16/typed.umd.js" integrity="sha512-+2pW8xXU/rNr7VS+H62aqapfRpqFwnSQh9ap6THjsm41AxgA0MhFRtfrABS+Lx2KHJn82UOrnBKhjZOXpom2LQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    var colors = ["red", "blue", "green", "orange", "purple"]; // Add more colors as needed
+
+    var typed = new Typed(".explore-the-tribal-container", {
+        strings: ['Explore The Tribal Development Index Of Jharkhand'],
+        typeSpeed: 50,
+        showCursor: false,
+        loop: true,
+        onStringTyped: function(arrayPos, self) {
+            var currentSpan = $(".explore-the-tribal-container span").eq(arrayPos);
+            currentSpan.css("color", colors[arrayPos % colors.length]);
+        }
+    });
+</script>
+
+
+
+
+
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+AOS.init({
+    offset: 100,
+    duration: 500,
+});
 </script>
 <!-- ****** -->
 

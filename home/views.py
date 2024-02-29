@@ -75,9 +75,9 @@ def tribe_detail_view(request, name, year):
         'censored_tribe_arr' : censored_tribe_arr,
         'name' : 'bokaro'
     }
-
-
-
+    
+    
+    print(tribe.village_details)
 
     return render(request, 'pvtg/asur.html', context=context)
 
@@ -139,9 +139,6 @@ def tribe_form_view(request):
         'alltribes':alltribes_defined,
     }
     return render(request, 'form/tribe_form.html',context)
-
-    
-    
 
     
 def tribe_pdf_view(request, slug):
