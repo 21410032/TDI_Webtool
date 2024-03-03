@@ -411,14 +411,10 @@ def perform_calculations(base_data_df, user, year):
 
 # Remove trailing commas and spaces from concatenated strings
     village_block_list = [village_block.rstrip(', ') for village_block in village_block_list]
+    # village_block_list = [village_block.replace(', ', '\n') for village_block in village_block_list]
 
 # Now village_block_list contains the desired concatenation
-    for i in range(total_tribes):
-        print('Hello')
-        print(i)
-        print(unique_tribes[i])
-        print(District_name_list[i])
-        print(village_block_list[i])
+   
             
     # from .models import Tribe
 

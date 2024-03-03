@@ -52,11 +52,17 @@ def tribe_detail_view(request, name, year):
 
     tribal_dimensional_index = [tribe.H_DI, tribe.E_DI, tribe.S_DI, tribe.C_DI, tribe.G_DI]
     dimension_contribution_to_tdi = [tribe.H_contri_to_TDI, tribe.E_contri_to_TDI, tribe.S_contri_to_TDI, tribe.C_contri_to_TDI, tribe.G_contri_to_TDI]
+    tribal_incidence=tribe.tribal_incidence
+    tribal_intensity=tribe.tribal_intensity
+
     tdi = tribe.TDI
 
     uncensored_tribe_arr = [tribe.UNC_CD_score, tribe.UNC_IM_score, tribe.UNC_MC_score, tribe.UNC_CM_score, tribe.UNC_FS_score, tribe.UNC_LE_score, tribe.UNC_DRO_score, tribe.UNC_IC_score, tribe.UNC_OW_score, tribe.UNC_SANI_score, tribe.UNC_FUEL_score, tribe.UNC_DRWA_score, tribe.UNC_ELECTR_score, tribe.UNC_ASS_score, tribe.UNC_LAN_score, tribe.UNC_ARTS_score, tribe.UNC_EV_score, tribe.UNC_MEET_score]
 
+    
+    
     censored_tribe_arr = [tribe.CEN_CD_score, tribe.CEN_IM_score, tribe.CEN_MC_score, tribe.CEN_CM_score, tribe.CEN_FS_score, tribe.CEN_LE_score, tribe.CEN_DRO_score, tribe.CEN_IC_score, tribe.CEN_OW_score, tribe.CEN_SANI_score, tribe.CEN_FUEL_score, tribe.CEN_DRWA_score, tribe.CEN_ELECTR_score, tribe.CEN_ASS_score, tribe.CEN_LAN_score, tribe.CEN_ARTS_score, tribe.CEN_EV_score, tribe.CEN_MEET_score]
+    detail = tribe.village_details
     
     context = {
         'tribes' : tribes,
@@ -70,16 +76,26 @@ def tribe_detail_view(request, name, year):
         'governance_contributions_to_dimension': governance_contributions_to_dimension,
         'tribal_dimensional_index': tribal_dimensional_index,
         'dimension_contribution_to_tdi': dimension_contribution_to_tdi,
+        'incidence':tribal_incidence,
+        'intensity':tribal_intensity,
         'tdi' : tdi,
         'uncensored_tribe_arr' : uncensored_tribe_arr,
         'censored_tribe_arr' : censored_tribe_arr,
         'name' : 'bokaro'
     }
     
-    
-    print(tribe.village_details)
+    detail = tribe.village_details
+# Assuming each element in detail is a dictionary with 'Block_name_list' key
+    for entry in detail:
+        block_name_list_str = entry.get('Block_name_list')
+        lines = block_name_list_str.split(',')  # Split by line breaks first
+    context['detail_Block_name_list'] = lines
+    if year == '2022':
+        return render(request, 'pvtg/asur.html', context=context)
+    else:
+        return render(request, 'pvtg/asurcopy.html', context=context)
 
-    return render(request, 'pvtg/asur.html', context=context)
+        
 
 import pandas as pd
 from .test import perform_calculations
