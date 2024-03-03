@@ -76,7 +76,7 @@ a {
   align-items: center;
   z-index: 10;
 }
-.explore-the {
+/* .explore-the {
   color: var(--color-black);
 }
 .tribal {
@@ -87,7 +87,7 @@ a {
 }
 .index1 {
   color: var(--blue-green-tdi);
-}
+} */
 
 .d {
   letter-spacing: 0.17em;
@@ -1296,6 +1296,7 @@ a {
   box-sizing: border-box;
   font-size: var(--font-size-xl);
   color: var(--color-white);
+  
 }
 .frame-parent {
   align-self: stretch;
@@ -1706,3 +1707,130 @@ svg{
   font-size: var(--font-size-xs-3);
   color: var(--color-white);
 }
+.downindicator{
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  right: 0px;
+  transform: rotate(45deg);
+}
+.upindicator{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 0px;
+  top: 6480px;
+  /* bottom: 20px; */
+  transform: rotate(45deg);
+}
+
+
+.downindicator span{
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  border: none;
+  border-right:5px solid #000000;
+  border-bottom: 5px solid #000000;
+  border-radius: 5px solid #000000;
+  display: block;
+  width: 50%;
+  height: 50%;
+  animation:animateone 1s linear infinite;
+}
+.upindicator span{
+  position: absolute;
+  box-sizing: border-box;
+  border: none;
+  border-left:5px solid #fff;
+  border-top: 5px solid #fff;
+  border-radius: 5px solid #000000;
+  display: block;
+  width: 50%;
+  height: 50%;
+  animation:animatetwo 1s linear infinite;
+}
+
+.downindicator span:nth-child(1){
+  top:-30px;
+  left: -30px;
+  animation-delay: 0s;
+}
+.downindicator span:nth-child(2){
+  top:-15px;
+  left: -15px;
+  animation-delay: 0.2s;
+
+}
+.downindicator span:nth-child(3){
+  top:0px;
+  left: 0px;
+  animation-delay: 0.4s;
+
+}
+
+.downindicator span:nth-child(4){
+  top:15px;
+  left:15px;
+  animation-delay: 0.6s;
+}
+.downindicator span:nth-child(5){
+  top:30px;
+  left:30px;
+  animation-delay: 0.8s;
+}
+.upindicator span:nth-child(1){
+  top:-30px;
+  left: -30px;
+  animation-delay: 0s;
+}
+.upindicator span:nth-child(2){
+  top:-15px;
+  left: -15px;
+  animation-delay: 0.2s;
+
+}
+.upindicator span:nth-child(3){
+  top:0px;
+  left: 0px;
+  animation-delay: 0.4s;
+
+}
+
+.upindicator span:nth-child(4){
+  top:15px;
+  left:15px;
+  animation-delay: 0.6s;
+}
+.upindicator span:nth-child(5){
+  top:30px;
+  left:30px;
+  animation-delay: 0.8s;
+}
+
+@keyframes animateone{
+  
+  0%{
+    border-color: #000000;
+  }
+  20%{
+    border-color: #000000;
+  }
+  20.1%,100%{
+    border-color: #dad7d7;
+  }
+}
+@keyframes animatetwo{
+  
+  0%{
+    border-color: #fff;
+  }
+  20%{
+    border-color: #fff;
+  }
+  20.1%,100%{
+    border-color: #000000;
+  }
+}
+

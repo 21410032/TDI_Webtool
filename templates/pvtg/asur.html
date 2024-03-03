@@ -187,7 +187,20 @@
         </div>
       </div>
     </div>
+    <div class="indicator" id="indicator">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
+
+
+
+
+
+  
   <div class="frame-parent33">
     <div class="frame-parent34">
       <div class="frame-parent35">
@@ -205,12 +218,16 @@
 
 
               {% for detail in tribe.village_details %}
-              <h1>{{ detail.district_name }}</h1>
+              <h1>{{ detail.District_name_list }}</h1>
               <p>
-                Village Name: {{ detail.village_name }} </p>
-              <p>Block Name: {{ detail.block_name }}
-              </p>
-              {% endfor %}
+                Village Name:Block Name </p>
+                <ul>
+                  {% for item in detail_Block_name_list %}
+                      <li>{{ item }}</li>
+                  {% endfor %}
+              </ul>
+             
+              {% endfor %} 
               {% comment %} {% for tribal_set in tribe_of_slug.village_details %}
               <p>{{ tribal_set.district }}</p>
               <p>Village Name : Block Name</p>
@@ -712,11 +729,34 @@
     </div>
   </div>
 </div>
+
 <div class="download-button-div">
   <button id="download-button" onclick="downloadPageWithCharts('tribe-pdf-page')" class="login-btn" type="button"
     style="position: static">
     Download PDF
   </button>
 </div>
+<script>
+  // Get the down indicator element
+  const downIndicator = document.getElementById("indicator");
 
+  // Add a scroll event listener to the window
+  window.addEventListener("scroll", function () {
+    // Calculate the distance between the bottom of the page and the bottom of the viewport
+    const distanceToBottom =
+      document.body.scrollHeight - window.innerHeight - window.scrollY;
+
+    // Set a threshold value to determine when to hide the indicator (e.g., 100 pixels from the bottom)
+    const threshold = 100;
+
+    // Check if the distance to the bottom is less than the threshold
+    if (distanceToBottom < threshold) {
+      // Hide the down indicator when reaching the end of the page
+      downIndicator.style.display = "none";
+    } else {
+      // Show the down indicator when not at the end of the page
+      downIndicator.style.display = "block";
+    }
+  });
+</script>
 {% endblock %}

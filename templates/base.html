@@ -4,6 +4,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>TDI WebTool</title>
@@ -36,6 +37,8 @@
     <link rel="stylesheet" href="{% static 'newcss/district-wise.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/tribe-wise.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'newcss/asurcopy.css' %}">
+    <link rel="stylesheet" href="{% static 'newcss/asurcopy_global.css' %}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" />
@@ -411,191 +414,203 @@
     const vertical_bar_graph = new Chart(vertical_graph_element, config_vertical_bar);
 
     //UNSENSORED-GRAPH
-    var uncensored_tribe_arr = {{ uncensored_tribe_arr| safe}}; // Create an array to store the data
-
-
-    const uncensored_data = {
-        labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
-        datasets: [
-            {
-                label: 'Uncensored',
-                data: uncensored_tribe_arr,
-                fill: false,
-                backgroundColor: [
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#C5E0B4',
-                    '#C5E0B4',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#D9D9D9',
-                    '#D9D9D9',
-                    '#F8CBAD',
-                    '#F8CBAD',
-                ],
-                // borderColor: 'rgba(75,192,192,1)',
-                borderWidth: 1,
-            },
-        ],
-    };
-
-    const config_uncensored = {
-        type: 'bar',
-        data: uncensored_data,
-        options: {
-            indexAxis: 'y',
-            scales: {
-                xAxes: [
-                    {
-                        ticks: {
-                            stepSize: 1,
-                            beginAtZero: true,
-                            autoSkip: false,
-
-                        },
-
-                    },
-                ],
-                yAxes: [
-                    {
-                        ticks: {
-                            stepSize: 1,
-                            beginAtZero: true,
-                            maxTicksLimit: 16,
-                            autoSkip: false
-                        },
-
-                    },
-                ],
-
-                x: {
-                    grid: {
-                        drawOnChartArea: false,
-                        display: false
-                    }
-                },
-                y: {
-                    grid: {
-                        drawOnChartArea: false,
-                        display: false
-                    }
-                }
-            },
-            plugins: {
-                datalabels: {
-                    anchor: "end",
-                    align: "right"
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    };
-
-    const uncensored_graph = new Chart(document.getElementById('uncensored-graph'), config_uncensored);
+   
     //*******************************************
 
 
-    //CENSORED-GRAPH
-    var censored_tribe_arr = {{ censored_tribe_arr| safe }}; // Create an array to store the data
-
-    const censored_data = {
-        labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
-        datasets: [
-            {
-                label: 'Censored',
-                data: censored_tribe_arr,
-                fill: false,
-                backgroundColor: [
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#BDD7EE',
-                    '#C5E0B4',
-                    '#C5E0B4',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#FFE699',
-                    '#D9D9D9',
-                    '#D9D9D9',
-                    '#F8CBAD',
-                    '#F8CBAD',
-                ],
-                // borderColor: 'rgba(75,192,192,1)',
-                borderWidth: 1,
-            },
-        ],
-    };
+    
 
 
+   //UNSENSORED-GRAPH
+   var uncensored_tribe_arr = {{ uncensored_tribe_arr| safe}}; // Create an array to store the data
 
-    const config_censored = {
-        type: 'bar',
-        data: censored_data,
-        options: {
-            indexAxis: 'y',
-            scales: {
-                xAxes: [
-                    {
-                        ticks: {
-                            stepSize: 1,
-                            beginAtZero: true,
-                            autoSkip: false
-                        },
-                    },
-                ],
-                yAxes: [
-                    {
-                        ticks: {
-                            stepSize: 1,
-                            beginAtZero: true,
-                            maxTicksLimit: 20,
-                            autoSkip: false
-                        },
-                    },
-                ],
 
-                x: {
-                    grid: {
-                        drawOnChartArea: false,
-                        display: false
-                    }
-                },
-                y: {
-                    grid: {
-                        drawOnChartArea: false,
-                        display: false
-                    }
-                }
-            },
-            plugins: {
-                datalabels: {
-                    anchor: "end",
-                    align: "right"
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    };
+   const uncensored_data = {
+       labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
+       datasets: [
+           {
+               label: 'Uncensored',
+               data: uncensored_tribe_arr,
+               fill: false,
+               backgroundColor: [
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#C5E0B4',
+                   '#C5E0B4',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#D9D9D9',
+                   '#D9D9D9',
+                   '#F8CBAD',
+                   '#F8CBAD',
+               ],
+               // borderColor: 'rgba(75,192,192,1)',
+               borderWidth: 1,
+           },
+       ],
+   };
 
-    const censored_graph = new Chart(document.getElementById('censored-graph'), config_censored);
+   const config_uncensored = {
+       type: 'bar',
+       data: uncensored_data,
+       options: {
+           indexAxis: 'y',
+           scales: {
+               xAxes: [
+                   {
+                       ticks: {
+                           stepSize: 1,
+                           beginAtZero: true,
+                           autoSkip: false,
+
+                       },
+
+                   },
+               ],
+               yAxes: [
+                   {
+                       ticks: {
+                           stepSize: 1,
+                           beginAtZero: true,
+                           maxTicksLimit: 16,
+                           autoSkip: false
+                       },
+
+                   },
+               ],
+
+               x: {
+                   grid: {
+                       drawOnChartArea: false,
+                       display: false
+                   }
+               },
+               y: {
+                   grid: {
+                       drawOnChartArea: false,
+                       display: false
+                   }
+               }
+           },
+           plugins: {
+               datalabels: {
+                   anchor: "end",
+                   align: "right"
+               }
+           }
+       },
+       plugins: [ChartDataLabels]
+   };
+
+   const uncensored_graph = new Chart(document.getElementById('uncensored-graph'), config_uncensored);
+   //*******************************************
+
+
+   //CENSORED-GRAPH
+   var censored_tribe_arr = {{ censored_tribe_arr| safe }}; // Create an array to store the data
+
+   const censored_data = {
+       labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
+       datasets: [
+           {
+               label: 'Censored',
+               data: censored_tribe_arr,
+               fill: false,
+               backgroundColor: [
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#BDD7EE',
+                   '#C5E0B4',
+                   '#C5E0B4',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#FFE699',
+                   '#D9D9D9',
+                   '#D9D9D9',
+                   '#F8CBAD',
+                   '#F8CBAD',
+               ],
+               // borderColor: 'rgba(75,192,192,1)',
+               borderWidth: 1,
+           },
+       ],
+   };
+
+
+
+   const config_censored = {
+       type: 'bar',
+       data: censored_data,
+       options: {
+           indexAxis: 'y',
+           scales: {
+               xAxes: [
+                   {
+                       ticks: {
+                           stepSize: 1,
+                           beginAtZero: true,
+                           autoSkip: false
+                       },
+                   },
+               ],
+               yAxes: [
+                   {
+                       ticks: {
+                           stepSize: 1,
+                           beginAtZero: true,
+                           maxTicksLimit: 20,
+                           autoSkip: false
+                       },
+                   },
+               ],
+
+               x: {
+                   grid: {
+                       drawOnChartArea: false,
+                       display: false
+                   }
+               },
+               y: {
+                   grid: {
+                       drawOnChartArea: false,
+                       display: false
+                   }
+               }
+           },
+           plugins: {
+               datalabels: {
+                   anchor: "end",
+                   align: "right"
+               }
+           }
+       },
+       plugins: [ChartDataLabels]
+   };
+
+   const censored_graph = new Chart(document.getElementById('censored-graph'), config_censored);
+   //********************************
+
+
+
     //********************************
 
 
     //Pie chart health
-    var myDattaElement = document.getElementById('my-data-health');
+    {% comment %} var myDattaElement = document.getElementById('my-data-health'); {% endcomment %}
     var health_data = {{ health_contributions_to_dimension| safe}};
     const data2 = {
 
@@ -621,7 +636,7 @@
 
 
     //Pie chart education *********
-    var myDattaElement = document.getElementById('my-data-education');
+    {% comment %} var myDattaElement = document.getElementById('my-data-education'); {% endcomment %}
     var education_data = {{ education_contributions_to_dimension| safe}};
 
     const data3 = {
@@ -651,7 +666,7 @@
 
 
     //Pie chart sol ***********
-    var myDattaElement = document.getElementById('my-data-sol');
+    {% comment %} var myDattaElement = document.getElementById('my-data-sol'); {% endcomment %}
     var sol_data = {{ sol_contributions_to_dimension| safe}};
     const data4 = {
         // labels: [
@@ -684,7 +699,7 @@
     //********************
 
     //Pie chart culture ********
-    var myDattaElement = document.getElementById('my-data-culture');
+    {% comment %} var myDattaElement = document.getElementById('my-data-culture'); {% endcomment %}
     var culture_data = {{ culture_contributions_to_dimension| safe}};
     const data5 = {
         // labels: [
@@ -713,7 +728,7 @@
 
 
     //Pie chart governance ******
-    var myDattaElement = document.getElementById('my-data-governance');
+    {% comment %} var myDattaElement = document.getElementById('my-data-governance'); {% endcomment %}
     var governance_data = {{ governance_contributions_to_dimension| safe}};
     const data6 = {
         // labels: [
@@ -1250,6 +1265,35 @@
         containerElement.style.height = '';
     }
 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.16/typed.umd.js" integrity="sha512-+2pW8xXU/rNr7VS+H62aqapfRpqFwnSQh9ap6THjsm41AxgA0MhFRtfrABS+Lx2KHJn82UOrnBKhjZOXpom2LQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    var colors = ["red", "blue", "green", "orange", "purple"]; // Add more colors as needed
+
+    var typed = new Typed(".explore-the-tribal-container", {
+        strings: ['Explore The Tribal Development Index Of Jharkhand'],
+        typeSpeed: 50,
+        showCursor: false,
+        loop: true,
+        onStringTyped: function(arrayPos, self) {
+            var currentSpan = $(".explore-the-tribal-container span").eq(arrayPos);
+            currentSpan.css("color", colors[arrayPos % colors.length]);
+        }
+    });
+</script>
+
+
+
+
+
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+AOS.init({
+    offset: 100,
+    duration: 500,
+});
 </script>
 <!-- ****** -->
 
