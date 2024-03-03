@@ -44,6 +44,11 @@ body {
   --font-size-2xs: 11px;
   --font-size-lg: 18px;
   --font-size-13xl: 32px;
+  --font-size-3xs-9: 9.9px;
+  --font-size-4xl: 23px;
+  --font-size-base-8: 15.8px;
+  --font-size-mid-6: 17.6px;
+  --font-size-lgi-4: 19.4px;
 
   /* Colors */
   --color-white: #fff;
@@ -108,6 +113,14 @@ body {
   --padding-3xs: 10px;
   --padding-mini: 15px;
   --padding-4xs: 9px;
+  --padding-3xs: 10px;
+  --padding-mini: 15px;
+  --padding-4xs-8: 8.8px;
+  --padding-mid-6: 17.6px;
+  --padding-8xs-4: 4.4px;
+  --padding-2xl: 21px;
+
+
 
   /* Border radiuses */
   --br-smi: 13px;

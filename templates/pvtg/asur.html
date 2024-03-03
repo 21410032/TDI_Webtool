@@ -94,7 +94,7 @@
               </div>
 
               <!-- ------ --><!-- PIE CHART -->
-              <div class="pie-icon-1" style="left: 115.04px; top: -8.3px">
+              <div class="pie-icon-1" style="left: 115.04px; top: -4.3px">
                 <canvas id="health-pie"></canvas>
               </div>
             </div>
@@ -189,42 +189,38 @@
     </div>
   </div>
   <div class="frame-parent33">
-    <div class="frame-parent34">
-      <div class="frame-parent35">
-        <div class="sample-location-of-sauria-para-wrapper">
-          <div class="sample-location-of">
-            Sample location of <span class="inline-texts">{{tribe_of_slug.name}}</span> PVTG
+    <div class="frame-parent34-pg2-1">
+      <div class="frame-parent9-pg2-1">
+        <div class="sample-location-of-sauria-para-container">
+          <div class="sample-location-of-container1">
+            <span>Sample Location of </span>
+            <span class="sauria-parahia1">{{tribe_of_slug.name}}</span>
+            <span> </span>
           </div>
         </div>
-        <div class="frame-parent36">
-          <div class="sahebganj-wrapper">
-            <div class="sample-location-of">{{tribe_of_slug.tribe_image.first.location}}</div>
-          </div>
-          <div class="village-name-block-name-ke-wrapper">
-            <div class="village-name-container">
-
-
-              {% for detail in tribe.village_details %}
-              <h1>{{ detail.district_name }}</h1>
-              <p>
-                Village Name: {{ detail.village_name }} </p>
-              <p>Block Name: {{ detail.block_name }}
-              </p>
-              {% endfor %}
-              {% comment %} {% for tribal_set in tribe_of_slug.village_details %}
-              <p>{{ tribal_set.district }}</p>
-              <p>Village Name : Block Name</p>
-              <ul>
-                <li>{{ tribal_set.village }} : {{ tribal_set.block }}</li>
-                {%if tribal_set.village2 and tribal_set.block2 %}
-                <li>{{ tribal_set.village2 }} : {{ tribal_set.block2 }}</li>
-                {%endif%}
-              </ul>
-              <hr>
-              {% endfor %} {% endcomment %}
-              </p>
+        <div class="frame-parent10-pg2-1">
+          <div class="frame-parent11-pg2-1">
+            <div class="district-container-pg2-1">
+              District :
+            </div>
+            {% for detail in tribe.village_details %}
+            <div class="sahebganj-container">
+              <div class="sahebganj1">{{ detail.District_name_list }}</div>
             </div>
           </div>
+          <div class="village-name-block-name-group">
+            <div class="village-name1">[Village name : Block name ]</div>
+            <div class="frame-parent12-pg2-1">
+              <div class="aetebarwadi-chandwa-frame">
+                <div class="aetebarwadi-chandwa-container1">
+                  <ul class="aetebarwadi-chandwa1">
+                    <li>{{ detail.Block_name_list }}</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>{% endfor %}
         </div>
       </div>
       <div class="frame3">

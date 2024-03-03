@@ -598,9 +598,9 @@
     var myDattaElement = document.getElementById('my-data-health');
     var health_data = {{ health_contributions_to_dimension| safe}};
     const data2 = {
-
+        labels: ['Chronic Diseases', 'Immunisation', 'Maternal Care', 'Child Mortality', 'Food Security'],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: health_data,
             backgroundColor: [
                 '#315493',
@@ -616,6 +616,13 @@
     const config2 = {
         type: 'doughnut',
         data: data2,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
     };
     const health = new Chart(document.getElementById('health-pie'), config2);
 
@@ -625,13 +632,12 @@
     var education_data = {{ education_contributions_to_dimension| safe}};
 
     const data3 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Years of Schooling',
+            'Drop Out',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: education_data,
             backgroundColor: [
                 '#538233',
@@ -644,6 +650,22 @@
     const config3 = {
         type: 'doughnut',
         data: data3,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    titleFont: {
+                        size: 11
+                    },
+                    titleMarginBottom: 6,
+                    bodyFont: {
+                        size: 10
+                    }
+                }
+            }
+        }
     };
     const education = new Chart(document.getElementById('education-pie'), config3);
 
@@ -654,13 +676,17 @@
     var myDattaElement = document.getElementById('my-data-sol');
     var sol_data = {{ sol_contributions_to_dimension| safe}};
     const data4 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Institutional Credit',
+            'Ownership',
+            'Sanitation',
+            'Fuel',
+            'Drinkng Water',
+            'Electricity',
+            'Assets',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: sol_data,
             backgroundColor: [
                 '#C09000',
@@ -678,6 +704,13 @@
     const config4 = {
         type: 'doughnut',
         data: data4,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
     };
     const sol = new Chart(document.getElementById('sol-pie'), config4);
 
@@ -687,13 +720,12 @@
     var myDattaElement = document.getElementById('my-data-culture');
     var culture_data = {{ culture_contributions_to_dimension| safe}};
     const data5 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Language',
+            'Arts',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: culture_data,
             backgroundColor: [
                 '#5F5F5F',
@@ -707,6 +739,13 @@
     const config5 = {
         type: 'doughnut',
         data: data5,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
     };
     const culture = new Chart(document.getElementById('culture-pie'), config5);
     //**************
@@ -716,13 +755,12 @@
     var myDattaElement = document.getElementById('my-data-governance');
     var governance_data = {{ governance_contributions_to_dimension| safe}};
     const data6 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Execution Of Voting Rights',
+            'Participation in Government meetings',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: governance_data,
             backgroundColor: [
                 '#F5C7B8',
@@ -735,6 +773,13 @@
     const config6 = {
         type: 'doughnut',
         data: data6,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
 
         // plugins: [ChartDataLabels]
     };
@@ -747,7 +792,7 @@
     var graph2_data = {{ tribal_dimensional_index| safe }};
     const ctx = document.getElementById('graph2');
 
-    var tdi = {{ tdi| safe  }};
+    var tdi = {{ tdi }};
 
     const data = {
         labels: ['Health Development Index', 'Education Development Index', 'Sol Development Index', 'Culture Development Index', 'Governance Development Index', 'Tribal Development Index'],

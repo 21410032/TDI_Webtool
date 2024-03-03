@@ -651,7 +651,7 @@ a {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-21xl);
+  gap: 70px;
   color: var(--green-tdi);
 }
 .team1 {
@@ -1372,9 +1372,7 @@ a {
   cursor: pointer;
   
 }
-svg{
-  border: 2px white solid;
-}
+
 
 .jhnew1-1-1-wrapper path {
   stroke: #01171b;
