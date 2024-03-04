@@ -1,37 +1,26 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>TDI WebTool</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
-
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Noto Sans Hebrew:wght@100;400;500;700;800&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains Mono:wght@400;800&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kiwi Maru:wght@500&display=swap" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-
-
+    <!-- Add your other CSS links here -->
     <link rel="stylesheet" href="{% static 'newcss/global1.css' %}">
+    <!-- Add your other CSS links here -->
+
     <link rel="stylesheet" href="{% static 'newcss/gallery.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/index1.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/district-wise.css' %}">
@@ -42,20 +31,18 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" />
-
-
 </head>
 
 <body>
     {% if messages %} {% for message in messages %}
 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %} {% endif %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %} {% endif %}
 
 
     <div class="main-logo-parent">
@@ -146,7 +133,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <!-- ****** -->
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- JAVASCRIPT -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -979,7 +966,7 @@
         }
     },
         plugins: [ChartDataLabels]
-});
+ });
 
 
 
@@ -1194,93 +1181,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 <!-- Your existing scripts -->
-<script type="text/javascript">
-    function myfun(pa) {
-        var b = document.body.innerHTML;
-        var d = document.getElementById(pa).innerHTML;
-        document.body.innerHTML = d;
-        window.print();
-    }
-    window.jsPDF = window.jspdf.jsPDF;
 
-    function downloadPageWithCharts(containerId) {
-        // Capture the entire container element
-        var containerElement = document.getElementById(containerId);
 
-        // Get the dimensions of the container
-        var containerWidth = containerElement.offsetWidth;
-        var containerHeight = containerElement.offsetHeight;
 
-        // Set the dimensions of the canvas to match the container
-        containerElement.style.width = containerWidth + 'px';
-        containerElement.style.height = containerHeight + 'px';
 
-        // Get the download button element
-        var downloadButton = document.getElementById('download-button');
-
-        // Change button content to indicate downloading
-        downloadButton.innerHTML = 'Downloading...';
-
-        // Use html2canvas to capture the container element
-        html2canvas(containerElement, {
-            scale: 2,
-            onclone: function (document) {
-                // Set the willReadFrequently attribute
-                var ctx = document.querySelector('canvas').getContext('2d');
-                ctx.imageSmoothingEnabled = true;
-                ctx.imageSmoothingQuality = 'high';
-                ctx.willReadFrequently = true;
-            }
-        }).then(function (canvas) {
-            // Create a new jsPDF instance with dimensions matching the canvas
-            var pdf = new jsPDF({ unit: 'px', format: [containerWidth, containerHeight] });
-
-            // Set margins and gaps
-            var marginTop = 100;
-            var marginBottom = 100;
-            var marginLeft = 50;
-            var marginRight = 50;
-
-            // Calculate offsets to center the canvas within the PDF
-            var yOffset = marginTop;
-            var xOffset = (pdf.internal.pageSize.width - (containerWidth * 0.9)) / 2;
-
-            // Scale the canvas before adding it to the PDF
-            var scaledWidth = containerWidth * 0.9;
-            var scaledHeight = containerHeight * 0.9;
-
-            pdf.scale(0.9);
-            pdf.addImage(canvas, 'PNG', xOffset, yOffset, scaledWidth, scaledHeight);
-            pdf.scale(1); // Reset the scale
-
-            // Save the PDF with a specific name
-            pdf.save('TDI_Report.pdf');
-
-            // Change button content back to normal
-            downloadButton.innerHTML = 'Download PDF';
-        });
-
-        // Restore the original dimensions of the container
-        containerElement.style.width = '';
-        containerElement.style.height = '';
-    }
-
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.16/typed.umd.js" integrity="sha512-+2pW8xXU/rNr7VS+H62aqapfRpqFwnSQh9ap6THjsm41AxgA0MhFRtfrABS+Lx2KHJn82UOrnBKhjZOXpom2LQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    var colors = ["red", "blue", "green", "orange", "purple"]; // Add more colors as needed
 
-    var typed = new Typed(".explore-the-tribal-container", {
-        strings: ['Explore The Tribal Development Index Of Jharkhand'],
-        typeSpeed: 50,
-        showCursor: false,
-        loop: true,
-        onStringTyped: function(arrayPos, self) {
-            var currentSpan = $(".explore-the-tribal-container span").eq(arrayPos);
-            currentSpan.css("color", colors[arrayPos % colors.length]);
-        }
-    });
-</script>
+
 
 
 
