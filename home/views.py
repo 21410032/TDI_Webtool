@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.http import Http404
 from .models import Tribe,Tribe_Image
@@ -15,30 +15,17 @@ import numpy as np
 
 def tribe_detail_view(request, name, year):
     
-    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    tribes = Tribe.objects.filter(user = user, year='2022')
-    districts=District.objects.filter(user = user, year='2022')
-   
-    tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = name)
-    # tribe = Tribe.objects.get(user=user, year = '2022', name = name)
-   
-    user_phone_number = request.GET.get('user')
+    admin_user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    tribes = Tribe.objects.filter(user = admin_user, year='2022')
+    districts=District.objects.filter(user = admin_user, year='2022')
 
-    if user_phone_number:
-        user = User.objects.get(phone_number=user_phone_number)
+    inputted_data = request.GET.get('inputted_data', False) == 'True'
 
-    else:    
-        user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-
-    
-
-    if name and year is not None:
-        try:
-            
-            tribe = Tribe.objects.get(user=user, year=year, name = name)
-            
-        except Exception as e:
-            return e 
+    if inputted_data:
+    # Use get_object_or_404 to handle the case when the tribe is not found
+        tribe = get_object_or_404(Tribe, user=request.user, year=year, name=name)
+    else:
+        tribe = get_object_or_404(Tribe, user=admin_user, year=year, name=name)
 
     # tribe_of_slug = Tribe.objects.get(slug = slug1)
     # total_tribals = tribe.get_total_tribals
@@ -67,7 +54,6 @@ def tribe_detail_view(request, name, year):
     context = {
         'tribes' : tribes,
         'districts' :districts,
-        'tribe_of_slug':tribe_of_slug,
         'tribe': tribe,
         'health_contributions_to_dimension': health_contributions_to_dimension,
         'education_contributions_to_dimension': education_contributions_to_dimension,
@@ -84,16 +70,22 @@ def tribe_detail_view(request, name, year):
         'name' : 'bokaro'
     }
     
-    detail = tribe.village_details
-# Assuming each element in detail is a dictionary with 'Block_name_list' key
     for entry in detail:
         block_name_list_str = entry.get('Block_name_list')
         lines = block_name_list_str.split(',')  # Split by line breaks first
+
+
     context['detail_Block_name_list'] = lines
-    if year == '2022':
-        return render(request, 'pvtg/asur.html', context=context)
+    context['detail'] = detail
+
+    if inputted_data:
+        template_name = 'pvtg/asurcopy.html' 
+        
     else:
-        return render(request, 'pvtg/asurcopy.html', context=context)
+        template_name = 'pvtg/asur.html' 
+
+    # Use render function with the determined template name
+    return render(request, template_name, context=context)
 
         
 
@@ -125,8 +117,8 @@ def tribe_form_view(request):
             base_data_df = pd.read_excel(uploaded_file)
 
             perform_calculations(base_data_df, user_from_form, year)
-            
-            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
+            inputted_data = True
+            redirect_url = f'/tribe/asur/{request.POST["year"]}/?inputted_data={inputted_data}'
             return redirect(redirect_url)
         else:
             # tribe_slug = request.POST.get('tribe_slug')

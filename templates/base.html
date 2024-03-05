@@ -7,15 +7,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>TDI WebTool</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+   
 
     <!-- Add your other CSS links here -->
     <link rel="stylesheet" href="{% static 'newcss/global1.css' %}">
@@ -31,18 +37,32 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" />
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     {% if messages %} {% for message in messages %}
 
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  {% endfor %} {% endif %}
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="position: absolute;
+        top: 75px;
+        right: 0;">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %} {% endif %}
+
 
 
     <div class="main-logo-parent">
@@ -54,7 +74,7 @@
             <div class="home"><a href="{% url 'home' %}">HOME</a></div>
             <div class="home" id="tribeDropdown">
 
-                <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     TRIBE
                 </div>
 
@@ -71,7 +91,7 @@
             <div class="home"><a href="#">RESEARCH</a></div>
 
             <div class="home" id="districtDropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                     DISTRICT
                 </a>
 
@@ -96,7 +116,8 @@
                     <a href="{% url 'login'%}">LOGIN</a>
                 </div>
             </div>
-            <div class="login-btn">
+            <div class="login-btn"
+                style="color: var(--yellow-tdi); background: none; border: solid 3px var(--yellow-tdi);">
                 <div class="login">
                     <a href="{% url 'register'%}">REGISTER</a>
                 </div>
@@ -121,22 +142,21 @@
             {% endif %}
         </div>
     </div>
-    {% block content %}
-    {% endblock %}
-
+    <div style="margin-top: 120px;">
+        {% block content %}
+        {% endblock %}
+    </div>
 
 
     </div>
 </body>
 
-<!-- BOOTSTRAP -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <!-- ****** -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- JAVASCRIPT -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
@@ -156,98 +176,6 @@
 </script>
 
 
-<!-- HOME TRIBE GRAPH -->
-<!-- <script>
-    // TRIBE STACKED GRAPH
-    const tribe_stacked_graph = document.getElementById('tribe_stacked_graph');
-
-    var tribe_wise_tdi = {{ tribe_wise_tdi }}
-    new Chart(tribe_stacked_graph, {
-        type: 'bar',
-        data: {
-            labels: ['Asur', 'Birhor', 'Birjia', 'Korwa', 'Mal Paharia', 'Parhiya', 'Savar', 'Sauria Parhaiya'],
-            datasets: [{
-                label: 'TDI',
-                data: tribe_wise_tdi,
-                borderWidth: 1,
-                backgroundColor: [
-                    '#4472C4',
-                    '#ED7D31',
-                    '#A5A5A5',
-                    '#FFC000',
-                    '#5B9BD5',
-                    '#70AD47', // Color for the additional value
-                ],
-            }
-            ]
-        },
-
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script> -->
-<!-- ****** -->
-
-<!-- HOME DISTRICT GRAPH -->
-<!-- <script>
-    // DISTRICT HORIZONTAL GRAPH
-
-    const district_horizontal_graph = document.getElementById('district_horizontal_graph');
-    var district_wise_tdi = {{ district_wise_tdi }}
-    new Chart(district_horizontal_graph, {
-        type: 'bar',
-        data: {
-            labels: ['Bokaro', 'Chatra', 'Deoghar', 'Dhanbad', 'Dumka', 'Garhwa', 'Giridih', 'Godda', 'Gumla', 'Hazaribagh', 'Jamtara', 'Khunti', 'Kodarma', 'Latehar', 'Lohardaga', 'Pakur', 'Palamu', 'Pashchimi (West) Singhbhum', 'Purbi (East) Singhbhum', 'Ramgarh', 'Ranchi', 'Sahibganj', 'Saraikela-Kharsawan', 'Simdega'],
-            datasets: [{
-                label: 'TDI',
-                data: district_wise_tdi,
-                borderWidth: 1,
-                backgroundColor: [
-                    '#C5E0B4',
-                    '#D9D9D9',
-                    '#B3B3B3',
-                    '#FFE0B5',
-                    '#FFE699',
-                    '#F1A78A',
-                    '#BDD7EE',
-                    '#F8CBAD',
-                    '#A1C490',
-                    '#F5C7B8',
-                    '#FFC000',
-                    '#FFD9A0',
-                    '#FFD184',
-                    '#538233',
-                    '#BDD7EE',
-                    '#FFE699',
-                    '#FFE699',
-                    '#C5E0B4',
-                    '#C5E0B4',
-                    '#C09000',
-                    '#BDD7EE',
-                    '#FFD184',
-                    '#F8CBAD',
-                    '#BDD7EE',
-                ],
-
-            }]
-        },
-        options: {
-            // indexAxis: 'y',
-            aspectRatio: 2.1,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script> -->
-<!-- ****** -->
 
 <!-- HOME MAP SCRIPT -->
 <script>
@@ -315,33 +243,34 @@
     var data_goverance = {{ dimension_contribution_to_tdi.4}};
 
 
+
     const vertical_bar_data = {
         labels: ['Dimensions'],
         datasets: [
             {
                 label: 'Governance', // Removed square brackets
                 data: [data_goverance], // Replace with your actual data for 'Governance'
-                backgroundColor: '#C55A11', // Color for 'Governance'
+                backgroundColor: '#843c0c', // Color for 'Governance'
             },
             {
                 label: 'Culture', // Removed square brackets
                 data: [data_culture], // Replace with your actual data for 'Culture'
-                backgroundColor: '#BFBFBF', // Color for 'Culture'
+                backgroundColor: '#a6a6a6', // Color for 'Culture'
             },
             {
                 label: 'Sol', // Removed square brackets
                 data: [data_sol], // Replace with your actual data for 'Sol'
-                backgroundColor: '#FFD966', // Color for 'Sol'
+                backgroundColor: '#bf9000', // Color for 'Sol'
             },
             {
                 label: 'Education', // Removed square brackets
                 data: [data_education], // Replace with your actual data for 'Education'
-                backgroundColor: '#A9D18E', // Color for 'Education'
+                backgroundColor: '#548235', // Color for 'Education'
             },
             {
                 label: 'Health', // Removed square brackets
                 data: [data_health], // Replace with your actual data for 'Health'
-                backgroundColor: '#5B9BD5', // Color for 'Health'
+                backgroundColor: '#2e75b6', // Color for 'Health'
             },
         ],
     };
@@ -401,195 +330,205 @@
     const vertical_bar_graph = new Chart(vertical_graph_element, config_vertical_bar);
 
     //UNSENSORED-GRAPH
-   
+
     //*******************************************
 
 
-    
-
-
-   //UNSENSORED-GRAPH
-   var uncensored_tribe_arr = {{ uncensored_tribe_arr| safe}}; // Create an array to store the data
-
-
-   const uncensored_data = {
-       labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
-       datasets: [
-           {
-               label: 'Uncensored',
-               data: uncensored_tribe_arr,
-               fill: false,
-               backgroundColor: [
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#C5E0B4',
-                   '#C5E0B4',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#D9D9D9',
-                   '#D9D9D9',
-                   '#F8CBAD',
-                   '#F8CBAD',
-               ],
-               // borderColor: 'rgba(75,192,192,1)',
-               borderWidth: 1,
-           },
-       ],
-   };
-
-   const config_uncensored = {
-       type: 'bar',
-       data: uncensored_data,
-       options: {
-           indexAxis: 'y',
-           scales: {
-               xAxes: [
-                   {
-                       ticks: {
-                           stepSize: 1,
-                           beginAtZero: true,
-                           autoSkip: false,
-
-                       },
-
-                   },
-               ],
-               yAxes: [
-                   {
-                       ticks: {
-                           stepSize: 1,
-                           beginAtZero: true,
-                           maxTicksLimit: 16,
-                           autoSkip: false
-                       },
-
-                   },
-               ],
-
-               x: {
-                   grid: {
-                       drawOnChartArea: false,
-                       display: false
-                   }
-               },
-               y: {
-                   grid: {
-                       drawOnChartArea: false,
-                       display: false
-                   }
-               }
-           },
-           plugins: {
-               datalabels: {
-                   anchor: "end",
-                   align: "right"
-               }
-           }
-       },
-       plugins: [ChartDataLabels]
-   };
-
-   const uncensored_graph = new Chart(document.getElementById('uncensored-graph'), config_uncensored);
-   //*******************************************
-
-
-   //CENSORED-GRAPH
-   var censored_tribe_arr = {{ censored_tribe_arr| safe }}; // Create an array to store the data
-
-   const censored_data = {
-       labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
-       datasets: [
-           {
-               label: 'Censored',
-               data: censored_tribe_arr,
-               fill: false,
-               backgroundColor: [
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#BDD7EE',
-                   '#C5E0B4',
-                   '#C5E0B4',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#FFE699',
-                   '#D9D9D9',
-                   '#D9D9D9',
-                   '#F8CBAD',
-                   '#F8CBAD',
-               ],
-               // borderColor: 'rgba(75,192,192,1)',
-               borderWidth: 1,
-           },
-       ],
-   };
 
 
 
-   const config_censored = {
-       type: 'bar',
-       data: censored_data,
-       options: {
-           indexAxis: 'y',
-           scales: {
-               xAxes: [
-                   {
-                       ticks: {
-                           stepSize: 1,
-                           beginAtZero: true,
-                           autoSkip: false
-                       },
-                   },
-               ],
-               yAxes: [
-                   {
-                       ticks: {
-                           stepSize: 1,
-                           beginAtZero: true,
-                           maxTicksLimit: 20,
-                           autoSkip: false
-                       },
-                   },
-               ],
+    //UNSENSORED-GRAPH
+    var uncensored_tribe_arr = {{ uncensored_tribe_arr| safe}}; // Create an array to store the data
 
-               x: {
-                   grid: {
-                       drawOnChartArea: false,
-                       display: false
-                   }
-               },
-               y: {
-                   grid: {
-                       drawOnChartArea: false,
-                       display: false
-                   }
-               }
-           },
-           plugins: {
-               datalabels: {
-                   anchor: "end",
-                   align: "right"
-               }
-           }
-       },
-       plugins: [ChartDataLabels]
-   };
 
-   const censored_graph = new Chart(document.getElementById('censored-graph'), config_censored);
-   //********************************
+    const uncensored_data = {
+        labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
+        datasets: [
+            {
+                label: 'Uncensored',
+                data: uncensored_tribe_arr,
+                fill: false,
+                backgroundColor: [
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#C5E0B4',
+                    '#C5E0B4',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#D9D9D9',
+                    '#D9D9D9',
+                    '#F8CBAD',
+                    '#F8CBAD',
+                ],
+                // borderColor: 'rgba(75,192,192,1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const config_uncensored = {
+        type: 'bar',
+        data: uncensored_data,
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [
+                    {
+                        ticks: {
+                            stepSize: 1,
+                            beginAtZero: true,
+                            autoSkip: false,
+
+                        },
+
+                    },
+                ],
+                yAxes: [
+                    {
+                        ticks: {
+                            stepSize: 1,
+                            beginAtZero: true,
+                            maxTicksLimit: 16,
+                            autoSkip: false
+                        },
+
+                    },
+                ],
+
+                x: {
+                    grid: {
+                        drawOnChartArea: false,
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        drawOnChartArea: false,
+                        display: false
+                    }
+                }
+            },
+
+            plugins: {
+                datalabels: {
+                    anchor: "end",
+                    align: "right"
+                },
+                legend: {
+                    display: false
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    };
+
+    const uncensored_graph = new Chart(document.getElementById('uncensored-graph'), config_uncensored);
+    //*******************************************
+
+
+    //CENSORED-GRAPH
+    var censored_tribe_arr = {{ censored_tribe_arr| safe }}; // Create an array to store the data
+
+    const censored_data = {
+        labels: ['Chronic Disease', 'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security', 'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership', 'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity', 'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings'],
+        datasets: [
+            {
+                label: 'Censored',
+                data: censored_tribe_arr,
+                fill: false,
+                backgroundColor: [
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#BDD7EE',
+                    '#C5E0B4',
+                    '#C5E0B4',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#FFE699',
+                    '#D9D9D9',
+                    '#D9D9D9',
+                    '#F8CBAD',
+                    '#F8CBAD',
+                ],
+                // borderColor: 'rgba(75,192,192,1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+
+
+    const config_censored = {
+        type: 'bar',
+        data: censored_data,
+
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [
+                    {
+                        ticks: {
+                            stepSize: 1,
+                            beginAtZero: true,
+                            autoSkip: false
+                        },
+                    },
+                ],
+                yAxes: [
+                    {
+                        ticks: {
+                            stepSize: 1,
+                            beginAtZero: true,
+                            maxTicksLimit: 20,
+                            autoSkip: false
+                        },
+                    },
+                ],
+
+                x: {
+                    grid: {
+                        drawOnChartArea: false,
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        drawOnChartArea: false,
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                datalabels: {
+                    anchor: "end",
+                    align: "right"
+                },
+                legend: {
+                    display: false
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    };
+
+    const censored_graph = new Chart(document.getElementById('censored-graph'), config_censored);
+    //********************************
 
 
 
@@ -597,19 +536,19 @@
 
 
     //Pie chart health
-    {% comment %} var myDattaElement = document.getElementById('my-data-health'); {% endcomment %}
+
     var health_data = {{ health_contributions_to_dimension| safe}};
     const data2 = {
-
+        labels: ['Chronic Diseases', 'Immunisation', 'Maternal Care', 'Child Mortality', 'Food Security'],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: health_data,
             backgroundColor: [
                 '#315493',
-                '#3B64AD',
-                '#4472C4',
-                '#8FA2D4',
-                '#8FA2D4',
+                '#3b64ad',
+                '#4472c4',
+                '#8fa2d4',
+                '#bac4e2',
             ],
             hoverOffset: 4
         }]
@@ -618,26 +557,41 @@
     const config2 = {
         type: 'doughnut',
         data: data2,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    titleFont: {
+                        size: 11
+                    },
+                    titleMarginBottom: 6,
+                    bodyFont: {
+                        size: 10
+                    }
+                }
+            }
+        }
     };
     const health = new Chart(document.getElementById('health-pie'), config2);
 
 
     //Pie chart education *********
-    {% comment %} var myDattaElement = document.getElementById('my-data-education'); {% endcomment %}
+
     var education_data = {{ education_contributions_to_dimension| safe}};
 
     const data3 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Years of Schooling',
+            'Drop Out',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: education_data,
             backgroundColor: [
                 '#538233',
-                '#A1C490',
+                '#a1c490',
             ],
             hoverOffset: 4,
         }]
@@ -646,6 +600,22 @@
     const config3 = {
         type: 'doughnut',
         data: data3,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    titleFont: {
+                        size: 11
+                    },
+                    titleMarginBottom: 6,
+                    bodyFont: {
+                        size: 10
+                    }
+                }
+            }
+        }
     };
     const education = new Chart(document.getElementById('education-pie'), config3);
 
@@ -653,24 +623,28 @@
 
 
     //Pie chart sol ***********
-    {% comment %} var myDattaElement = document.getElementById('my-data-sol'); {% endcomment %}
+
     var sol_data = {{ sol_contributions_to_dimension| safe}};
     const data4 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Institutional Credit',
+            'Ownership',
+            'Sanitation',
+            'Fuel',
+            'Drinkng Water',
+            'Electricity',
+            'Assets',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: sol_data,
             backgroundColor: [
-                '#C09000',
-                '#E2AA00',
-                '#FFC000',
-                '#FFD184',
-                '#FFE0B5',
-                '#FFD9A0',
+                '#c09000',
+                '#e2aa00',
+                '#ffc000',
+                '#ffd184',
+                '#ffe0b5',
+                '#ffd9a0',
 
             ],
             hoverOffset: 4
@@ -680,26 +654,32 @@
     const config4 = {
         type: 'doughnut',
         data: data4,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
     };
     const sol = new Chart(document.getElementById('sol-pie'), config4);
 
     //********************
 
     //Pie chart culture ********
-    {% comment %} var myDattaElement = document.getElementById('my-data-culture'); {% endcomment %}
+
     var culture_data = {{ culture_contributions_to_dimension| safe}};
     const data5 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Language',
+            'Arts',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: culture_data,
             backgroundColor: [
-                '#5F5F5F',
-                'B3B3B3',
+                '#5f5f5f',
+                '#b2b2b2',
 
             ],
             hoverOffset: 4
@@ -709,26 +689,32 @@
     const config5 = {
         type: 'doughnut',
         data: data5,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
     };
     const culture = new Chart(document.getElementById('culture-pie'), config5);
     //**************
 
 
     //Pie chart governance ******
-    {% comment %} var myDattaElement = document.getElementById('my-data-governance'); {% endcomment %}
+
     var governance_data = {{ governance_contributions_to_dimension| safe}};
     const data6 = {
-        // labels: [
-        //   'Red',
-        //   'Blue',
-        //   'Yellow'
-        // ],
+        labels: [
+            'Execution Of Voting Rights',
+            'Participation in Government meetings',
+        ],
         datasets: [{
-            label: '',
+            label: ['Score'],
             data: governance_data,
             backgroundColor: [
-                '#F5C7B8',
-                '#F1A78A',
+                '#f5c7b8',
+                '#f1a78a',
             ],
             hoverOffset: 4
         }]
@@ -737,6 +723,13 @@
     const config6 = {
         type: 'doughnut',
         data: data6,
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
 
         // plugins: [ChartDataLabels]
     };
@@ -749,7 +742,8 @@
     var graph2_data = {{ tribal_dimensional_index| safe }};
     const ctx = document.getElementById('graph2');
 
-    var tdi = {{ tdi| safe  }};
+    var tdi = {{ tdi }};
+    var tdiColor = tdi >= 0.50 ? '#92d050' : '#ff0000';
 
     const data = {
         labels: ['Health Development Index', 'Education Development Index', 'Sol Development Index', 'Culture Development Index', 'Governance Development Index', 'Tribal Development Index'],
@@ -757,12 +751,12 @@
             {
                 data: [...graph2_data, tdi],
                 backgroundColor: [
-                    '#4472C4',
-                    '#ED7D31',
-                    '#A5A5A5',
-                    '#FFC000',
-                    '#5B9BD5',
-                    '#70AD47',
+                    '#2e75b6',
+                    '#548235',
+                    '#bf9000',
+                    '#a6a6a6',
+                    '#843c0c',
+                    tdiColor,
                 ],
                 borderWidth: 1,
             },
@@ -919,12 +913,13 @@
                 label: '',
                 data: [...{{ district_dimensional_index }}, ...{{ tdi }}],
         backgroundColor: [
-            '#4273B1',
-            '#5E813F',
-            '#B89230',
+            '#2e75b6',
+            '#548235',
+            '#bf9000',
             '#B86029',
             '#385492',
             // Color for the additional value
+
         ],
         borderWidth: 1
     }]
@@ -1010,7 +1005,7 @@
         // borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
         barThickness: 18,
-          },
+            },
         ],
       };
 
@@ -1085,17 +1080,17 @@
             {
                 label: 'Sol', // Removed square brackets
                 data: [sol_contri_to_tdi], // Replace with your actual data for 'Sol'
-                backgroundColor: '#FFD966', // Color for 'Sol'
+                backgroundColor: '#bf9000', // Color for 'Sol'
             },
             {
                 label: 'Education', // Removed square brackets
                 data: [education_contri_to_tdi], // Replace with your actual data for 'Education'
-                backgroundColor: '#A9D18E', // Color for 'Education'
+                backgroundColor: '#548235', // Color for 'Education'
             },
             {
                 label: 'Health', // Removed square brackets
                 data: [health_contri_to_tdi], // Replace with your actual data for 'Health'
-                backgroundColor: '#5B9BD5', // Color for 'Health'
+                backgroundColor: '#2e75b6', // Color for 'Health'
             },
         ],
     };
@@ -1189,18 +1184,12 @@
 
 
 
-
-
-
-
-
-
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
-AOS.init({
-    offset: 100,
-    duration: 500,
-});
+    AOS.init({
+        offset: 100,
+        duration: 500,
+    });
 </script>
 <!-- ****** -->
 

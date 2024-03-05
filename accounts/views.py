@@ -12,8 +12,7 @@ from district_wise.models import District
 
 def register_view(request):
     if request.method == "POST":
-       
-        form = ProfileCreationForm(request.POST, request.FILES)  # Include request.FILES here
+        form = ProfileCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             phone_number = form.cleaned_data['phone_number']
@@ -22,12 +21,20 @@ def register_view(request):
             login(request, user)
             messages.success(request, 'Registration successful')
             return redirect('home')
+        else:
+            # Include form errors in the context
+            context = {
+                'form': form,
+            }
+            # Display error messages using Django messages framework
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
     else:
         form = ProfileCreationForm()
-
-    context = {
-        'form': form,
-    }
+        context = {
+            'form': form,
+        }
 
     return render(request, 'accounts/register.html', context)
 

@@ -15,8 +15,7 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ formset.management_form }}
-  <div>• Add the households data for each Tribe and find the Tribal Development
-    Index of that Tribe</div><br>
+  <div>• Upload your excel file</div><br>
   <hr><br>
 
   <label for="id_year">Select Year:</label>
@@ -26,15 +25,10 @@
 
 
 
-  <!-- <label for="entryType">Select Data Entry Type:</label> -->
-  <select id="entryType" onchange="toggleForms()" required>
-    <option value="" disabled selected hidden>-- Data Input Type</option>
-    <option value="manual">Manual Entry</option>
-    <option value="file">Upload Excel</option>
-  </select>
 
-  <div class="file_upload_box" id="HH_fileUpload_form" style="display: none;">
-    <input type="file" name="households_excel_file" placeholder="Choose file">
+
+  <div class="file_upload_box" id="HH_fileUpload_form">
+    <input type="file" name="households_excel_file" placeholder="Upload excel file" required>
   </div>
 
 
@@ -66,84 +60,4 @@
   <button type="submit" class="tribe_form_submit">Submit</button>
 </form>
 
-<script>
-  document.getElementById('add-form').addEventListener('click', function () {
-    // Get the div containing the form elements
-    var formsetDiv = document.getElementById('formset');
-
-    // Get the template form HTML from the first form in the formset
-    var templateHTML = formsetDiv.firstElementChild.outerHTML;
-
-    // Create a new form using the template HTML
-    var newForm = document.createElement('div');
-    newForm.innerHTML = templateHTML;
-
-    // Clear values in the cloned form
-    newForm.querySelectorAll('input, select, textarea').forEach(function (element) {
-      element.value = '';
-    });
-
-    // Increment the form index
-    var formCountField = document.getElementById('id_form-TOTAL_FORMS');
-    var newFormIndex = parseInt(formCountField.value);
-    newFormIndex++;
-    formCountField.value = newFormIndex;
-
-    // Update the IDs of form fields in the cloned form
-    newForm.querySelectorAll('[id]').forEach(function (element) {
-      element.id = element.id.replace(/-\d+/, '-' + (newFormIndex - 1));
-    });
-
-    // Update the names of form fields in the cloned form
-    newForm.querySelectorAll('[name]').forEach(function (element) {
-      element.name = element.name.replace(/-\d+/, '-' + (newFormIndex - 1));
-    });
-
-    // Update the 'for' attribute of labels in the cloned form
-    newForm.querySelectorAll('label').forEach(function (label) {
-      var labelFor = label.getAttribute('for');
-      if (labelFor) {
-        label.setAttribute('for', labelFor.replace(/-\d+/, '-' + (newFormIndex - 1)));
-      }
-    });
-
-    // Append the new form to the formset
-    formsetDiv.appendChild(newForm);
-  });
-
-
-  document.getElementById('remove-form').addEventListener('click', function () {
-    // Get the div containing the form elements
-    var formsetDiv = document.getElementById('formset');
-
-    // If there is more than one form, remove the last one
-    if (formsetDiv.childElementCount > 1) {
-      var lastForm = formsetDiv.lastElementChild;
-      formsetDiv.removeChild(lastForm);
-    }
-  });
-
-
-  function toggleForms() {
-    var entryType = document.getElementById("entryType").value;
-    var manualForm = document.getElementById("HH_manual_data_form");
-    var fileUploadForm = document.getElementById("HH_fileUpload_form");
-    // var slugSelect = document.getElementById("id_form-0-tribeID");
-
-
-    if (entryType === "manual") {
-      manualForm.style.display = "block";
-      fileUploadForm.style.display = "none";
-      // slugSelect.setAttribute("required", "required");
-    } else if (entryType === "file") {
-      manualForm.style.display = "none";
-      fileUploadForm.style.display = "block";
-      // slugSelect.removeAttribute("required");
-    }
-  }
-
-
-
-
-</script>
 {% endblock content %}

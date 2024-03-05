@@ -277,15 +277,15 @@ def perform_calculations(base_data_df, user, year):
     )
 
 
-    excel_writer = pd.ExcelWriter("C:/Users/tinky/OneDrive/Documents/TRI_base_data_file.xlsx", engine='xlsxwriter')
-    base_data_df.to_excel(excel_writer, sheet_name='Sheet1', na_rep='NA', index=False)
-    excel_writer._save()
+    # excel_writer = pd.ExcelWriter("C:/SARTHAK\NOTES/SEM5\Web TDI/pandas/New datas/TRI_base_data_file.xlsx", engine='xlsxwriter')
+    # base_data_df.to_excel(excel_writer, sheet_name='Sheet1', na_rep='NA', index=False)
+    # excel_writer._save()
     print("Result Excel file saved successfully.")
     # base_data_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
     # print("Result Excel file saved successfully.")
 
-    # base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
-    # print("Result Excel file saved successfully.")
+    base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
+    print("Result Excel file saved successfully.")
 
     total_fid = base_data_df[['__fid__']].values.tolist()
     tribes = np.array(base_data_df['Tribe_N']).flatten().tolist()
@@ -383,7 +383,7 @@ def perform_calculations(base_data_df, user, year):
         **score_columns
     })
 
-    cum_score_df.to_excel("C:/Users/tinky/OneDrive/Documents/households_excel.xlsx", index=False)
+    cum_score_df.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/cum_score_df.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
 
@@ -718,10 +718,10 @@ def perform_calculations(base_data_df, user, year):
 
 
 
-    HH_score_df.to_excel("C:/Users/tinky/OneDrive/Documents/households_excel1.xlsx", index=False)
+    HH_score_df.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/HH_score_df.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
-    Tribe_cum_score_df.to_excel("C:/Users/tinky/OneDrive/Documents/households_excel2.xlsx", index=False)
+    Tribe_cum_score_df.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/Tribe_cum_score_df.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
     import math
@@ -1114,7 +1114,7 @@ def perform_calculations(base_data_df, user, year):
     Final_Excel['G_contri_to_TDI'] = list_G_contri_to_TDI
         
                 
-    Final_Excel.to_excel("C:/Users/tinky/OneDrive/Documents/households_excel3.xlsx", index=False)
+    Final_Excel.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/Final_Excel.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
 

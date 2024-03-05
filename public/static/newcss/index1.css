@@ -39,7 +39,7 @@ a {
 }
 .login-btn {
 
-  border-radius: 22.36px;
+  border-radius: 8px;
   background-color: var(--yellow-tdi);
   height: 42px;
   display: flex;
@@ -67,11 +67,14 @@ a {
 
 
 .main-logo-parent {
-  position: relative;
-  height: 100px;
+  position: fixed;
+  height: 75px;
+  top: 0px;
   display: flex;;
   width: 100%;
   justify-content: space-around;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   align-items: center;
   z-index: 10;
@@ -106,7 +109,7 @@ a {
   color: var(--color-black);
 }
 .login-btn1 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--yellow-tdi);
   width: 174px;
   height: 48px;
@@ -350,7 +353,7 @@ a {
   color: var(--color-black);
 }
 .explore-now-btn {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--green-tdi);
   width: 174px;
   height: 48px;
@@ -401,7 +404,7 @@ a {
   text-align: center;
 }
 .explore-now-btn1 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--red-tdi);
   width: 174px;
   height: 48px;
@@ -494,7 +497,7 @@ a {
   width: 534.6px;
 }
 .explore-now-btn2 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--blue-tdi);
   height: 48px;
   display: flex;
@@ -539,7 +542,7 @@ a {
   width: 599px;
 }
 .explore-now-btn3 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--yellow-tdi);
   height: 48px;
   display: flex;
@@ -632,7 +635,7 @@ a {
   padding: 25px;
 }
 .explore-now-btn4 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--green-tdi);
   width: 167px;
   height: 48px;
@@ -651,7 +654,7 @@ a {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-21xl);
+  gap: 70px;
   color: var(--green-tdi);
 }
 .team1 {
@@ -1373,9 +1376,7 @@ a {
   cursor: pointer;
   
 }
-svg{
-  border: 2px white solid;
-}
+
 
 .jhnew1-1-1-wrapper path {
   stroke: #01171b;
@@ -1707,107 +1708,35 @@ svg{
   font-size: var(--font-size-xs-3);
   color: var(--color-white);
 }
-.downindicator{
+
+#scroll-btn {
   position: fixed;
-  width: 50px;
-  height: 50px;
-  right: 0px;
-  transform: rotate(45deg);
-}
-.upindicator{
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  right: 0px;
-  top: 6480px;
-  /* bottom: 20px; */
-  transform: rotate(45deg);
-}
-
-
-.downindicator span{
-  position: fixed;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
+  bottom: 30px;
+  right: 20px;
+ 
+  
   border: none;
-  border-right:5px solid #000000;
-  border-bottom: 5px solid #000000;
-  border-radius: 5px solid #000000;
-  display: block;
-  width: 50%;
-  height: 50%;
-  animation:animateone 1s linear infinite;
-}
-.upindicator span{
-  position: absolute;
-  box-sizing: border-box;
-  border: none;
-  border-left:5px solid #fff;
-  border-top: 5px solid #fff;
-  border-radius: 5px solid #000000;
-  display: block;
-  width: 50%;
-  height: 50%;
-  animation:animatetwo 1s linear infinite;
+ 
+  cursor: pointer;
+  font-size: 20px;
+  padding: 10px;
+  display: none;
+  
 }
 
-.downindicator span:nth-child(1){
-  top:-30px;
-  left: -30px;
-  animation-delay: 0s;
-}
-.downindicator span:nth-child(2){
-  top:-15px;
-  left: -15px;
-  animation-delay: 0.2s;
-
-}
-.downindicator span:nth-child(3){
-  top:0px;
-  left: 0px;
-  animation-delay: 0.4s;
-
+#scroll-btn img{
+  transition: background-color 0.3s ease-out;
 }
 
-.downindicator span:nth-child(4){
-  top:15px;
-  left:15px;
-  animation-delay: 0.6s;
-}
-.downindicator span:nth-child(5){
-  top:30px;
-  left:30px;
-  animation-delay: 0.8s;
-}
-.upindicator span:nth-child(1){
-  top:-30px;
-  left: -30px;
-  animation-delay: 0s;
-}
-.upindicator span:nth-child(2){
-  top:-15px;
-  left: -15px;
-  animation-delay: 0.2s;
-
-}
-.upindicator span:nth-child(3){
-  top:0px;
-  left: 0px;
-  animation-delay: 0.4s;
-
+#scroll-btn img:hover {
+  filter: invert(100%);
+  color: #538233; /* Apply invert effect on hover */
 }
 
-.upindicator span:nth-child(4){
-  top:15px;
-  left:15px;
-  animation-delay: 0.6s;
+#scroll-btn.rotate {
+  transform: rotate(180deg);
 }
-.upindicator span:nth-child(5){
-  top:30px;
-  left:30px;
-  animation-delay: 0.8s;
-}
+
 
 @keyframes animateone{
   

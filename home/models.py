@@ -119,8 +119,8 @@ class Tribe_Image(models.Model):
     map_image = models.ImageField(upload_to='images/map_images')
     date = models.DateField(null=True, blank=True)
 
-    def __str__(self):
-        return f"{self.tribe.name} images"
+    # def __str__(self):
+    #     return f"{self.tribe.name} images"
 
 
 class User_Hitcounts(models.Model):
