@@ -79,7 +79,7 @@ a {
   align-items: center;
   z-index: 10;
 }
-/* .explore-the {
+ .explore-the {
   color: var(--color-black);
 }
 .tribal {
@@ -90,7 +90,7 @@ a {
 }
 .index1 {
   color: var(--blue-green-tdi);
-} */
+} 
 
 .d {
   letter-spacing: 0.17em;
