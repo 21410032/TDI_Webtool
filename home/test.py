@@ -4,7 +4,7 @@ import numpy as np
 def perform_calculations(base_data_df, user, year):
 
 
-    # base_data_df = pd.read_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/TRI_base_data.xlsx")
+    # base_data_df = pd.read_excel()
 
     base_data_df['Eligibility_CD'] = np.where(base_data_df['chronic_disease'].str.strip() == 'लागू नहीं', 0, 1)
 
@@ -277,15 +277,15 @@ def perform_calculations(base_data_df, user, year):
     )
 
 
-    excel_writer = pd.ExcelWriter('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data.xlsx', engine='xlsxwriter')
-    base_data_df.to_excel(excel_writer, sheet_name='Sheet1', na_rep='NA', index=False)
-    excel_writer._save()
+    # excel_writer = pd.ExcelWriter("C:/SARTHAK\NOTES/SEM5\Web TDI/pandas/New datas/TRI_base_data_file.xlsx", engine='xlsxwriter')
+    # base_data_df.to_excel(excel_writer, sheet_name='Sheet1', na_rep='NA', index=False)
+    # excel_writer._save()
     print("Result Excel file saved successfully.")
     # base_data_df.to_excel(settings.EXCEL_FILE_PATH, index=False)
     # print("Result Excel file saved successfully.")
 
-    # base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
-    # print("Result Excel file saved successfully.")
+    base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
+    print("Result Excel file saved successfully.")
 
     total_fid = base_data_df[['__fid__']].values.tolist()
     tribes = np.array(base_data_df['Tribe_N']).flatten().tolist()
@@ -383,7 +383,7 @@ def perform_calculations(base_data_df, user, year):
         **score_columns
     })
 
-    cum_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/cum_scores.xlsx', index=False)
+    cum_score_df.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/cum_score_df.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
 
@@ -397,17 +397,24 @@ def perform_calculations(base_data_df, user, year):
 
     })
 
-    village_name_list = [""] * total_tribes
+    village_block_list = [""] * total_tribes
     Block_name_list = [""] * total_tribes
     District_name_list = [""] * total_tribes
+
     for i in range(total_tribes):
         for j in range(len(tribes)):
-            if tribes[j] == unique_tribes[i] and village_name_list[i].find(village_name[j]) == -1:
-                village_name_list[i] += village_name[j] + ', '
-            if tribes[j] == unique_tribes[i] and Block_name_list[i].find(Block_name[j]) == -1:
-                Block_name_list[i] += Block_name[j] + ', '
             if tribes[j] == unique_tribes[i] and District_name_list[i].find(District_name[j]) == -1:
                 District_name_list[i] += District_name[j] + ', '
+            if tribes[j] == unique_tribes[i] and village_block_list[i].find(village_name[j]) == -1:
+                village_block_list[i] += village_name[j] + ':' + Block_name[j] + ', '
+
+
+# Remove trailing commas and spaces from concatenated strings
+    village_block_list = [village_block.rstrip(', ') for village_block in village_block_list]
+    # village_block_list = [village_block.replace(', ', '\n') for village_block in village_block_list]
+
+# Now village_block_list contains the desired concatenation
+   
             
     # from .models import Tribe
 
@@ -711,10 +718,10 @@ def perform_calculations(base_data_df, user, year):
 
 
 
-    HH_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/HH_scores.xlsx', index=False)
+    HH_score_df.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/HH_score_df.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
-    Tribe_cum_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/Tribe_cum_score_df.xlsx', index=False)
+    Tribe_cum_score_df.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/Tribe_cum_score_df.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
     import math
@@ -1107,7 +1114,7 @@ def perform_calculations(base_data_df, user, year):
     Final_Excel['G_contri_to_TDI'] = list_G_contri_to_TDI
         
                 
-    Final_Excel.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/Final_Excel.xlsx', index=False)
+    Final_Excel.to_excel("C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/Final_Excel.xlsx", index=False)
     print("Result Excel file saved successfully.")
 
 
@@ -1127,37 +1134,37 @@ def perform_calculations(base_data_df, user, year):
             unique_District_name.append(x)
 
 
-    HH_village_name_list = [""] * len(unique_fid)
-    HH_District_name_list = [""] * len(unique_fid)
-    HH_Block_name_list = [""] * len(unique_fid)
+    # HH_village_name_list = [""] * len(unique_fid)
+    # HH_District_name_list = [""] * len(unique_fid)
+    # HH_Block_name_list = [""] * len(unique_fid)
 
-    for i in range(len(unique_fid)):
-        for j in range(len(total_fid)):
+    # for i in range(len(unique_fid)):
+    #     for j in range(len(total_fid)):
 
-            if unique_fid[i] == total_fid[j]:
-                HH_size_list[i] += 1
-                if HH_tribe_list[i] == "":
-                    HH_tribe_list[i] = tribes[j]
-                    HH_village_name_list[i]=village_name[j]
-                    HH_District_name_list[i]=District_name[j]
-                    HH_Block_name_list[i]=Block_name[j]
+    #         if unique_fid[i] == total_fid[j]:
+    #             HH_size_list[i] += 1
+    #             if HH_tribe_list[i] == "":
+    #                 HH_tribe_list[i] = tribes[j]
+    #                 HH_village_name_list[i]=village_name[j]
+    #                 HH_District_name_list[i]=District_name[j]
+    #                 HH_Block_name_list[i]=Block_name[j]
 
 
-    HH_score_df['HH_village_name_list'] = HH_village_name_list
-    HH_score_df['HH_Block_name_list'] = HH_Block_name_list
-    HH_score_df['HH_District_name_list'] = HH_District_name_list
+    # HH_score_df['HH_village_name_list'] = HH_village_name_list
+    # HH_score_df['HH_Block_name_list'] = HH_Block_name_list
+    # HH_score_df['HH_District_name_list'] = HH_District_name_list
 
-    village_name_list = [""] * len(unique_tribes)
-    Block_name_list = [""] * len(unique_tribes)
-    District_name_list = [""] * len(unique_tribes)
-    for i in range(len(unique_tribes)):
-        for j in range(len(tribes)):
-            if tribes[j] == unique_tribes[i] and village_name_list[i].find(village_name[j]) == -1:
-                village_name_list[i] += village_name[j] + ', '
-            if tribes[j] == unique_tribes[i] and Block_name_list[i].find(Block_name[j]) == -1:
-                Block_name_list[i] += Block_name[j] + ', '
-            if tribes[j] == unique_tribes[i] and District_name_list[i].find(District_name[j]) == -1:
-                District_name_list[i] += District_name[j] + ', '
+    # village_name_list = [""] * len(unique_tribes)
+    # Block_name_list = [""] * len(unique_tribes)
+    # District_name_list = [""] * len(unique_tribes)
+    # for i in range(len(unique_tribes)):
+    #     for j in range(len(tribes)):
+    #         if tribes[j] == unique_tribes[i] and village_name_list[i].find(village_name[j]) == -1:
+    #             village_name_list[i] += village_name[j] + ', '
+    #         if tribes[j] == unique_tribes[i] and Block_name_list[i].find(Block_name[j]) == -1:
+    #             Block_name_list[i] += Block_name[j] + ', '
+    #         if tribes[j] == unique_tribes[i] and District_name_list[i].find(District_name[j]) == -1:
+    #             District_name_list[i] += District_name[j] + ', '
 
 
     
@@ -1284,7 +1291,7 @@ def perform_calculations(base_data_df, user, year):
         try:
             tribe = Tribe.objects.get(name=slug, user=user, year=year)
             details_list = [
-            {"village_name": village_name_list[i], "block_name": Block_name_list[i], "district_name": District_name_list[i]}
+            {"Block_name_list": village_block_list[i], "District_name_list": District_name_list[i]}
         ]
 
             tribe.village_details = details_list

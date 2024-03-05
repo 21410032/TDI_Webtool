@@ -39,7 +39,7 @@ a {
 }
 .login-btn {
 
-  border-radius: 22.36px;
+  border-radius: 8px;
   background-color: var(--yellow-tdi);
   height: 42px;
   display: flex;
@@ -67,16 +67,19 @@ a {
 
 
 .main-logo-parent {
-  position: relative;
-  height: 100px;
+  position: fixed;
+  height: 75px;
+  top: 0px;
   display: flex;;
   width: 100%;
   justify-content: space-around;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   align-items: center;
   z-index: 10;
 }
-.explore-the {
+/* .explore-the {
   color: var(--color-black);
 }
 .tribal {
@@ -87,7 +90,7 @@ a {
 }
 .index1 {
   color: var(--blue-green-tdi);
-}
+} */
 
 .d {
   letter-spacing: 0.17em;
@@ -106,7 +109,7 @@ a {
   color: var(--color-black);
 }
 .login-btn1 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--yellow-tdi);
   width: 174px;
   height: 48px;
@@ -350,7 +353,7 @@ a {
   color: var(--color-black);
 }
 .explore-now-btn {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--green-tdi);
   width: 174px;
   height: 48px;
@@ -401,7 +404,7 @@ a {
   text-align: center;
 }
 .explore-now-btn1 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--red-tdi);
   width: 174px;
   height: 48px;
@@ -494,7 +497,7 @@ a {
   width: 534.6px;
 }
 .explore-now-btn2 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--blue-tdi);
   height: 48px;
   display: flex;
@@ -539,7 +542,7 @@ a {
   width: 599px;
 }
 .explore-now-btn3 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--yellow-tdi);
   height: 48px;
   display: flex;
@@ -632,7 +635,7 @@ a {
   padding: 25px;
 }
 .explore-now-btn4 {
-  border-radius: 24.82px;
+  border-radius: 8px;
   background-color: var(--green-tdi);
   width: 167px;
   height: 48px;
@@ -1296,6 +1299,7 @@ a {
   box-sizing: border-box;
   font-size: var(--font-size-xl);
   color: var(--color-white);
+  
 }
 .frame-parent {
   align-self: stretch;
@@ -1704,3 +1708,58 @@ a {
   font-size: var(--font-size-xs-3);
   color: var(--color-white);
 }
+
+#scroll-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+ 
+  
+  border: none;
+ 
+  cursor: pointer;
+  font-size: 20px;
+  padding: 10px;
+  display: none;
+  
+}
+
+#scroll-btn img{
+  transition: background-color 0.3s ease-out;
+}
+
+#scroll-btn img:hover {
+  filter: invert(100%);
+  color: #538233; /* Apply invert effect on hover */
+}
+
+#scroll-btn.rotate {
+  transform: rotate(180deg);
+}
+
+
+@keyframes animateone{
+  
+  0%{
+    border-color: #000000;
+  }
+  20%{
+    border-color: #000000;
+  }
+  20.1%,100%{
+    border-color: #dad7d7;
+  }
+}
+@keyframes animatetwo{
+  
+  0%{
+    border-color: #fff;
+  }
+  20%{
+    border-color: #fff;
+  }
+  20.1%,100%{
+    border-color: #000000;
+  }
+}
+

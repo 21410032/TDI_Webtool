@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.http import Http404
 from .models import Tribe,Tribe_Image
@@ -15,30 +15,17 @@ import numpy as np
 
 def tribe_detail_view(request, name, year):
     
-    user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-    tribes = Tribe.objects.filter(user = user, year='2022')
-    districts=District.objects.filter(user = user, year='2022')
-   
-    tribe_of_slug = Tribe.objects.get(user=user, year = '2022', name = name)
-    # tribe = Tribe.objects.get(user=user, year = '2022', name = name)
-   
-    user_phone_number = request.GET.get('user')
+    admin_user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
+    tribes = Tribe.objects.filter(user = admin_user, year='2022')
+    districts=District.objects.filter(user = admin_user, year='2022')
 
-    if user_phone_number:
-        user = User.objects.get(phone_number=user_phone_number)
+    inputted_data = request.GET.get('inputted_data', False) == 'True'
 
-    else:    
-        user = User.objects.get(phone_number=settings.ADMIN_USER_PHONE_NUMBER)
-
-    
-
-    if name and year is not None:
-        try:
-            
-            tribe = Tribe.objects.get(user=user, year=year, name = name)
-            
-        except Exception as e:
-            return e 
+    if inputted_data:
+    # Use get_object_or_404 to handle the case when the tribe is not found
+        tribe = get_object_or_404(Tribe, user=request.user, year=year, name=name)
+    else:
+        tribe = get_object_or_404(Tribe, user=admin_user, year=year, name=name)
 
     # tribe_of_slug = Tribe.objects.get(slug = slug1)
     # total_tribals = tribe.get_total_tribals
@@ -52,16 +39,21 @@ def tribe_detail_view(request, name, year):
 
     tribal_dimensional_index = [tribe.H_DI, tribe.E_DI, tribe.S_DI, tribe.C_DI, tribe.G_DI]
     dimension_contribution_to_tdi = [tribe.H_contri_to_TDI, tribe.E_contri_to_TDI, tribe.S_contri_to_TDI, tribe.C_contri_to_TDI, tribe.G_contri_to_TDI]
+    tribal_incidence=tribe.tribal_incidence
+    tribal_intensity=tribe.tribal_intensity
+
     tdi = tribe.TDI
 
     uncensored_tribe_arr = [tribe.UNC_CD_score, tribe.UNC_IM_score, tribe.UNC_MC_score, tribe.UNC_CM_score, tribe.UNC_FS_score, tribe.UNC_LE_score, tribe.UNC_DRO_score, tribe.UNC_IC_score, tribe.UNC_OW_score, tribe.UNC_SANI_score, tribe.UNC_FUEL_score, tribe.UNC_DRWA_score, tribe.UNC_ELECTR_score, tribe.UNC_ASS_score, tribe.UNC_LAN_score, tribe.UNC_ARTS_score, tribe.UNC_EV_score, tribe.UNC_MEET_score]
 
+    
+    
     censored_tribe_arr = [tribe.CEN_CD_score, tribe.CEN_IM_score, tribe.CEN_MC_score, tribe.CEN_CM_score, tribe.CEN_FS_score, tribe.CEN_LE_score, tribe.CEN_DRO_score, tribe.CEN_IC_score, tribe.CEN_OW_score, tribe.CEN_SANI_score, tribe.CEN_FUEL_score, tribe.CEN_DRWA_score, tribe.CEN_ELECTR_score, tribe.CEN_ASS_score, tribe.CEN_LAN_score, tribe.CEN_ARTS_score, tribe.CEN_EV_score, tribe.CEN_MEET_score]
+    detail = tribe.village_details
     
     context = {
         'tribes' : tribes,
         'districts' :districts,
-        'tribe_of_slug':tribe_of_slug,
         'tribe': tribe,
         'health_contributions_to_dimension': health_contributions_to_dimension,
         'education_contributions_to_dimension': education_contributions_to_dimension,
@@ -70,16 +62,32 @@ def tribe_detail_view(request, name, year):
         'governance_contributions_to_dimension': governance_contributions_to_dimension,
         'tribal_dimensional_index': tribal_dimensional_index,
         'dimension_contribution_to_tdi': dimension_contribution_to_tdi,
+        'incidence':tribal_incidence,
+        'intensity':tribal_intensity,
         'tdi' : tdi,
         'uncensored_tribe_arr' : uncensored_tribe_arr,
         'censored_tribe_arr' : censored_tribe_arr,
         'name' : 'bokaro'
     }
+    
+    for entry in detail:
+        block_name_list_str = entry.get('Block_name_list')
+        lines = block_name_list_str.split(',')  # Split by line breaks first
 
 
+    context['detail_Block_name_list'] = lines
+    context['detail'] = detail
 
+    if inputted_data:
+        template_name = 'pvtg/asurcopy.html' 
+        
+    else:
+        template_name = 'pvtg/asur.html' 
 
-    return render(request, 'pvtg/asur.html', context=context)
+    # Use render function with the determined template name
+    return render(request, template_name, context=context)
+
+        
 
 import pandas as pd
 from .test import perform_calculations
@@ -109,8 +117,8 @@ def tribe_form_view(request):
             base_data_df = pd.read_excel(uploaded_file)
 
             perform_calculations(base_data_df, user_from_form, year)
-            
-            redirect_url = f'/tribe/asur/{request.POST["year"]}?user={user_from_form.phone_number}'
+            inputted_data = True
+            redirect_url = f'/tribe/asur/{request.POST["year"]}/?inputted_data={inputted_data}'
             return redirect(redirect_url)
         else:
             # tribe_slug = request.POST.get('tribe_slug')
@@ -139,9 +147,6 @@ def tribe_form_view(request):
         'alltribes':alltribes_defined,
     }
     return render(request, 'form/tribe_form.html',context)
-
-    
-    
 
     
 def tribe_pdf_view(request, slug):

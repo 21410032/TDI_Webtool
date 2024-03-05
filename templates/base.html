@@ -4,18 +4,16 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>TDI WebTool</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Noto Sans Hebrew:wght@100;400;500;700;800&display=swap" />
@@ -25,9 +23,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
     <link rel="stylesheet" href="{% static 'newcss/global1.css' %}">
@@ -36,17 +36,34 @@
     <link rel="stylesheet" href="{% static 'newcss/district-wise.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/tribe-wise.css' %}">
     <link rel="stylesheet" href="{% static 'newcss/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'newcss/asurcopy.css' %}">
+    <link rel="stylesheet" href="{% static 'newcss/asurcopy_global.css' %}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" />
 
 
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.slim.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js">
+    </script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     {% if messages %} {% for message in messages %}
 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="position: absolute;
+        top: 75px;
+        right: 0;">
         {{message}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -64,7 +81,7 @@
             <div class="home"><a href="{% url 'home' %}">HOME</a></div>
             <div class="home" id="tribeDropdown">
 
-                <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     TRIBE
                 </div>
 
@@ -81,7 +98,7 @@
             <div class="home"><a href="#">RESEARCH</a></div>
 
             <div class="home" id="districtDropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                     DISTRICT
                 </a>
 
@@ -106,7 +123,8 @@
                     <a href="{% url 'login'%}">LOGIN</a>
                 </div>
             </div>
-            <div class="login-btn">
+            <div class="login-btn"
+                style="color: var(--yellow-tdi); background: none; border: solid 3px var(--yellow-tdi);">
                 <div class="login">
                     <a href="{% url 'register'%}">REGISTER</a>
                 </div>
@@ -131,22 +149,21 @@
             {% endif %}
         </div>
     </div>
-    {% block content %}
-    {% endblock %}
-
+    <div style="margin-top: 120px;">
+        {% block content %}
+        {% endblock %}
+    </div>
 
 
     </div>
 </body>
 
-<!-- BOOTSTRAP -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <!-- ****** -->
 
 
 <!-- JAVASCRIPT -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
@@ -166,98 +183,6 @@
 </script>
 
 
-<!-- HOME TRIBE GRAPH -->
-<!-- <script>
-    // TRIBE STACKED GRAPH
-    const tribe_stacked_graph = document.getElementById('tribe_stacked_graph');
-
-    var tribe_wise_tdi = {{ tribe_wise_tdi }}
-    new Chart(tribe_stacked_graph, {
-        type: 'bar',
-        data: {
-            labels: ['Asur', 'Birhor', 'Birjia', 'Korwa', 'Mal Paharia', 'Parhiya', 'Savar', 'Sauria Parhaiya'],
-            datasets: [{
-                label: 'TDI',
-                data: tribe_wise_tdi,
-                borderWidth: 1,
-                backgroundColor: [
-                    '#4472C4',
-                    '#ED7D31',
-                    '#A5A5A5',
-                    '#FFC000',
-                    '#5B9BD5',
-                    '#70AD47', // Color for the additional value
-                ],
-            }
-            ]
-        },
-
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script> -->
-<!-- ****** -->
-
-<!-- HOME DISTRICT GRAPH -->
-<!-- <script>
-    // DISTRICT HORIZONTAL GRAPH
-
-    const district_horizontal_graph = document.getElementById('district_horizontal_graph');
-    var district_wise_tdi = {{ district_wise_tdi }}
-    new Chart(district_horizontal_graph, {
-        type: 'bar',
-        data: {
-            labels: ['Bokaro', 'Chatra', 'Deoghar', 'Dhanbad', 'Dumka', 'Garhwa', 'Giridih', 'Godda', 'Gumla', 'Hazaribagh', 'Jamtara', 'Khunti', 'Kodarma', 'Latehar', 'Lohardaga', 'Pakur', 'Palamu', 'Pashchimi (West) Singhbhum', 'Purbi (East) Singhbhum', 'Ramgarh', 'Ranchi', 'Sahibganj', 'Saraikela-Kharsawan', 'Simdega'],
-            datasets: [{
-                label: 'TDI',
-                data: district_wise_tdi,
-                borderWidth: 1,
-                backgroundColor: [
-                    '#C5E0B4',
-                    '#D9D9D9',
-                    '#B3B3B3',
-                    '#FFE0B5',
-                    '#FFE699',
-                    '#F1A78A',
-                    '#BDD7EE',
-                    '#F8CBAD',
-                    '#A1C490',
-                    '#F5C7B8',
-                    '#FFC000',
-                    '#FFD9A0',
-                    '#FFD184',
-                    '#538233',
-                    '#BDD7EE',
-                    '#FFE699',
-                    '#FFE699',
-                    '#C5E0B4',
-                    '#C5E0B4',
-                    '#C09000',
-                    '#BDD7EE',
-                    '#FFD184',
-                    '#F8CBAD',
-                    '#BDD7EE',
-                ],
-
-            }]
-        },
-        options: {
-            // indexAxis: 'y',
-            aspectRatio: 2.1,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script> -->
-<!-- ****** -->
 
 <!-- HOME MAP SCRIPT -->
 <script>
@@ -325,33 +250,34 @@
     var data_goverance = {{ dimension_contribution_to_tdi.4}};
 
 
+
     const vertical_bar_data = {
         labels: ['Dimensions'],
         datasets: [
             {
                 label: 'Governance', // Removed square brackets
                 data: [data_goverance], // Replace with your actual data for 'Governance'
-                backgroundColor: '#C55A11', // Color for 'Governance'
+                backgroundColor: '#843c0c', // Color for 'Governance'
             },
             {
                 label: 'Culture', // Removed square brackets
                 data: [data_culture], // Replace with your actual data for 'Culture'
-                backgroundColor: '#BFBFBF', // Color for 'Culture'
+                backgroundColor: '#a6a6a6', // Color for 'Culture'
             },
             {
                 label: 'Sol', // Removed square brackets
                 data: [data_sol], // Replace with your actual data for 'Sol'
-                backgroundColor: '#FFD966', // Color for 'Sol'
+                backgroundColor: '#bf9000', // Color for 'Sol'
             },
             {
                 label: 'Education', // Removed square brackets
                 data: [data_education], // Replace with your actual data for 'Education'
-                backgroundColor: '#A9D18E', // Color for 'Education'
+                backgroundColor: '#548235', // Color for 'Education'
             },
             {
                 label: 'Health', // Removed square brackets
                 data: [data_health], // Replace with your actual data for 'Health'
-                backgroundColor: '#5B9BD5', // Color for 'Health'
+                backgroundColor: '#2e75b6', // Color for 'Health'
             },
         ],
     };
@@ -411,6 +337,14 @@
     const vertical_bar_graph = new Chart(vertical_graph_element, config_vertical_bar);
 
     //UNSENSORED-GRAPH
+
+    //*******************************************
+
+
+
+
+
+    //UNSENSORED-GRAPH
     var uncensored_tribe_arr = {{ uncensored_tribe_arr| safe}}; // Create an array to store the data
 
 
@@ -452,6 +386,7 @@
         data: uncensored_data,
         options: {
             indexAxis: 'y',
+            maintainAspectRatio: false,
             scales: {
                 xAxes: [
                     {
@@ -489,10 +424,14 @@
                     }
                 }
             },
+
             plugins: {
                 datalabels: {
                     anchor: "end",
                     align: "right"
+                },
+                legend: {
+                    display: false
                 }
             }
         },
@@ -544,8 +483,10 @@
     const config_censored = {
         type: 'bar',
         data: censored_data,
+
         options: {
             indexAxis: 'y',
+            maintainAspectRatio: false,
             scales: {
                 xAxes: [
                     {
@@ -584,6 +525,9 @@
                 datalabels: {
                     anchor: "end",
                     align: "right"
+                },
+                legend: {
+                    display: false
                 }
             }
         },
@@ -594,8 +538,12 @@
     //********************************
 
 
+
+    //********************************
+
+
     //Pie chart health
-    var myDattaElement = document.getElementById('my-data-health');
+
     var health_data = {{ health_contributions_to_dimension| safe}};
     const data2 = {
         labels: ['Chronic Diseases', 'Immunisation', 'Maternal Care', 'Child Mortality', 'Food Security'],
@@ -604,10 +552,10 @@
             data: health_data,
             backgroundColor: [
                 '#315493',
-                '#3B64AD',
-                '#4472C4',
-                '#8FA2D4',
-                '#8FA2D4',
+                '#3b64ad',
+                '#4472c4',
+                '#8fa2d4',
+                '#bac4e2',
             ],
             hoverOffset: 4
         }]
@@ -620,6 +568,15 @@
             plugins: {
                 legend: {
                     display: false
+                },
+                tooltip: {
+                    titleFont: {
+                        size: 11
+                    },
+                    titleMarginBottom: 6,
+                    bodyFont: {
+                        size: 10
+                    }
                 }
             }
         }
@@ -628,7 +585,7 @@
 
 
     //Pie chart education *********
-    var myDattaElement = document.getElementById('my-data-education');
+
     var education_data = {{ education_contributions_to_dimension| safe}};
 
     const data3 = {
@@ -641,7 +598,7 @@
             data: education_data,
             backgroundColor: [
                 '#538233',
-                '#A1C490',
+                '#a1c490',
             ],
             hoverOffset: 4,
         }]
@@ -673,7 +630,7 @@
 
 
     //Pie chart sol ***********
-    var myDattaElement = document.getElementById('my-data-sol');
+
     var sol_data = {{ sol_contributions_to_dimension| safe}};
     const data4 = {
         labels: [
@@ -689,12 +646,12 @@
             label: ['Score'],
             data: sol_data,
             backgroundColor: [
-                '#C09000',
-                '#E2AA00',
-                '#FFC000',
-                '#FFD184',
-                '#FFE0B5',
-                '#FFD9A0',
+                '#c09000',
+                '#e2aa00',
+                '#ffc000',
+                '#ffd184',
+                '#ffe0b5',
+                '#ffd9a0',
 
             ],
             hoverOffset: 4
@@ -717,7 +674,7 @@
     //********************
 
     //Pie chart culture ********
-    var myDattaElement = document.getElementById('my-data-culture');
+
     var culture_data = {{ culture_contributions_to_dimension| safe}};
     const data5 = {
         labels: [
@@ -728,8 +685,8 @@
             label: ['Score'],
             data: culture_data,
             backgroundColor: [
-                '#5F5F5F',
-                'B3B3B3',
+                '#5f5f5f',
+                '#b2b2b2',
 
             ],
             hoverOffset: 4
@@ -752,7 +709,7 @@
 
 
     //Pie chart governance ******
-    var myDattaElement = document.getElementById('my-data-governance');
+
     var governance_data = {{ governance_contributions_to_dimension| safe}};
     const data6 = {
         labels: [
@@ -763,8 +720,8 @@
             label: ['Score'],
             data: governance_data,
             backgroundColor: [
-                '#F5C7B8',
-                '#F1A78A',
+                '#f5c7b8',
+                '#f1a78a',
             ],
             hoverOffset: 4
         }]
@@ -793,6 +750,7 @@
     const ctx = document.getElementById('graph2');
 
     var tdi = {{ tdi }};
+    var tdiColor = tdi >= 0.50 ? '#92d050' : '#ff0000';
 
     const data = {
         labels: ['Health Development Index', 'Education Development Index', 'Sol Development Index', 'Culture Development Index', 'Governance Development Index', 'Tribal Development Index'],
@@ -800,12 +758,12 @@
             {
                 data: [...graph2_data, tdi],
                 backgroundColor: [
-                    '#4472C4',
-                    '#ED7D31',
-                    '#A5A5A5',
-                    '#FFC000',
-                    '#5B9BD5',
-                    '#70AD47',
+                    '#2e75b6',
+                    '#548235',
+                    '#bf9000',
+                    '#a6a6a6',
+                    '#843c0c',
+                    tdiColor,
                 ],
                 borderWidth: 1,
             },
@@ -962,12 +920,13 @@
                 label: '',
                 data: [...{{ district_dimensional_index }}, ...{{ tdi }}],
         backgroundColor: [
-            '#4273B1',
-            '#5E813F',
-            '#B89230',
+            '#2e75b6',
+            '#548235',
+            '#bf9000',
             '#B86029',
             '#385492',
             // Color for the additional value
+
         ],
         borderWidth: 1
     }]
@@ -1053,7 +1012,7 @@
         // borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
         barThickness: 18,
-          },
+            },
         ],
       };
 
@@ -1128,17 +1087,17 @@
             {
                 label: 'Sol', // Removed square brackets
                 data: [sol_contri_to_tdi], // Replace with your actual data for 'Sol'
-                backgroundColor: '#FFD966', // Color for 'Sol'
+                backgroundColor: '#bf9000', // Color for 'Sol'
             },
             {
                 label: 'Education', // Removed square brackets
                 data: [education_contri_to_tdi], // Replace with your actual data for 'Education'
-                backgroundColor: '#A9D18E', // Color for 'Education'
+                backgroundColor: '#548235', // Color for 'Education'
             },
             {
                 label: 'Health', // Removed square brackets
                 data: [health_contri_to_tdi], // Replace with your actual data for 'Health'
-                backgroundColor: '#5B9BD5', // Color for 'Health'
+                backgroundColor: '#2e75b6', // Color for 'Health'
             },
         ],
     };
@@ -1295,6 +1254,14 @@
         containerElement.style.height = '';
     }
 
+</script>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+        offset: 100,
+        duration: 500,
+    });
 </script>
 <!-- ****** -->
 

@@ -4,7 +4,7 @@ import numpy as np
 
    
 
-base_data_df = pd.read_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/TRI_base_data.xlsx')
+base_data_df = pd.read_excel("C:/Users/tinky/OneDrive/Documents/TRI_base_data_file.xlsx")
 
 # print(base_data_df)
 
@@ -281,7 +281,7 @@ base_data_df['Cum_s core_meetings'] = np.where(
 )
 
 
-base_data_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/base_data_df.xlsx', index=False)
+base_data_df.to_excel("C:/Users/tinky/OneDrive/Documents/households_excel.xlsx", index=False)
 print("Result Excel file saved successfully.")
 
 total_fid = base_data_df[['__fid__']].values.tolist()
@@ -357,7 +357,7 @@ cum_score_df = pd.DataFrame({
     **score_columns
 })
 
-cum_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/cum_data_df.xlsx', index=False)
+cum_score_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel2.xlsx', index=False)
 print("Result Excel file saved successfully.")
 
 HH_score_df = pd.DataFrame({
@@ -452,7 +452,7 @@ HH_score_df['HH_Score_G_meeting'] = np.where(cum_score_df['Sum of Cum_s core_mee
 
 # print(HH_score_df)
 
-HH_score_df.to_excel('C:/SARTHAK/NOTES/SEM5/Web TDI/pandas/HH_scores.xlsx', index=False)
+HH_score_df.to_excel('C:/Users/tinky/OneDrive/Documents/households_excel3.xlsx', index=False)
 print("Result Excel file saved successfully.")
 
 # from .models import Tribe

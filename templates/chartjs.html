@@ -1,0 +1,23 @@
+var uncensored_tribe_arr = {{uncensored_tribe_arr | safe}}; const
+censored_tribe_arr = {{censored_tribe_arr | safe}}; const censoredNegativeData =
+censored_tribe_arr.map(x => x * -1); // Setup const labels = ['Chronic Disease',
+'Immunisation', 'Maternal Care', 'Under 5 child mortality', 'Food Security',
+'Level of Education', 'Drop-out', 'Institutional Credit', 'Land Ownership',
+'Sanitation', 'Cooking Fuel', 'Source of Drinking Water', 'Electricity',
+'Assets', 'Language', 'Arts and Culture', 'Voted', 'Meetings']; const
+censoredChartData = { labels: labels, datasets: [ { label: "Uncensored", data:
+uncensored_tribe_arr, backgroundColor: 'rgba(189, 215, 238, 0.7)', borderColor:
+'rgba(189, 215, 238, 1)', borderWidth: 1, borderRadius: 5, }, { label:
+"Censored", data: censoredNegativeData, backgroundColor: 'rgba(255, 204, 204,
+0.7)', borderColor: 'rgba(255, 204, 204, 1)', borderWidth: 1, borderRadius: 5,
+}, ], bar: { barThickness: 5, }, }; const tooltip = { yAlign: "bottom",
+titleAlign: "center", callbacks: { label: function (context) { return
+`${context.dataset.label} ${Math.abs(context.raw)}`; }, }, }; // Config const
+config = { type: "bar", data: censoredChartData, options: { maintainAspectRatio:
+false, indexAxis: "y", scales: { x: { stacked: true, ticks: { width: 1,
+callback: function (value, index, values) { return Math.abs(value); }, },
+offset: true, }, y: { grace: '75%', stacked: true, beginAtZero: true,
+maxTicksLimit: labels.length / 2, position: "center", // Align y-axis ticks in
+the center }, }, plugins: { tooltip, }, barPercentage: 0.7, categoryPercentage:
+0.9, }, }; // Render init block const censoredGraph = new
+Chart(document.getElementById("censored-graph"), config);
