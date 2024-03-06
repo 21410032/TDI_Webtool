@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.forms import UserChangeForm
+from .models import Profile  # Import your Profile model
+from .forms import ProfileUpdateForm
+
 from django.contrib import messages
 # Create your views here.
 from .forms import *
@@ -9,6 +14,7 @@ User = get_user_model()
 from django.conf import settings
 from home.models import Tribe
 from district_wise.models import District
+
 
 def register_view(request):
     if request.method == "POST":
@@ -90,23 +96,31 @@ def profile_view(request):
     }
     return render (request, 'accounts/profile.html',context)
 
+@login_required
 def profile_edit_view(request):
+    # Get the user's profile instance using the phone_number
+    profile_instance, created = Profile.objects.get_or_create(phone_number=request.user.phone_number)
+    print(profile_instance)
+    print(profile_instance.first_name)
+    print(profile_instance.last_name)
+    print(profile_instance.email)
+    print(profile_instance.phone_number)
     if request.method == 'POST':
-        form = ProfilePictureUpdateForm(request.POST, request.FILES, instance=request.user)
+        # Create an instance of the ProfileUpdateForm with the user's data
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile_instance)
+        print(form)
         if form.is_valid():
-            # Save only the profile picture field
-            request.user.profile_pic = form.cleaned_data['profile_pic']
-            request.user.save()
+            # Save the form data to update the profile
+            form.save()
 
             # Redirect to the profile page or any other page you want
             return redirect('profile')  # Change 'profile' to the actual name of your profile page
 
     else:
         # If it's a GET request, initialize the form with the current user's data
-        form = ProfilePictureUpdateForm(instance=request.user)
+        form = ProfileUpdateForm(instance=profile_instance)
+
     context = {
-        
         'form': form,
     }
     return render(request, 'accounts/editprofile.html', context)
-    

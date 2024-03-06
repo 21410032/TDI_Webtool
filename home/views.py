@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 import pandas as pd
 import numpy as np
-
+from openpyxl import Workbook
 
 
 def tribe_detail_view(request, name, year):
@@ -114,7 +114,7 @@ def tribe_form_view(request):
             uploaded_file  = request.FILES['households_excel_file']
             
             #create dataframe of base_data
-            base_data_df = pd.read_excel(uploaded_file)
+            base_data_df = pd.read_excel(uploaded_file,engine='openpyxl')
 
             perform_calculations(base_data_df, user_from_form, year)
             inputted_data = True
@@ -217,3 +217,45 @@ def test_view(request):
 
     }
     return render(request, 'pvtg/test.html', context)
+
+from django.http import HttpResponse
+from io import BytesIO
+import pandas as pd
+import csv
+def download_template(request):
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=household_data_template.xlsx'
+
+    # Create a new workbook and grab the active worksheet
+    workbook = Workbook()
+    worksheet = workbook.active
+
+    # Add column headings to the worksheet
+    headers = [
+       '__fid__', 'village_name', 'Gram_panchayat', 'Block_name', 'District_name', 'Tribe_N', 'HH_S', 'Name',
+    'Relationship_Respondent', 'Gender', 'Age', 'chronic_disease', 'disease_name', 'basic_vaccination',
+    'Institutional_delivery', 'ANC', 'Infant_mortality', '2sqmeals', 'food_diversity', 'Ed', 'Inst_Credit',
+    'ration_c_color', 'agricultureland', 'home_ownership', 'defecation', 'bath', 'source_fuel', 'source_drinking_water',
+    'electricity', 'assets', 'smart_phone', 'no_hen_cock', 'no_goats', 'no_cows', 'no_buffaloes', 'no_oxan', 'no_pigs',
+    'no_ducks', 'no_swan', 'Pond_Fish', 'Language', 'traditional_song', 'traditional_dance', 'traditional_instrument',
+    'Traditional_Instrument', 'voter', 'traditional_sabha', 'traditional_meeting', 'gram_sabha_meeting',
+    'Panchayat_meetings', 'SHG', 'Eligibility_CD', 'CD_Cum_Score', 'Eligibility_IMM', 'IMM_Cum_Score',
+    'Eligibility_IND', 'IND_Cum_Score', 'Eligibility_ANC', 'ANC_Cum_Score', 'U5CM_Cum_Score', '2sq_Cum_Score',
+    'Energy', 'Proteins', 'Vitamins', 'FD_Cum_Score', 'Eligibility LE', 'cum_score_LE', 'Eligibility DRO',
+    'cum_score_DRO', 'Aadhaar_bank_account_MCP_Aayushman', 'Ration', 'Job/ Labour/ Kisan credit', 'CUM_SCORE_IC',
+    'CUM_SCORE_OWN', 'CUM_SCORE_SANI', 'cum_score_Fuel', 'cum_score_SoDrWa', 'cum_score_ELECTR', 'ASS_INFO', 'ASS_LIVE',
+    'ASS_TRANS', 'ASS', 'ANI', 'CUM_SCORE_ASS', 'cum_score_L', 'cum_score_So', 'cum_score_MuI', 'cum_score_Da',
+    'cum_score_Arts', 'Eligibility_voter', 'cum_score_EV', 'Cum_score_meetings'
+        # Add the rest of your headers here
+    ]
+    worksheet.append(headers)
+
+    # Save the workbook to the response
+    workbook.save(response)
+
+    return response
+
+	
+
+
+

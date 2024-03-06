@@ -1,131 +1,209 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
-<style>
-  .main-logo-parent,
-  .nav-items {
-    color: white;
-  }
+{% load static %}
 
-  .login-btn {
-    background-color: var(--color-white);
-    color: var(--bs-dark);
-  }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="{% static 'newcss/globalregister.css' %}" />
+    <link rel="stylesheet" href="{% static 'newcss/register.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300&display=swap"
+    />
+  </head>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
 
-  .home:hover {
-    color: var(--bs-dark);
-  }
+    .alert {
+      margin-bottom: 20px;
+    }
 
-  #tribeDropdown:hover,
-  #districtDropdown:hover {
-    font-weight: bold;
-  }
-</style>
-<form method="post" enctype="multipart/form-data">
-  <div class="profile-child"></div>
+    .frame-parent {
+      display: flex;
+      height: 100vh;
+    }
 
-  <div class="frame-parent22-profile">
-    <div class="profile-image-frame">
-      {% csrf_token %}
-      <label for="id_profile_pic">
-        <img
-          class="frame-child26-profile"
-          alt=""
-          src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
-        />
-      </label>
-      <input
-        type="file"
-        name="profile_pic"
-        id="id_profile_pic"
-        style="display: none"
-      />
+    .frame-child {
+      flex: 1;
+      background-color: #3498db; /* Change this to your desired background color */
+    }
+
+    .frame-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-logo-parent {
+      padding: 20px;
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .main-logo a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .sign-up {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .frame-container {
+      margin: 20px;
+    }
+
+    .iconamoonprofile-fill-parent {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .fa-solid {
+      margin-right: 10px;
+      color: #3498db; /* Change this to your desired icon color */
+    }
+
+    .firstname-wrapper {
+      flex: 1;
+      border-bottom: 2px solid #3498db; /* Change this to your desired border color */
+      padding: 8px;
+      margin-left: 10px;
+    }
+
+    .login-btn {
+      background-color: #3498db;
+      color: #fff;
+      padding: 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 18px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .login-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .social-media-icons i {
+      font-size: 24px;
+      color: #ecf0f1;
+      margin-right: 15px;
+    }
+
+    /* Add your home navigation styles here */
+
+    /* Add any additional styles as needed */
+  </style>
+  <body>
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    {% endfor %} {% endif %}
 
-    <b class="profile-name-head">{{profile.first_name}}</b>
-    <div class="frame-parent23-profile">
-      <div class="my-account-profile-parent-profile">
-        <div class="my-account-profile">My Account</div>
-        <div class="login-btn3">
-          <div class="logout">SETTINGS</div>
-        </div>
-      </div>
-      <div class="frame-parent24-profile">
-        <div class="user-information-parent">
-          <b class="user-information">User Information</b>
-          <div class="frame-parent25-profile">
-            <div class="frame-parent26-profile">
-              <div class="full-name-parent-profile">
-                <div class="profile-credential-head">FULL NAME</div>
-                <div class="profile-credential-box">
-                  <div class="profile-credential">
-                    {{profile.first_name}} {{profile.last_name}}
-                  </div>
-                </div>
+    <div class="frame-parent">
+      <div class="frame-child"></div>
+      <div class="frame-group">
+        <div class="main-logo-parent">
+          <div class="main-logo">
+            <b class="tdi-webtool"
+              ><a href="{% url 'home' %}">TDI Webtool</a></b
+            >
+          </div>
+          <div class="sign-up-parent">
+            <div class="sign-up">Update Profile</div>
+          </div>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="frame-container">
+              <div class="iconamoonprofile-fill-parent">
+                <i class="fa-solid fa-user"></i>
+                <div class="firstname-wrapper">{{ form.first_name }}</div>
               </div>
-              <div class="full-name-parent-profile">
-                <div class="profile-credential-head">EMAIl</div>
-                <div class="profile-credential-box">
-                  <div class="profile-credential">{{profile.email}}</div>
-                </div>
+              <div class="iconamoonprofile-fill-parent">
+                <i class="fa-solid fa-user"></i>
+                <div class="firstname-wrapper">{{ form.last_name }}</div>
+              </div>
+              <div class="iconamoonprofile-fill-parent">
+                <i class="fa-solid fa-envelope"></i>
+                <div class="firstname-wrapper">{{ form.email }}</div>
+              </div>
+              <div class="iconamoonprofile-fill-parent">
+                <i class="fa-solid fa-phone"></i>
+                <div class="firstname-wrapper">{{ form.phone_number }}</div>
+              </div>
+              <div class="iconamoonprofile-fill-parent">
+                <i class="fa-solid fa-lock"></i>
+                <div class="firstname-wrapper">{{ form.password1 }}</div>
+              </div>
+              <div class="iconamoonprofile-fill-parent">
+                <i class="fa-solid fa-lock"></i>
+                <div class="firstname-wrapper">{{ form.password2 }}</div>
               </div>
             </div>
-            <div class="frame-parent26-profile">
-              <div class="full-name-parent-profile">
-                <div class="profile-credential-head">PHONE NUMBER</div>
-                <div class="profile-credential-box">
-                  <div class="profile-credential">{{profile.phone_number}}</div>
-                </div>
-              </div>
-              <div class="full-name-parent-profile">
-                <div class="profile-credential-head">AGE</div>
-                <div class="profile-credential-box">
-                  <div class="profile-credential">20</div>
-                </div>
-              </div>
+            <div>
+              <button type="submit" class="login-btn">Update Profile</button>
+            </div>
+          </form>
+
+          <div class="frame-parent1">
+            <div class="social-media-icons">
+              <i class="fa-brands fa-square-instagram"></i>
+            </div>
+            <div class="social-media-icons">
+              <i class="fa-brands fa-youtube"></i>
+            </div>
+            <div class="social-media-icons">
+              <i class="fa-brands fa-linkedin"></i>
             </div>
           </div>
         </div>
-        <div class="user-information-parent">
-          <b class="user-information">MY DATA</b>
-          <div class="frame-parent28-profile">
-            <div class="frame-parent29-profile">
-              <div class="tribe-wise-data-profile-wrapper-profile">
-                <div class="tribe-wise-data-profile">TRIBE-WISE DATA</div>
-              </div>
-              <div class="frame-wrapper3-profile">
-                <div class="add-parent-profile">
-                  <div class="tribe-wise-data-profile">ADD</div>
-                  <div class="lets-iconsadd-duotone">
-                    <img
-                      class="group-icon-profile"
-                      alt=""
-                      src="./public/group.svg"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="frame-parent30-profile">
-              <div class="district-wise-data-wrapper-profile">
-                <div class="tribe-wise-data-profile">DISTRICT-WISE DATA</div>
-              </div>
-              <div class="frame-wrapper3-profile">
-                <div class="add-parent-profile">
-                  <div class="tribe-wise-data-profile">ADD</div>
-                  <div class="lets-iconsadd-duotone">
-                    <img
-                      class="group-icon-profile"
-                      alt=""
-                      src="./public/group.svg"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="frame-wrapper">
+          <div class="home-parent">
+            <b class="home"><a href="{% url 'home' %}">HOME</a></b>
+            <b class="home"><a href="#">RESEARCH</a></b>
+            <b class="home"><a href="#">TEAM</a></b>
+            <b class="home"><a href="#">GALLERY</a></b>
+            <b class="home"><a href="#">ABOUT US</a></b>
+            <b class="home"><a href="#">CONTACT US</a></b>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <button type="submit">save</button>
-</form>
-{% endblock %}
+  </body>
+</html>

@@ -79,7 +79,7 @@ a {
   align-items: center;
   z-index: 10;
 }
- .explore-the {
+.explore-the {
   color: var(--color-black);
 }
 .tribal {
@@ -1762,4 +1762,3 @@ a {
     border-color: #000000;
   }
 }
-
