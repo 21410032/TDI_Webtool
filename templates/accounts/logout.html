@@ -16,24 +16,24 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
     />
   </head>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
+  <body>
+    {% if messages %} {% for message in messages %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js">
-</script>
-
-<body>
-  {% if messages %} {% for message in messages %}
-
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  {% endfor %} {% endif %}
-
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{message}}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %} {% endif %}
     <div class="frame-parent">
       {% if request.user.is_authenticated %}
       <div class="frame-group">
@@ -79,8 +79,4 @@
       {% endif %}
     </div>
   </body>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- Add Bootstrap JS -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </html>
