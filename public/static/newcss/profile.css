@@ -161,7 +161,6 @@ z-index: 5;
   border: 1px solid var(--blue-tdi);
   box-sizing: border-box;
   height: 73px;
-  overflow: hidden;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -272,7 +271,7 @@ z-index: 5;
   gap: 47px;
   z-index: 2;
   font-size: 45px;
-  margin-top: 105px;
+  margin-top: 188px;
   color: var(--color-black);
 }
 .profile {

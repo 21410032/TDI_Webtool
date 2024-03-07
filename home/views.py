@@ -218,6 +218,8 @@ def test_view(request):
     }
     return render(request, 'pvtg/test.html', context)
 
+
+
 from django.http import HttpResponse
 from io import BytesIO
 import pandas as pd

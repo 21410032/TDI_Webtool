@@ -43,19 +43,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" />
 
 
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.slim.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js">
-    </script> -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -160,13 +147,74 @@
 
 
 <!-- ****** -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 
 <!-- JAVASCRIPT -->
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
+<!-- Home page scroll btn JS -->
+<script>
+    window.onscroll = function () {
+        showScrollButton();
+    };
+
+    function showScrollButton() {
+        var scrollBtn = document.getElementById("scroll-btn");
+        var scrollThreshold = 2000; // Set your threshold here
+        var bodyHeight = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+
+        if (window.innerHeight + window.scrollY >= bodyHeight - scrollThreshold) {
+            // If the user is near the bottom of the page, rotate the button
+            scrollBtn.classList.add("rotate");
+        } else {
+            // If the user is not at the bottom, reset the button
+            scrollBtn.classList.remove("rotate");
+        }
+
+        if (
+            document.body.scrollTop > 100 ||
+            document.documentElement.scrollTop > 100
+        ) {
+            // Display the button after scrolling 100 pixels
+            scrollBtn.style.display = "block";
+        } else {
+            // Hide the button if not scrolled enough
+            scrollBtn.style.display = "none";
+        }
+    }
+
+    function scrollFunction() {
+        var bodyHeight = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+
+        if (document.getElementById("scroll-btn").classList.contains("rotate")) {
+            // If the button is rotated, scroll to the top
+            window.scrollTo(0, 0);
+        } else {
+            // If the button is not rotated, scroll to the bottom
+            window.scrollTo(0, bodyHeight);
+        }
+    }
+</script>
 
 <!-- ****** -->
 
@@ -493,7 +541,7 @@
                         ticks: {
                             stepSize: 1,
                             beginAtZero: true,
-                            autoSkip: false
+                            // autoSkip: false,
                         },
                     },
                 ],
@@ -503,7 +551,7 @@
                             stepSize: 1,
                             beginAtZero: true,
                             maxTicksLimit: 20,
-                            autoSkip: false
+                            // autoSkip: false,
                         },
                     },
                 ],
@@ -511,13 +559,13 @@
                 x: {
                     grid: {
                         drawOnChartArea: false,
-                        display: false
+                        display: false,
                     }
                 },
                 y: {
                     grid: {
                         drawOnChartArea: false,
-                        display: false
+                        display: false,
                     }
                 }
             },

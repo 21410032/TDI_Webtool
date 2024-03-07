@@ -1,10 +1,5 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 <style>
-  .main-logo-parent,
-  .nav-items {
-    color: white;
-  }
-
   .login-btn {
     background-color: var(--color-white);
     color: var(--bs-dark);
@@ -27,18 +22,10 @@
   <div class="profile-image-frame">
     {% csrf_token %}
     <label for="id_profile_pic">
-      <img
-        class="frame-child26-profile"
-        alt=""
-        src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}"
-      />
+      <img class="frame-child26-profile" alt=""
+        src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}{% static 'images/profile_images/default-profile-pic.png' %}{% endif %}" />
     </label>
-    <input
-      type="file"
-      name="profile_pic"
-      id="id_profile_pic"
-      style="display: none"
-    />
+    <input type="file" name="profile_pic" id="id_profile_pic" style="display: none" />
   </div>
 
   <b class="profile-name-head">{{profile.first_name}}</b>
@@ -50,7 +37,7 @@
       </div>
 
       <div class="login-btn3">
-        <div class="edit"><a href={% url 'profile_edit'   %}>Edit</a></div>
+        <div class="edit"><a href={% url 'profile_edit' %}>Edit</a></div>
       </div>
     </div>
     <div class="frame-parent24-profile">
@@ -94,38 +81,27 @@
         <div class="frame-parent28-profile">
           <div class="frame-parent29-profile">
             <div class="tribe-wise-data-profile-wrapper-profile">
-              <div class="tribe-wise-data-profile">TRIBE-WISE DATA</div>
-            </div>
-            <div class="frame-wrapper3-profile">
-              <div class="add-parent-profile">
-                <div class="tribe-wise-data-profile">ADD</div>
-                <div class="lets-iconsadd-duotone">
-                  <img
-                    class="group-icon-profile"
-                    alt=""
-                    src="./public/group.svg"
-                  />
-                </div>
+
+              <div class="tribe-wise-data-profile" id="profile-tribe-Dropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                  My Data
+                </a>
+
+                <ul class="dropdown-menu custom-dropdown">
+                  {% for file in excel_files %}
+                  <li>
+                    {{ file.year }} - <a href="{% url 'download_excel' file.id %}">Download</a>
+                  </li>
+                  {% endfor %}
+
+                </ul>
               </div>
+
+
             </div>
+
           </div>
-          <div class="frame-parent30-profile">
-            <div class="district-wise-data-wrapper-profile">
-              <div class="tribe-wise-data-profile">DISTRICT-WISE DATA</div>
-            </div>
-            <div class="frame-wrapper3-profile">
-              <div class="add-parent-profile">
-                <div class="tribe-wise-data-profile">ADD</div>
-                <div class="lets-iconsadd-duotone">
-                  <img
-                    class="group-icon-profile"
-                    alt=""
-                    src="./public/group.svg"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>

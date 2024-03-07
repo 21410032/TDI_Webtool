@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from home.models import Tribe, User_Hitcounts
+from home.models import Tribe
 from district_wise.models import District
 
 from django.contrib.auth import get_user_model
@@ -39,15 +39,7 @@ def home_view(request):
     }
 
 
-# Visitors Count
-# Increment the total site views
-    User_Hitcounts.increment_site_views()
 
-    # Retrieve the total site views
-    total_site_views = User_Hitcounts.get_site_views()
-
-    # Pass the total_site_views to the template context
-    context['total_site_views'] = total_site_views
 
     return render(request,'home/index.html',context=context)
 

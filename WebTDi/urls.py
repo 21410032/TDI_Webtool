@@ -12,6 +12,7 @@ urlpatterns = [
     path('district/', include('district_wise.urls')),
     path('accounts/', include('accounts.urls')),
     path('gallery/',gallery_view, name='gallery'),
+    
 ]
 
 if settings.DEBUG:

@@ -459,7 +459,6 @@
   box-sizing: border-box;
 }
 .frame-child19 {
-  align-self: stretch;
   flex: 1;
   position: relative;
   overflow: hidden;
@@ -485,7 +484,7 @@
   gap: var(--gap-31xl);
 }
 .dimension-wise-index-score-and-wrapper {
-  align-self: stretch;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -493,7 +492,6 @@
   padding: var(--padding-3xs) 0px;
 }
 .frame-wrapper10 {
-  align-self: stretch;
   gap: 30px;
   display: flex;
   flex-direction: column;
@@ -502,7 +500,7 @@
   padding: var(--padding-3xs);
 }
 .frame-parent59 {
-  align-self: stretch;
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -511,7 +509,7 @@
   gap: var(--gap-31xl);
 }
 .frame-parent57 {
-  width: 100%;
+  width: 1237px;
   padding: 50px 60px;
   height: 750px;
   display: flex;

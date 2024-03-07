@@ -122,24 +122,8 @@ class Tribe_Image(models.Model):
     # def __str__(self):
     #     return f"{self.tribe.name} images"
 
-
-class User_Hitcounts(models.Model):
-    site_views = models.IntegerField(default=0)
-    last_refresh_time = models.DateTimeField(null=True, blank=True)
-
-    @classmethod
-    def get_site_views(cls):
-        # This method returns the total site views
-        instance, created = cls.objects.get_or_create(pk=1)
-        return instance.site_views
-
-    @classmethod
-    def increment_site_views(cls):
-        # This method increments the total site views
-        instance, created = cls.objects.get_or_create(pk=1)
-        if instance.last_refresh_time is None or (timezone.now() - instance.last_refresh_time).total_seconds() > 600:  # 300 seconds = 10 minutes
-            instance.site_views += 1
-            instance.last_refresh_time = timezone.now()
-            instance.save()
-        return instance.site_views
     
+class Report_Excel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='excel_report')
+    year = models.IntegerField()
+    file = models.FileField(upload_to='user_excel_reports/')
