@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
+from django.http import HttpResponse
 from django.contrib.auth.forms import UserChangeForm
-from .models import Profile  # Import your Profile model
+from .models import Profile
 from .forms import ProfileUpdateForm
+from home.models import Report_Excel
 
 from django.contrib import messages
 # Create your views here.
@@ -12,8 +14,10 @@ from .forms import *
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.conf import settings
-from home.models import Tribe
+from home.models import Tribe, Report_Excel
 from district_wise.models import District
+from django.shortcuts import get_object_or_404
+from mimetypes import guess_type
 
 
 def register_view(request):
@@ -78,6 +82,8 @@ def profile_view(request):
     districts=District.objects.filter(user = user, year='2022')
     profile = request.user
     
+    excel_files = Report_Excel.objects.filter(user=profile)
+    
 
     if request.method == 'POST':
       
@@ -93,6 +99,7 @@ def profile_view(request):
         'profile' :profile,
         'tribes' : tribes,
         'districts' :districts,
+        'excel_files': excel_files
     }
     return render (request, 'accounts/profile.html',context)
 
@@ -124,3 +131,15 @@ def profile_edit_view(request):
         'form': form,
     }
     return render(request, 'accounts/editprofile.html', context)
+
+
+
+def download_excel(request, file_id):
+    excel_file = get_object_or_404(Report_Excel, id=file_id)
+    file_path = excel_file.file.path
+    content_type, encoding = guess_type(file_path)
+    response = HttpResponse(content_type=content_type)
+    response['Content-Disposition'] = f'attachment; filename="{excel_file.file.name}"'
+    with open(file_path, 'rb') as file:
+        response.write(file.read())
+    return response

@@ -2,7 +2,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #95cec7;
+    background-color: #FFE5B4;
     width: 720px;
     height: 770px;
     overflow: hidden;
@@ -42,7 +42,6 @@
     justify-content: flex-start;
     gap: 17.66px;
     font-size: var(--font-size-13xl);
-    color: #0a362e;
   }
   .iconamoonprofile-fill {
     width: 9.4px;
@@ -80,28 +79,32 @@
   }
   .frame-container {
     flex-direction: column;
-    align-items: flex-start;
     gap: 30.61px;
-    font-size: var(--font-size-5xs-7);
+    font-size: 12px;
   }
   .login {
     position: relative;
     font-weight: 600;
   }
   .login-btn {
-    border-radius: 13.16px;
-    background-color: #92c6d6;
-    border: 1.2px solid #3a6551;
+    border-radius: 10px;
+    width: 100%;
+    background-color: black;
+    border: 1.2px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: var(--padding-8xs) 23px;
+  
     transition: transform 0.3s ease-in-out;
     font-size: var(--font-size-lg-8);
     color: #f8fff8;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding: 8px 20px;
+   
+  }
+
+  .login-btn:hover{
+    transform: scale(1.05);
   }
 
 
@@ -120,7 +123,7 @@
     transition: transform 0.3s ease-in-out;
   }
 
-  .login-btn:hover, .sign-in:hover, .home:hover, .social-media-icons:hover{
+  .sign-in:hover, .home:hover, .social-media-icons:hover{
     transform: scale(1.1);
   }
   .already-have-an-account-parent {
@@ -181,13 +184,15 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    COLOR: black;
+    font-size: 10px;
     justify-content: center;
     gap: 34.29px;
   }
   .frame-wrapper {
     width: 545px;
-    border-radius: 51.44px 0 0 51.44px;
-    background-color: #457875;
+    border-radius: 51.44px;
+    background-color: #FFE5B4;
     height: 614px;
     display: flex;
     flex-direction: column;
@@ -204,7 +209,7 @@
   }
   .frame-group {
     position: absolute;
-    top: calc(50% - 307.2px);
+    top: 60px;
     left: calc(50% - 544.5px);
     border-radius: 51.44px 0 0 51.44px;
     width: 1090px;
@@ -241,4 +246,35 @@
     text-decoration: none;
 
   }
+
+
+  .input-container {
+    margin-bottom: 15px;
+    position: relative;
+    align-items: center;
+    height: 25px;
+    gap: 10px;
+    display: flex;
+}
+
+.input-container i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    
+}
+
+input {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding: 10px;
+
+    padding-left: 30px;
+   
+    border-radius: 5px;
+    outline: none;
+}
 

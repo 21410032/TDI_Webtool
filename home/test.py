@@ -1168,10 +1168,12 @@ def perform_calculations(base_data_df, user, year):
 
 
     
-    from .models import Tribe
+    from .models import Tribe, Report_Excel
     from django.http import HttpResponse
     from .forms import TribeForm
     from django.db import IntegrityError
+    from io import BytesIO
+    from django.core.files.base import ContentFile
 
         
 
@@ -1299,3 +1301,11 @@ def perform_calculations(base_data_df, user, year):
             tribe.save()
         except Tribe.DoesNotExist:
             print(HttpResponse(f'Tribe with slug "{slug}" not found. Check your Excel for a valid tribe name.'))
+
+
+    excel_buffer = BytesIO()
+    Final_Excel.to_excel(excel_buffer, index=False)
+
+    excel_file_instance = Report_Excel(user=user, year=year)
+    excel_file_instance.file.save(f'reports/{user.username}_{year}.xlsx', ContentFile(excel_buffer.getvalue()))
+    excel_file_instance.save()
